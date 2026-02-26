@@ -2,19 +2,46 @@ import React, { useState } from 'react';
 import { Form, Input, Button, message } from 'antd';
 import { UserOutlined, LockOutlined, MessageOutlined } from '@ant-design/icons';
 import { useNavigate, Link } from 'react-router-dom';
+import { authApi } from '../../api/auth';
 
 const Register: React.FC = () => {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
 
-    const onFinish = (values: any) => {
-        setLoading(true);
-        console.log('Register values: ', values);
-        setTimeout(() => {
-            message.success('账号注册成功！');
+    const [form] = Form.useForm();
+
+    const onFinish = async (values: any) => {
+        try {
+            setLoading(true);
+            await authApi.register({
+                phone: values.phone,
+                code: values.verificationCode,
+                password: values.password
+            });
+
+            message.success('账号注册成功，即将跳转登录！');
+            setTimeout(() => {
+                navigate('/login', { replace: true });
+            }, 1500);
+        } catch (e: any) {
+            console.error('Register failed', e);
+        } finally {
             setLoading(false);
-            navigate('/login');
-        }, 1000);
+        }
+    };
+
+    const handleSendCode = async () => {
+        try {
+            const phoneStr = form.getFieldValue('phone');
+            if (!phoneStr || !/^1\d{10}$/.test(phoneStr)) {
+                message.warning('请先输入正确的手机号');
+                return;
+            }
+            await authApi.sendVerifyCode(phoneStr);
+            message.success('验证码已发送，请注意查收');
+        } catch (e) {
+            console.error('Failed to send code', e);
+        }
     };
 
     return (
@@ -40,6 +67,7 @@ const Register: React.FC = () => {
                 </div>
 
                 <Form
+                    form={form}
                     name="register"
                     onFinish={onFinish}
                     size="large"
@@ -69,7 +97,7 @@ const Register: React.FC = () => {
                                 placeholder="6位验证码"
                                 className="rounded-xl bg-gray-50 border-gray-200 focus:bg-white flex-1 py-2.5"
                             />
-                            <Button className="h-full rounded-xl shrink-0" style={{ height: '46px' }}>获取验证码</Button>
+                            <Button className="h-full rounded-xl shrink-0" style={{ height: '46px' }} onClick={handleSendCode}>获取验证码</Button>
                         </div>
                     </Form.Item>
 
