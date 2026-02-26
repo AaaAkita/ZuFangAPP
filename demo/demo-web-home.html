@@ -1,0 +1,1118 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>租房避雷 - 网页端首页</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #F9FAFB;
+            min-height: 100vh;
+        }
+
+        .navbar {
+            height: 72px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 40px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+            transition: box-shadow 0.3s ease;
+        }
+
+        .navbar.scrolled {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .logo svg {
+            width: 28px;
+            height: 28px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            align-items: center;
+        }
+
+        .nav-link {
+            font-size: 14px;
+            font-weight: 500;
+            color: #6B7280;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: #667eea;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .nav-link.active {
+            color: #667eea;
+        }
+
+        .nav-link.active::after {
+            width: 100%;
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            background: #F3F4F6;
+            border-radius: 24px;
+            padding: 8px 16px;
+            width: 320px;
+            transition: all 0.3s ease;
+        }
+
+        .search-box:focus-within {
+            background: #fff;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+        }
+
+        .search-box input {
+            flex: 1;
+            border: none;
+            background: transparent;
+            font-size: 14px;
+            margin-left: 8px;
+            outline: none;
+            color: #1F2937;
+        }
+
+        .search-box input::placeholder {
+            color: #9CA3AF;
+        }
+
+        .search-box svg {
+            width: 18px;
+            height: 18px;
+            color: #9CA3AF;
+            transition: color 0.3s ease;
+        }
+
+        .search-box:focus-within svg {
+            color: #667eea;
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn {
+            padding: 8px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: #667eea;
+            border: 1px solid #667eea;
+        }
+
+        .btn-outline:hover {
+            background: rgba(102, 126, 234, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(102, 126, 234, 0.4);
+        }
+
+        .hero {
+            height: 400px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            position: relative;
+            overflow: hidden;
+            margin-top: 72px;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .carousel {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .carousel-container {
+            position: relative;
+            width: 100%;
+            height: 320px;
+            overflow: hidden;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .carousel-track {
+            display: flex;
+            transition: transform 0.5s ease;
+            height: 100%;
+        }
+
+        .carousel-slide {
+            min-width: 100%;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .carousel-slide::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: rotate 15s linear infinite;
+            pointer-events: none;
+        }
+
+        .carousel-slide-1 {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+        }
+
+        .carousel-slide-2 {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .carousel-slide-3 {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        .carousel-content {
+            position: relative;
+            z-index: 1;
+            padding: 60px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .carousel-badge {
+            display: inline-block;
+            padding: 6px 16px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 16px;
+            width: fit-content;
+        }
+
+        .carousel-title {
+            font-size: 36px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 12px;
+        }
+
+        .carousel-desc {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 24px;
+            max-width: 500px;
+            line-height: 1.6;
+        }
+
+        .carousel-btn {
+            display: inline-block;
+            padding: 12px 32px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+            color: #fff;
+            font-size: 14px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: fit-content;
+        }
+
+        .carousel-btn:hover {
+            background: rgba(255, 255, 255, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .carousel-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 48px;
+            height: 48px;
+            background: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 10;
+            border: none;
+        }
+
+        .carousel-arrow svg {
+            width: 24px;
+            height: 24px;
+            color: #fff;
+        }
+
+        .carousel-arrow:hover {
+            background: rgba(255, 255, 255, 0.5);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .carousel-arrow-prev {
+            left: -24px;
+        }
+
+        .carousel-arrow-next {
+            right: -24px;
+        }
+
+        .carousel-dots {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+            z-index: 10;
+        }
+
+        .carousel-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.4);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+        }
+
+        .carousel-dot:hover {
+            background: rgba(255, 255, 255, 0.6);
+        }
+
+        .carousel-dot.active {
+            background: #fff;
+            transform: scale(1.2);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 40px;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 32px;
+        }
+
+        .section-title {
+            font-size: 32px;
+            font-weight: 700;
+            color: #1F2937;
+        }
+
+        .section-subtitle {
+            font-size: 16px;
+            color: #6B7280;
+            margin-top: 8px;
+        }
+
+        .view-all {
+            color: #667eea;
+            font-size: 14px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .view-all:hover {
+            color: #764ba2;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .card {
+            background: #fff;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+        }
+
+        .card-image {
+            height: 200px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-image::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+            pointer-events: none;
+        }
+
+        .card-image svg {
+            width: 64px;
+            height: 64px;
+            color: rgba(255, 255, 255, 0.9);
+            position: relative;
+            z-index: 1;
+        }
+
+        .card-content {
+            padding: 20px;
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1F2937;
+            margin-bottom: 8px;
+            transition: color 0.3s ease;
+        }
+
+        .card:hover .card-title {
+            color: #667eea;
+        }
+
+        .card-rating {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 14px;
+            color: #F59E0B;
+            margin-bottom: 12px;
+        }
+
+        .card-rating svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .card-stats {
+            display: flex;
+            gap: 16px;
+            font-size: 14px;
+            color: #6B7280;
+        }
+
+        .ad-banner-large {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            border-radius: 16px;
+            padding: 40px;
+            margin: 40px 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(250, 112, 154, 0.3);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ad-banner-large::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: rotate 15s linear infinite;
+            pointer-events: none;
+        }
+
+        .ad-banner-large:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 28px rgba(250, 112, 154, 0.4);
+        }
+
+        .ad-content-large {
+            position: relative;
+            z-index: 1;
+        }
+
+        .ad-title-large {
+            font-size: 28px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+
+        .ad-desc-large {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 20px;
+        }
+
+        .ad-btn {
+            padding: 12px 32px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+            color: #fff;
+            font-size: 14px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 1;
+        }
+
+        .ad-btn:hover {
+            background: rgba(255, 255, 255, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .ad-badge-large {
+            padding: 8px 16px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 4px;
+            font-size: 12px;
+            color: #fff;
+            position: relative;
+            z-index: 1;
+        }
+
+        .warning-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .warning-item {
+            background: #fff;
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .warning-item:hover {
+            transform: translateX(8px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .warning-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .warning-icon svg {
+            width: 24px;
+            height: 24px;
+            color: #fff;
+        }
+
+        .warning-info {
+            flex: 1;
+        }
+
+        .warning-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1F2937;
+            margin-bottom: 4px;
+        }
+
+        .warning-desc {
+            font-size: 14px;
+            color: #6B7280;
+        }
+
+        .warning-count {
+            font-size: 24px;
+            font-weight: 700;
+            color: #DC2626;
+        }
+
+        .footer {
+            background: #1F2937;
+            color: #fff;
+            padding: 60px 40px;
+            margin-top: 60px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+        }
+
+        .footer-section h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .footer-section a {
+            display: block;
+            color: #9CA3AF;
+            text-decoration: none;
+            margin-bottom: 12px;
+            font-size: 14px;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: #fff;
+        }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 40px auto 0;
+            padding-top: 40px;
+            border-top: 1px solid #374151;
+            text-align: center;
+            color: #9CA3AF;
+            font-size: 14px;
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 40px;
+            right: 40px;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 999;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 6px 16px rgba(102, 126, 234, 0.5);
+        }
+
+        .back-to-top svg {
+            width: 24px;
+            height: 24px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar" id="navbar">
+        <div class="logo" onclick="navigateTo('home')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+            </svg>
+            租房避雷
+        </div>
+        <div class="nav-links">
+            <a href="#" class="nav-link active" onclick="switchNav(this)">首页</a>
+            <a href="#" class="nav-link" onclick="switchNav(this)">热门小区</a>
+            <a href="#" class="nav-link" onclick="switchNav(this)">避雷榜</a>
+            <a href="#" class="nav-link" onclick="switchNav(this)">推荐榜</a>
+            <a href="#" class="nav-link" onclick="switchNav(this)">关于我们</a>
+        </div>
+        <div class="search-box">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input type="text" placeholder="搜索小区名称..." onkeypress="handleSearchKeypress(event)">
+        </div>
+        <div class="auth-buttons">
+            <button class="btn btn-outline" onclick="showLoginModal()">登录</button>
+            <button class="btn btn-primary" onclick="showRegisterModal()">注册</button>
+        </div>
+    </nav>
+
+    <div class="hero">
+        <div class="carousel">
+            <div class="carousel-container">
+                <div class="carousel-track" id="carouselTrack">
+                    <div class="carousel-slide carousel-slide-1" onclick="trackAdClick('carousel-slide-1')">
+                        <div class="carousel-content">
+                            <div class="carousel-badge">广告</div>
+                            <h2 class="carousel-title">优质小区推流</h2>
+                            <p class="carousel-desc">精选高评分小区，租房更安心，让您的租房之旅更加顺利</p>
+                            <button class="carousel-btn">立即查看</button>
+                        </div>
+                    </div>
+                    <div class="carousel-slide carousel-slide-2" onclick="trackAdClick('carousel-slide-2')">
+                        <div class="carousel-content">
+                            <div class="carousel-badge">广告</div>
+                            <h2 class="carousel-title">租房避雷指南</h2>
+                            <p class="carousel-desc">真实评论 · 合同验证 · 避免踩坑，让您的租房之旅更加顺利</p>
+                            <button class="carousel-btn">了解更多</button>
+                        </div>
+                    </div>
+                    <div class="carousel-slide carousel-slide-3" onclick="trackAdClick('carousel-slide-3')">
+                        <div class="carousel-content">
+                            <div class="carousel-badge">广告</div>
+                            <h2 class="carousel-title">新用户专享</h2>
+                            <p class="carousel-desc">注册即送VIP会员，免费查看所有小区避雷信息</p>
+                            <button class="carousel-btn">立即注册</button>
+                        </div>
+                    </div>
+                </div>
+                <button class="carousel-arrow carousel-arrow-prev" onclick="prevSlide()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="15 18 9 12 15 6"></polyline>
+                    </svg>
+                </button>
+                <button class="carousel-arrow carousel-arrow-next" onclick="nextSlide()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </button>
+                <div class="carousel-dots" id="carouselDots">
+                    <button class="carousel-dot active" onclick="goToSlide(0)"></button>
+                    <button class="carousel-dot" onclick="goToSlide(1)"></button>
+                    <button class="carousel-dot" onclick="goToSlide(2)"></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="section-header">
+            <div>
+                <h2 class="section-title">热门小区</h2>
+                <p class="section-subtitle">最受用户关注的小区</p>
+            </div>
+            <a href="#" class="view-all" onclick="navigateTo('communities')">查看全部 →</a>
+        </div>
+
+        <div class="grid">
+            <div class="card" onclick="navigateTo('detail', 1)">
+                <div class="card-image" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                        <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                    </svg>
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">阳光花园</h3>
+                    <div class="card-rating">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                        </svg>
+                        <span>4.5</span>
+                    </div>
+                    <div class="card-stats">
+                        <span>
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle; margin-right: 2px;">
+                                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                            </svg>
+                            128条评论
+                        </span>
+                        <span>¥3500/月</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" onclick="navigateTo('detail', 2)">
+                <div class="card-image" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect>
+                        <line x1="9" y1="22" x2="9" y2="22.01"></line>
+                        <line x1="15" y1="22" x2="15" y2="22.01"></line>
+                        <line x1="12" y1="18" x2="12" y2="18.01"></line>
+                        <line x1="12" y1="14" x2="12" y2="14.01"></line>
+                        <line x1="12" y1="10" x2="12" y2="10.01"></line>
+                        <line x1="12" y1="6" x2="12" y2="6.01"></line>
+                    </svg>
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">翠微小区</h3>
+                    <div class="card-rating">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                        </svg>
+                        <span>4.2</span>
+                    </div>
+                    <div class="card-stats">
+                        <span>
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle; margin-right: 2px;">
+                                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                            </svg>
+                            96条评论
+                        </span>
+                        <span>¥4200/月</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" onclick="navigateTo('detail', 3)">
+                <div class="card-image" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="9" cy="7" r="4"></circle>
+                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                    </svg>
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">幸福家园</h3>
+                    <div class="card-rating">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                        </svg>
+                        <span>4.8</span>
+                    </div>
+                    <div class="card-stats">
+                        <span>
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle; margin-right: 2px;">
+                                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                            </svg>
+                            256条评论
+                        </span>
+                        <span>¥3800/月</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="ad-banner-large" onclick="trackAdClick('large-banner')">
+            <div class="ad-content-large">
+                <h2 class="ad-title-large">优质小区推流</h2>
+                <p class="ad-desc-large">精选高评分小区，租房更安心，让您的租房之旅更加顺利</p>
+                <button class="ad-btn">立即查看</button>
+            </div>
+            <div class="ad-badge-large">广告</div>
+        </div>
+
+        <div class="section-header" style="margin-top: 60px;">
+            <div>
+                <h2 class="section-title">避雷榜单</h2>
+                <p class="section-subtitle">需要谨慎考虑的小区</p>
+            </div>
+            <a href="#" class="view-all" onclick="navigateTo('warnings')">查看全部 →</a>
+        </div>
+
+        <div class="warning-list">
+            <div class="warning-item" onclick="navigateTo('warning', 1)">
+                <div class="warning-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path>
+                    </svg>
+                </div>
+                <div class="warning-info">
+                    <div class="warning-title">XX小区</div>
+                    <div class="warning-desc">隔音差、物业态度不好</div>
+                </div>
+                <div class="warning-count">23</div>
+            </div>
+
+            <div class="warning-item" onclick="navigateTo('warning', 2)">
+                <div class="warning-icon" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+                        <line x1="12" y1="9" x2="12" y2="13"></line>
+                        <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                    </svg>
+                </div>
+                <div class="warning-info">
+                    <div class="warning-title">YY小区</div>
+                    <div class="warning-desc">押金难退、合同陷阱</div>
+                </div>
+                <div class="warning-count">18</div>
+            </div>
+
+            <div class="warning-item" onclick="navigateTo('warning', 3)">
+                <div class="warning-icon" style="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="15" y1="9" x2="9" y2="15"></line>
+                        <line x1="9" y1="9" x2="15" y2="15"></line>
+                    </svg>
+                </div>
+                <div class="warning-info">
+                    <div class="warning-title">ZZ小区</div>
+                    <div class="warning-desc">虚假房源、中介欺诈</div>
+                </div>
+                <div class="warning-count">15</div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>关于我们</h3>
+                <a href="#" onclick="navigateTo('about')">公司介绍</a>
+                <a href="#" onclick="navigateTo('team')">团队介绍</a>
+                <a href="#" onclick="navigateTo('contact')">联系方式</a>
+            </div>
+            <div class="footer-section">
+                <h3>帮助中心</h3>
+                <a href="#" onclick="navigateTo('guide')">使用指南</a>
+                <a href="#" onclick="navigateTo('faq')">常见问题</a>
+                <a href="#" onclick="navigateTo('feedback')">反馈建议</a>
+            </div>
+            <div class="footer-section">
+                <h3>法律条款</h3>
+                <a href="#" onclick="navigateTo('terms')">用户协议</a>
+                <a href="#" onclick="navigateTo('privacy')">隐私政策</a>
+                <a href="#" onclick="navigateTo('disclaimer')">免责声明</a>
+            </div>
+            <div class="footer-section">
+                <h3>关注我们</h3>
+                <a href="#" onclick="navigateTo('wechat')">微信公众号</a>
+                <a href="#" onclick="navigateTo('weibo')">微博</a>
+                <a href="#" onclick="navigateTo('douyin')">抖音</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2024 租房避雷. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <div class="back-to-top" id="backToTop" onclick="scrollToTop()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="18 15 12 9 6 15"></polyline>
+        </svg>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const totalSlides = 3;
+        let carouselInterval;
+
+        function initCarousel() {
+            carouselInterval = setInterval(nextSlide, 5000);
+        }
+
+        function updateCarousel() {
+            const track = document.getElementById('carouselTrack');
+            const dots = document.querySelectorAll('.carousel-dot');
+            
+            track.style.transform = `translateX(-${currentSlide * 100}%)`;
+            
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentSlide);
+            });
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % totalSlides;
+            updateCarousel();
+        }
+
+        function prevSlide() {
+            currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+            updateCarousel();
+        }
+
+        function goToSlide(index) {
+            currentSlide = index;
+            updateCarousel();
+            resetCarouselInterval();
+        }
+
+        function resetCarouselInterval() {
+            clearInterval(carouselInterval);
+            carouselInterval = setInterval(nextSlide, 5000);
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            initCarousel();
+        });
+
+        function switchNav(element) {
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            element.classList.add('active');
+        }
+
+        function navigateTo(page, id = null) {
+            console.log('Navigate to:', page, id);
+            if (page === 'detail') {
+                alert('跳转到小区详情页 ID: ' + id);
+            } else if (page === 'warning') {
+                alert('跳转到避雷详情页 ID: ' + id);
+            } else {
+                alert('跳转到: ' + page);
+            }
+        }
+
+        function handleSearchKeypress(event) {
+            if (event.key === 'Enter') {
+                const searchInput = event.target;
+                console.log('搜索:', searchInput.value);
+                alert('搜索: ' + searchInput.value);
+            }
+        }
+
+        function showLoginModal() {
+            alert('显示登录弹窗');
+        }
+
+        function showRegisterModal() {
+            alert('显示注册弹窗');
+        }
+
+        function trackAdClick(type) {
+            console.log('广告点击追踪:', type);
+            alert('广告点击: ' + type);
+        }
+
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            const backToTop = document.getElementById('backToTop');
+            
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+            
+            if (window.scrollY > 300) {
+                backToTop.classList.add('visible');
+            } else {
+                backToTop.classList.remove('visible');
+            }
+        });
+    </script>
+</body>
+</html>

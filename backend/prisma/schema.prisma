@@ -1,0 +1,433 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id              BigInt    @id @default(autoincrement())
+  phone           String    @unique @db.VarChar(20)
+  password        String    @db.VarChar(255)
+  nickname        String?   @db.VarChar(50)
+  avatar          String?   @db.VarChar(255)
+  gender          Int       @default(0) @map("gender") @db.SmallInt
+  birthday        DateTime?
+  province        String?   @db.VarChar(50)
+  city            String?   @db.VarChar(50)
+  district        String?   @db.VarChar(50)
+  role            String    @default("user") @db.VarChar(20)
+  status          Int       @default(1) @map("status") @db.SmallInt
+  wechatOpenid    String?   @unique @map("wechat_openid") @db.VarChar(100)
+  alipayUserid    String?   @unique @map("alipay_userid") @db.VarChar(100)
+  apiKey          String?   @unique @map("api_key") @db.VarChar(100)
+  lastLoginAt     DateTime? @map("last_login_at")
+  lastLoginIp     String?   @map("last_login_ip") @db.VarChar(50)
+  createdAt       DateTime  @default(now()) @map("created_at")
+  updatedAt       DateTime  @updatedAt @map("updated_at")
+  deletedAt       DateTime? @map("deleted_at")
+
+  comments              Comment[]
+  commentLikes          CommentLike[]
+  commentReplies        CommentReply[] @relation("CommentReplyUser")
+  receivedCommentReplies CommentReply[] @relation("CommentReplyTargetUser")
+  commentReports        CommentReport[]
+  files                File[]
+  contractVerifications ContractVerification[]
+  messages             Message[]
+  searchHistories       SearchHistory[]
+  userFavorites        UserFavorite[]
+  userViewHistories    UserViewHistory[]
+  operationLogs        OperationLog[]
+  adImpressions        AdImpression[]
+  adClicks             AdClick[]
+  auditComments        Comment[]          @relation("AuditUser")
+  auditReports         CommentReport[]    @relation("AuditUser")
+  handleReports        CommentReport[]    @relation("HandleUser")
+
+  @@map("users")
+}
+
+model Community {
+  id               BigInt    @id @default(autoincrement())
+  name             String    @db.VarChar(100)
+  province         String    @db.VarChar(50)
+  city             String    @db.VarChar(50)
+  district         String    @db.VarChar(50)
+  address          String    @db.VarChar(255)
+  longitude        Decimal   @db.Decimal(10, 7)
+  latitude         Decimal   @db.Decimal(10, 7)
+  propertyType     String?   @map("property_type") @db.VarChar(50)
+  buildYear        Int?      @map("build_year")
+  developer        String?   @db.VarChar(100)
+  propertyCompany  String?   @map("property_company") @db.VarChar(100)
+  propertyFee      Decimal?  @map("property_fee") @db.Decimal(10, 2)
+  greenRate        Decimal?  @map("green_rate") @db.Decimal(5, 2)
+  plotRate         Decimal?  @map("plot_rate") @db.Decimal(5, 2)
+  totalBuildings   Int?      @map("total_buildings")
+  totalHouseholds  Int?      @map("total_households")
+  parkingSpaces    Int?      @map("parking_spaces")
+  description      String?   @db.Text
+  images           Json?
+  tags             Json?
+  facilities       Json?
+  ratingAvg        Decimal   @default(0) @map("rating_avg") @db.Decimal(3, 2)
+  ratingCount      Int       @default(0) @map("rating_count")
+  commentCount     Int       @default(0) @map("comment_count")
+  viewCount        Int       @default(0) @map("view_count")
+  favoriteCount    Int       @default(0) @map("favorite_count")
+  status           Int       @default(1) @map("status") @db.SmallInt
+  createdAt        DateTime  @default(now()) @map("created_at")
+  updatedAt        DateTime  @updatedAt @map("updated_at")
+  deletedAt        DateTime? @map("deleted_at")
+
+  comments              Comment[]
+  contractVerifications ContractVerification[]
+  userFavorites        UserFavorite[]
+  userViewHistories    UserViewHistory[]
+
+  @@map("communities")
+  @@index([name])
+  @@index([city])
+  @@index([district])
+  @@index([longitude, latitude])
+  @@index([ratingAvg])
+  @@index([commentCount])
+  @@index([status])
+  @@index([createdAt])
+}
+
+model Comment {
+  id             BigInt    @id @default(autoincrement())
+  userId         BigInt    @map("user_id")
+  communityId    BigInt    @map("community_id")
+  parentId       BigInt?   @map("parent_id")
+  content        String    @db.Text
+  images         Json?
+  videos         Json?
+  rating         Int       @default(0) @map("rating") @db.SmallInt
+  likeCount      Int       @default(0) @map("like_count")
+  replyCount     Int       @default(0) @map("reply_count")
+  reportCount    Int       @default(0) @map("report_count")
+  status         Int       @default(0) @map("status") @db.SmallInt
+  auditStatus    Int       @default(0) @map("audit_status") @db.SmallInt
+  auditResult    String?   @map("audit_result") @db.Text
+  auditUserId    BigInt?   @map("audit_user_id")
+  auditAt        DateTime? @map("audit_at")
+  createdAt      DateTime  @default(now()) @map("created_at")
+  updatedAt      DateTime  @updatedAt @map("updated_at")
+  deletedAt      DateTime? @map("deleted_at")
+
+  user           User          @relation(fields: [userId], references: [id])
+  community      Community     @relation(fields: [communityId], references: [id])
+  parent         Comment?      @relation("CommentReplies", fields: [parentId], references: [id])
+  replies        Comment[]     @relation("CommentReplies")
+  likes          CommentLike[]
+  commentReplies CommentReply[]
+  reports        CommentReport[]
+  auditUser      User?         @relation("AuditUser", fields: [auditUserId], references: [id])
+
+  @@map("comments")
+  @@index([userId])
+  @@index([communityId])
+  @@index([parentId])
+  @@index([status])
+  @@index([auditStatus])
+  @@index([rating])
+  @@index([createdAt])
+}
+
+model CommentLike {
+  id         BigInt   @id @default(autoincrement())
+  userId     BigInt   @map("user_id")
+  commentId  BigInt   @map("comment_id")
+  createdAt  DateTime @default(now()) @map("created_at")
+
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  comment Comment @relation(fields: [commentId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, commentId])
+  @@map("comment_likes")
+  @@index([commentId])
+}
+
+model CommentReply {
+  id          BigInt   @id @default(autoincrement())
+  userId      BigInt   @map("user_id")
+  commentId   BigInt   @map("comment_id")
+  replyUserId BigInt?  @map("reply_user_id")
+  content     String   @db.Text
+  likeCount   Int      @default(0) @map("like_count")
+  status      Int      @default(1) @map("status") @db.SmallInt
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+  deletedAt   DateTime? @map("deleted_at")
+
+  user    User    @relation("CommentReplyUser", fields: [userId], references: [id])
+  comment Comment @relation(fields: [commentId], references: [id], onDelete: Cascade)
+  replyUser User?   @relation("CommentReplyTargetUser", fields: [replyUserId], references: [id])
+
+  @@map("comment_replies")
+  @@index([userId])
+  @@index([commentId])
+  @@index([replyUserId])
+  @@index([createdAt])
+}
+
+model CommentReport {
+  id            BigInt   @id @default(autoincrement())
+  userId        BigInt   @map("user_id")
+  commentId     BigInt   @map("comment_id")
+  reason        String   @db.VarChar(50)
+  description   String?  @db.Text
+  status        Int      @default(0) @map("status") @db.SmallInt
+  auditUserId   BigInt?  @map("audit_user_id")
+  handleUserId  BigInt?  @map("handle_user_id")
+  handleResult  String?  @map("handle_result") @db.Text
+  handleAt      DateTime? @map("handle_at")
+  createdAt     DateTime @default(now()) @map("created_at")
+
+  user        User    @relation(fields: [userId], references: [id])
+  comment     Comment @relation(fields: [commentId], references: [id], onDelete: Cascade)
+  auditUser   User?   @relation("AuditUser", fields: [auditUserId], references: [id])
+  handleUser  User?   @relation("HandleUser", fields: [handleUserId], references: [id])
+
+  @@map("comment_reports")
+  @@index([userId])
+  @@index([commentId])
+  @@index([status])
+  @@index([createdAt])
+}
+
+model File {
+  id         BigInt   @id @default(autoincrement())
+  userId     BigInt   @map("user_id")
+  fileName   String   @map("file_name") @db.VarChar(255)
+  filePath   String   @map("file_path") @db.VarChar(500)
+  fileUrl    String   @map("file_url") @db.VarChar(500)
+  fileType   String   @map("file_type") @db.VarChar(50)
+  fileSize   BigInt   @map("file_size")
+  mimeType   String   @map("mime_type") @db.VarChar(100)
+  width      Int?
+  height     Int?
+  duration   Int?
+  thumbUrl   String?  @map("thumb_url") @db.VarChar(500)
+  status     Int      @default(1) @map("status") @db.SmallInt
+  createdAt  DateTime @default(now()) @map("created_at")
+  deletedAt  DateTime? @map("deleted_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("files")
+  @@index([userId])
+  @@index([fileType])
+  @@index([status])
+  @@index([createdAt])
+}
+
+model ContractVerification {
+  id                  BigInt   @id @default(autoincrement())
+  userId              BigInt   @map("user_id")
+  communityId         BigInt   @map("community_id")
+  contractFileId      BigInt?  @map("contract_file_id")
+  contractImages      Json?    @map("contract_images")
+  ocrResult           Json?    @map("ocr_result")
+  verificationResult  Json?    @map("verification_result")
+  status              Int      @default(0) @map("status") @db.SmallInt
+  errorMessage        String?  @map("error_message") @db.Text
+  createdAt           DateTime @default(now()) @map("created_at")
+  updatedAt           DateTime @updatedAt @map("updated_at")
+
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  community Community @relation(fields: [communityId], references: [id], onDelete: Cascade)
+
+  @@map("contract_verifications")
+  @@index([userId])
+  @@index([communityId])
+  @@index([status])
+  @@index([createdAt])
+}
+
+model Ad {
+  id              BigInt   @id @default(autoincrement())
+  title           String   @db.VarChar(100)
+  description     String?  @db.Text
+  imageUrl        String   @map("image_url") @db.VarChar(500)
+  linkUrl         String   @map("link_url") @db.VarChar(500)
+  position        String   @db.VarChar(50)
+  adType          String   @map("ad_type") @db.VarChar(50)
+  startTime       DateTime @map("start_time")
+  endTime         DateTime @map("end_time")
+  priority        Int      @default(0) @map("priority")
+  status          Int      @default(1) @map("status") @db.SmallInt
+  impressionCount Int      @default(0) @map("impression_count")
+  clickCount      Int      @default(0) @map("click_count")
+  ctr             Decimal  @default(0) @db.Decimal(5, 4)
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+
+  impressions AdImpression[]
+  clicks      AdClick[]
+
+  @@map("ads")
+  @@index([position])
+  @@index([status])
+  @@index([startTime])
+  @@index([endTime])
+  @@index([priority])
+}
+
+model AdImpression {
+  id          BigInt   @id @default(autoincrement())
+  adId        BigInt   @map("ad_id")
+  userId      BigInt?  @map("user_id")
+  ip          String?  @db.VarChar(50)
+  userAgent   String?  @map("user_agent") @db.VarChar(500)
+  deviceType  String?  @map("device_type") @db.VarChar(50)
+  osType      String?  @map("os_type") @db.VarChar(50)
+  browserType String?  @map("browser_type") @db.VarChar(50)
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  ad   Ad    @relation(fields: [adId], references: [id], onDelete: Cascade)
+  user User? @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("ad_impressions")
+  @@index([adId])
+  @@index([userId])
+  @@index([createdAt])
+}
+
+model AdClick {
+  id          BigInt   @id @default(autoincrement())
+  adId        BigInt   @map("ad_id")
+  userId      BigInt?  @map("user_id")
+  ip          String?  @db.VarChar(50)
+  userAgent   String?  @map("user_agent") @db.VarChar(500)
+  deviceType  String?  @map("device_type") @db.VarChar(50)
+  osType      String?  @map("os_type") @db.VarChar(50)
+  browserType String?  @map("browser_type") @db.VarChar(50)
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  ad   Ad    @relation(fields: [adId], references: [id], onDelete: Cascade)
+  user User? @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("ad_clicks")
+  @@index([adId])
+  @@index([userId])
+  @@index([createdAt])
+}
+
+model Message {
+  id        BigInt   @id @default(autoincrement())
+  userId    BigInt   @map("user_id")
+  type      String   @db.VarChar(50)
+  title     String   @db.VarChar(200)
+  content   String?  @db.Text
+  data      Json?
+  isRead    Boolean  @default(false) @map("is_read")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("messages")
+  @@index([userId])
+  @@index([type])
+  @@index([isRead])
+  @@index([createdAt])
+}
+
+model SearchHistory {
+  id          BigInt   @id @default(autoincrement())
+  userId      BigInt   @map("user_id")
+  keyword     String   @db.VarChar(100)
+  searchType  String?  @map("search_type") @db.VarChar(50)
+  resultCount Int      @default(0) @map("result_count")
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("search_histories")
+  @@index([userId])
+  @@index([keyword])
+  @@index([createdAt])
+}
+
+model HotSearch {
+  id          BigInt   @id @default(autoincrement())
+  keyword     String   @unique @db.VarChar(100)
+  searchCount Int      @default(0) @map("search_count")
+  rank        Int      @default(0) @map("rank")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  @@map("hot_searches")
+  @@index([searchCount])
+  @@index([rank])
+}
+
+model UserFavorite {
+  id          BigInt   @id @default(autoincrement())
+  userId      BigInt   @map("user_id")
+  communityId BigInt   @map("community_id")
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  community Community @relation(fields: [communityId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, communityId])
+  @@map("user_favorites")
+  @@index([userId])
+  @@index([communityId])
+}
+
+model UserViewHistory {
+  id           BigInt   @id @default(autoincrement())
+  userId       BigInt   @map("user_id")
+  communityId  BigInt   @map("community_id")
+  viewCount    Int      @default(1) @map("view_count")
+  lastViewedAt DateTime @default(now()) @map("last_viewed_at")
+  createdAt    DateTime @default(now()) @map("created_at")
+
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  community Community @relation(fields: [communityId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, communityId])
+  @@map("user_view_histories")
+  @@index([userId])
+  @@index([communityId])
+  @@index([lastViewedAt])
+}
+
+model SystemConfig {
+  id          BigInt   @id @default(autoincrement())
+  configKey   String   @unique @map("config_key") @db.VarChar(100)
+  configValue String?  @map("config_value") @db.Text
+  configType  String   @default("string") @map("config_type") @db.VarChar(50)
+  description String?  @db.VarChar(255)
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  @@map("system_configs")
+  @@index([configKey])
+}
+
+model OperationLog {
+  id         BigInt   @id @default(autoincrement())
+  userId     BigInt?  @map("user_id")
+  username   String?  @db.VarChar(50)
+  action     String   @db.VarChar(50)
+  module     String?  @db.VarChar(50)
+  details    Json?
+  ip         String?  @db.VarChar(50)
+  userAgent  String?  @map("user_agent") @db.VarChar(500)
+  createdAt  DateTime @default(now()) @map("created_at")
+
+  user User? @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  @@map("operation_logs")
+  @@index([userId])
+  @@index([action])
+  @@index([module])
+  @@index([createdAt])
+}
