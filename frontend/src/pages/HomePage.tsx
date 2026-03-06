@@ -1,146 +1,196 @@
-export default function HomePage() {
+import { Link } from 'react-router-dom';
+
+const HomePage = () => {
     return (
-        <main className="flex-1 w-full max-w-[1440px] mx-auto px-4 lg:px-40 py-8">
-            <div className="relative w-full rounded-3xl overflow-hidden min-h-[560px] flex items-center justify-center p-8 lg:p-12 mb-16 shadow-soft group border border-border-color/50" style={{ "background": "linear-gradient(135deg, rgba(242, 140, 75, 0.08) 0%, rgba(254, 250, 246, 1) 50%, rgba(168, 123, 93, 0.08) 100%)" }}>
-                <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-                    <div className="absolute -top-[10%] -left-[10%] w-[40%] h-[40%] rounded-full bg-primary/10 blur-[80px]"></div>
-                    <div className="absolute top-[20%] right-[10%] w-[30%] h-[30%] rounded-full bg-secondary/10 blur-[60px]"></div>
-                    <div className="absolute bottom-[10%] left-[20%] w-[25%] h-[25%] rounded-full bg-primary/10 blur-[70px]"></div>
+        <>
+            <div className="px-6 pt-8 pb-4 flex items-center justify-between sticky top-0 z-20 bg-background-light/95 dark:bg-background-dark/95 backdrop-blur-xl">
+                <div className="flex flex-col">
+                    <div className="flex items-center gap-1 text-text-main dark:text-gray-100">
+                        <span className="material-symbols-outlined text-[20px] text-primary">location_on</span>
+                        <span className="font-bold text-lg leading-none">北京市</span>
+                        <span className="material-symbols-outlined text-sm pt-0.5 text-text-muted">expand_more</span>
+                    </div>
+                    <span className="text-xs text-text-muted mt-1 ml-0.5">发现身边的美好社区</span>
                 </div>
-                <div className="relative z-10 flex flex-col gap-8 max-w-3xl items-center text-center">
-                    <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/70 backdrop-blur-md border border-white shadow-sm">
-                        <span className="material-symbols-outlined text-primary text-lg">favorite</span>
-                        <span className="text-secondary text-sm font-bold tracking-wide">超过 50,000 名租客信赖</span>
+                <button className="relative flex items-center justify-center p-2 rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors">
+                    <span className="material-symbols-outlined text-[26px] text-text-main dark:text-gray-100">notifications_none</span>
+                    <span className="absolute top-2 right-2.5 h-2 w-2 bg-primary rounded-full border border-background-light dark:border-background-dark"></span>
+                </button>
+            </div>
+
+            <div className="px-6 mb-8 mt-2">
+                <div className="relative flex items-center w-full h-14 rounded-full bg-surface-light dark:bg-surface-dark shadow-sm hover:shadow-md transition-all duration-300 border border-transparent hover:border-primary/10">
+                    <div className="flex items-center justify-center pl-5 pr-3 text-text-muted dark:text-gray-400">
+                        <span className="material-symbols-outlined">search</span>
                     </div>
-                    <h1 className="text-text-main text-5xl lg:text-7xl font-black leading-tight tracking-normal">
-                        一起寻找<span className="text-primary relative inline-block">安全的家
-                            <svg className="absolute w-full h-4 -bottom-1 left-0 text-primary/30 z-[-1]" fill="currentColor" viewBox="0 0 100 10"><path d="M0 5 Q 50 10 100 5 L 100 10 L 0 10 Z"></path></svg>
-                        </span>
-                    </h1>
-                    <p className="text-text-muted text-lg lg:text-xl font-medium leading-relaxed max-w-2xl">
-                        加入互助社区，避开租房陷阱，发现安全、温馨的居住空间。你的安心，从这里开始。
-                    </p>
-                    <div className="w-full max-w-xl mt-4">
-                        <label className="relative flex items-center w-full h-16 rounded-full shadow-soft bg-white group-focus-within:ring-4 ring-primary/20 transition-all duration-300 border border-border-color/50">
-                            <div className="flex items-center justify-center pl-6 text-primary">
-                                <span className="material-symbols-outlined text-2xl">search</span>
-                            </div>
-                            <input className="w-full h-full bg-transparent border-none text-text-main placeholder:text-text-muted/60 text-lg px-4 focus:ring-0 focus:outline-none" placeholder="输入小区名、地址或房东姓名" type="text" />
-                            <div className="pr-2">
-                                <button className="h-12 px-8 rounded-full bg-primary hover:bg-primary-hover text-white text-base font-bold shadow-md shadow-primary/30 transition-all duration-300 flex items-center gap-2">
-                                    <span>搜索</span>
-                                </button>
-                            </div>
-                        </label>
-                    </div>
-                    <div className="flex flex-wrap justify-center gap-3 mt-4 items-center">
-                        <span className="text-sm font-bold text-text-muted tracking-wide mr-2">热门搜索:</span>
-                        <a className="px-5 py-2 rounded-full bg-white/60 hover:bg-white border-2 border-transparent hover:border-primary/30 text-sm font-medium text-secondary transition-all shadow-sm" href="#">#靠谱房东</a>
-                        <a className="px-5 py-2 rounded-full bg-white/60 hover:bg-white border-2 border-transparent hover:border-primary/30 text-sm font-medium text-secondary transition-all shadow-sm" href="#">#押金退还</a>
-                        <a className="px-5 py-2 rounded-full bg-white/60 hover:bg-white border-2 border-transparent hover:border-primary/30 text-sm font-medium text-secondary transition-all shadow-sm" href="#">#合同审核</a>
+                    <input className="w-full bg-transparent border-none focus:ring-0 text-text-main dark:text-gray-100 placeholder:text-text-muted/60 dark:placeholder:text-gray-500 font-medium text-[15px] h-full py-0" placeholder="搜索小区或避雷信息" type="text" />
+                    <div className="pr-2">
+                        <button className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-colors">
+                            <span className="material-symbols-outlined text-[20px]">tune</span>
+                        </button>
                     </div>
                 </div>
             </div>
-            <div className="flex flex-col gap-12 py-12">
-                <div className="text-center max-w-2xl mx-auto flex flex-col gap-4">
-                    <h2 className="text-text-main text-3xl lg:text-4xl font-black tracking-normal">为什么选择租房避雷网？</h2>
-                    <p className="text-text-muted text-lg font-medium">
-                        我们坚信透明与善意。分享你的经历，帮助他人在城市中找到避风港。
-                    </p>
+
+            <div className="mb-8">
+                <div className="flex justify-between items-end px-6 mb-5">
+                    <h2 className="text-xl font-bold text-text-main dark:text-gray-100 tracking-tight">推荐小区</h2>
+                    <Link className="text-text-muted text-sm font-medium hover:text-primary transition-colors flex items-center gap-0.5" to="/community">
+                        查看全部 <span className="material-symbols-outlined text-[16px]">chevron_right</span>
+                    </Link>
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <div className="group flex flex-col items-center text-center gap-5 p-10 rounded-3xl bg-surface-light border-2 border-border-color hover:border-primary/30 shadow-sm hover:shadow-soft transition-all duration-300">
-                        <div className="w-16 h-16 rounded-full bg-orange-50 flex items-center justify-center text-primary group-hover:scale-110 group-hover:bg-primary group-hover:text-white transition-all duration-300">
-                            <span className="material-symbols-outlined text-3xl">verified</span>
+                <div className="flex overflow-x-auto gap-5 px-6 pt-4 pb-4 -mt-4 no-scrollbar snap-x snap-mandatory">
+                    <div className="snap-center shrink-0 flex-1 min-w-[260px] h-[340px] rounded-[24px] overflow-hidden relative shadow-soft group bg-surface-light dark:bg-surface-dark transform transition-transform hover:-translate-y-1 duration-300">
+                        <img alt="Modern apartment complex with balconies and greenery" className="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCYGS65YhEGX-VAmU5CqyDsgWyG8gaaZiuRfx-ekQzPIVLfxpzNq1djHcEn_13Y2gPwXAcpSFMjTsHmT4MGbi4WfKWLjQf0DtKHr9tNX6Pf4SohBiRPhuLJx870V_Am05iUBZo26_kmAtdd5ciku3xJA-cjgsuQYaGmr1g7Cd1wS3x9IjwLmrOwNOspzkjYUkqs3DdlU3ieyGSg7ycg0_unOdNX39XFQl0aqJ8S4Q__lfTOvih-8eZCo0sKlg8STlsvJZoxpaVnPQ" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+                        <div className="absolute top-4 left-4 bg-white/90 dark:bg-black/60 backdrop-blur-md px-3 py-1.5 rounded-full flex items-center gap-1 shadow-sm">
+                            <span className="material-symbols-outlined text-yellow-500 text-[16px] fill-1">star</span>
+                            <span className="text-xs font-bold text-gray-900 dark:text-white">4.9</span>
                         </div>
-                        <div className="flex flex-col gap-3">
-                            <h3 className="text-text-main text-xl font-bold">社区真实认证</h3>
-                            <p className="text-text-muted leading-relaxed font-medium">每条评价均由社区成员审核，确保内容真实有用，过滤虚假信息。</p>
+                        <div className="absolute bottom-6 left-5 right-5 text-white">
+                            <h3 className="font-bold text-xl mb-1 tracking-wide">阳光锦城</h3>
+                            <p className="text-sm opacity-90 font-medium mb-3 line-clamp-1 flex items-center gap-1">
+                                <span className="material-symbols-outlined text-[14px]">location_on</span> 朝阳区 · 建国路
+                            </p>
+                            <div className="flex gap-2">
+                                <span className="text-[10px] font-bold bg-emerald-500/20 backdrop-blur-md px-2.5 py-1 rounded-full border border-emerald-400/30 text-emerald-100">绿化好</span>
+                                <span className="text-[10px] font-bold bg-orange-500/20 backdrop-blur-md px-2.5 py-1 rounded-full border border-orange-400/30 text-orange-100">近地铁</span>
+                            </div>
                         </div>
                     </div>
-                    <div className="group flex flex-col items-center text-center gap-5 p-10 rounded-3xl bg-surface-light border-2 border-border-color hover:border-primary/30 shadow-sm hover:shadow-soft transition-all duration-300">
-                        <div className="w-16 h-16 rounded-full bg-orange-50 flex items-center justify-center text-primary group-hover:scale-110 group-hover:bg-primary group-hover:text-white transition-all duration-300">
-                            <span className="material-symbols-outlined text-3xl">shield_locked</span>
+                    <div className="snap-center shrink-0 flex-1 min-w-[260px] h-[340px] rounded-[24px] overflow-hidden relative shadow-soft group bg-surface-light dark:bg-surface-dark transform transition-transform hover:-translate-y-1 duration-300">
+                        <img alt="Bright high-rise apartment building against blue sky" className="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCYELfyEv7EK1UlHySb9Jpg-m9ses9RZ9ULQIVVVrABL76qXIokTpeSaFhOU6R8YyfWcpq2b1qPA5-r7xwhoAWIQPcTxvDektfOL0fgWGINGjJcjXzogA6koV8qBFTAfIBSBdDuvr-RhWaSWTNM8fW3Ao1VCSXbazPJ_Y9hwus34kys0VkAt3HFANJD2w06gXovGDY95Wlop7c_xexIdDv3I3WTcJ83bY7CrWcPker_MrF5fqEjtYiOmmgIRfJT-NEIPBL0ddkb3g" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+                        <div className="absolute top-4 left-4 bg-white/90 dark:bg-black/60 backdrop-blur-md px-3 py-1.5 rounded-full flex items-center gap-1 shadow-sm">
+                            <span className="material-symbols-outlined text-yellow-500 text-[16px] fill-1">star</span>
+                            <span className="text-xs font-bold text-gray-900 dark:text-white">4.7</span>
                         </div>
-                        <div className="flex flex-col gap-3">
-                            <h3 className="text-text-main text-xl font-bold">安全且匿名</h3>
-                            <p className="text-text-muted leading-relaxed font-medium">无所畏惧地分享你的故事。提供匿名发布选项，你的隐私安全是我们的首要任务。</p>
-                        </div>
-                    </div>
-                    <div className="group flex flex-col items-center text-center gap-5 p-10 rounded-3xl bg-surface-light border-2 border-border-color hover:border-primary/30 shadow-sm hover:shadow-soft transition-all duration-300">
-                        <div className="w-16 h-16 rounded-full bg-orange-50 flex items-center justify-center text-primary group-hover:scale-110 group-hover:bg-primary group-hover:text-white transition-all duration-300">
-                            <span className="material-symbols-outlined text-3xl">volunteer_activism</span>
-                        </div>
-                        <div className="flex flex-col gap-3">
-                            <h3 className="text-text-main text-xl font-bold">温暖互助网络</h3>
-                            <p className="text-text-muted leading-relaxed font-medium">与有相似经历的人建立联系。获取建议、法律援助以及情感支持。</p>
+                        <div className="absolute bottom-6 left-5 right-5 text-white">
+                            <h3 className="font-bold text-xl mb-1 tracking-wide">云尚国际</h3>
+                            <p className="text-sm opacity-90 font-medium mb-3 line-clamp-1 flex items-center gap-1">
+                                <span className="material-symbols-outlined text-[14px]">location_on</span> 海淀区 · 中关村
+                            </p>
+                            <div className="flex gap-2">
+                                <span className="text-[10px] font-bold bg-blue-500/20 backdrop-blur-md px-2.5 py-1 rounded-full border border-blue-400/30 text-blue-100">安保严</span>
+                                <span className="text-[10px] font-bold bg-purple-500/20 backdrop-blur-md px-2.5 py-1 rounded-full border border-purple-400/30 text-purple-100">设施新</span>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div className="py-16">
-                <div className="flex flex-col md:flex-row justify-between items-end gap-6 mb-10 px-4">
-                    <div>
-                        <h2 className="text-text-main text-3xl lg:text-4xl font-black tracking-normal mb-3">最新避雷提醒</h2>
-                        <p className="text-text-muted text-lg font-medium">了解您所在地区最近的租房报告。</p>
-                    </div>
-                    <a className="inline-flex items-center gap-2 text-primary font-bold hover:text-primary-hover transition-colors px-6 py-3 rounded-full bg-primary/10 hover:bg-primary/20" href="#">
-                        查看所有报告
-                        <span className="material-symbols-outlined text-xl">arrow_forward</span>
-                    </a>
-                </div>
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                    <div className="flex flex-col sm:flex-row items-stretch bg-surface-light rounded-3xl overflow-hidden shadow-card hover:shadow-soft transition-all duration-300 border-2 border-border-color group">
-                        <div className="sm:w-2/5 min-h-[220px] relative overflow-hidden">
-                            <div className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110" data-alt="Modern apartment building facade with balconies" style={{ "backgroundImage": "url('https://lh3.googleusercontent.com/aida-public/AB6AXuCjZyljFEwJmaURBEjfFA0msvj6moPFnplwBURH3z77vozc9aoOZg6C2FxC8BItb4LME7_i7kCZmKvzLddwyTN0AFHkHa1V1IpJerVZocNhlMYFfwjHd68kwUR5JITCpzzNryE2q6RcLar7K0Y61s9DS3Tz_JPWVxt7IuLxA1ixvauTWDQzKotoxjPfB_CRW1gmn6HR-QtEuNJh1Cz5vkWGHKwT96HnBUq2GjJFZstJLR_ytgsGQGUxzpRWd9jxvj98M61whdVL8w')" }}></div>
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent sm:bg-gradient-to-l opacity-60"></div>
-                            <div className="absolute top-4 left-4 bg-red-50 text-red-600 text-sm font-bold px-4 py-1.5 rounded-full shadow-sm flex items-center gap-1.5">
-                                <span className="material-symbols-outlined text-base">plumbing</span>
-                                设施维修
-                            </div>
+
+            <div className="px-6 mb-8">
+                <div className="bg-[#fcf3eb] rounded-[24px] p-5 shadow-sm flex items-center justify-between relative overflow-hidden">
+                    <div className="relative z-10 w-2/3">
+                        <div className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-primary/20 text-primary text-[10px] font-bold mb-2">
+                            <span className="material-symbols-outlined text-[12px]">loyalty</span> 搬家特惠
                         </div>
-                        <div className="flex-1 p-8 flex flex-col justify-between gap-5">
-                            <div>
-                                <div className="flex items-center justify-between mb-3">
-                                    <span className="text-sm text-text-muted font-medium flex items-center gap-1.5">
-                                        <span className="material-symbols-outlined text-base">schedule</span> 2小时前
-                                    </span>
-                                    <span className="text-sm text-secondary font-bold bg-secondary/10 px-3 py-1.5 rounded-full">朝阳区, 北京</span>
+                        <h3 className="font-bold text-[#8a5d3b] text-lg mb-1">省心搬家服务</h3>
+                        <p className="text-xs text-[#a6866f] font-medium">专业团队，轻拿轻放，温馨送到家</p>
+                        <button className="mt-3 bg-[#e69f69] text-white text-xs font-bold px-4 py-1.5 rounded-full shadow-sm hover:bg-[#d98b53] transition-colors">
+                            立即预约
+                        </button>
+                    </div>
+                    <div className="absolute right-0 bottom-0 w-32 h-32 bg-no-repeat bg-contain bg-right-bottom opacity-90" style={{ backgroundImage: "url('https://lh3.googleusercontent.com/aida-public/AB6AXuBJ-0S8s3_G7aKFKFWwm8wLEob_K3PVbXuqi3HKxKgmypBMVDdMTfoO3NEabxKb9vLXrXt1SpvMYyKsioqJ0CfBOZzM_pkRPMP4Hg6AmkMuvGNj7MuNfNrKlUcX29WtN8KpVUnCANpwWyZoFALStXxBezN00PMzCbYekUdHQDfjrUssfEY7fNQfuFfgxLig3TDagkXxMBKurT_AickewsyiXZCZKRITHaFK7oRdFEAwoxohxhkFk5LUOFEfoNrBYHnUOomm0vzUSw')" }}></div>
+                </div>
+            </div>
+
+            <div className="px-6 mb-10">
+                <h2 className="text-xl font-bold text-text-main dark:text-gray-100 mb-5 tracking-tight flex items-center gap-2">
+                    租房避雷信息
+                    <span className="material-symbols-outlined text-primary text-[20px]">warning</span>
+                </h2>
+                <div className="flex flex-col gap-4">
+                    <div className="p-4 bg-surface-light dark:bg-surface-dark rounded-[20px] shadow-sm border border-[#f5e6d8] dark:border-gray-800">
+                        <div className="flex items-start gap-3">
+                            <div className="flex-shrink-0 w-10 h-10 rounded-full bg-orange-100 dark:bg-orange-900/30 flex items-center justify-center text-orange-500">
+                                <span className="material-symbols-outlined text-[20px]">volume_off</span>
+                            </div>
+                            <div className="flex-1">
+                                <div className="flex justify-between items-start">
+                                    <h4 className="font-bold text-text-main dark:text-gray-100 text-[15px]">时代绿洲小区</h4>
+                                    <span className="text-[10px] text-text-muted">刚刚</span>
                                 </div>
-                                <h3 className="text-text-main text-xl font-bold leading-tight mb-3">阳光海岸小区 3号楼</h3>
-                                <p className="text-text-muted text-base line-clamp-2 leading-relaxed">卫生间持续漏水，多次书面请求房东维修均遭到无视 or 拖延，严重影响正常生活...</p>
+                                <p className="text-xs text-text-muted mb-2">3号楼</p>
+                                <p className="text-sm text-gray-700 dark:text-gray-300 leading-snug mb-3">
+                                    墙壁薄得像纸一样，邻居晚上说话都能听得一清二楚，严重影响睡眠质量。看房时一定要注意隔音问题！
+                                </p>
+                                <div className="flex gap-2">
+                                    <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-bold bg-[#fff0e6] text-[#e67326] border border-[#fcd5ba]">
+                                        <span className="material-symbols-outlined text-[12px]">campaign</span> 隔音极差
+                                    </span>
+                                </div>
                             </div>
-                            <button className="self-start text-primary text-base font-bold flex items-center gap-1.5 hover:gap-2.5 transition-all bg-primary/5 hover:bg-primary/10 px-5 py-2.5 rounded-full">
-                                阅读完整报告 <span className="material-symbols-outlined text-base">arrow_right_alt</span>
-                            </button>
                         </div>
                     </div>
-                    {/* 其他报告省略，为了展示效果可保留全部或部分 */}
-                    {/* 这里为了简洁，我在实际实现中会搬运全部内容 */}
+                    <div className="p-4 bg-surface-light dark:bg-surface-dark rounded-[20px] shadow-sm border border-[#f5e6d8] dark:border-gray-800">
+                        <div className="flex items-start gap-3">
+                            <div className="flex-shrink-0 w-10 h-10 rounded-full bg-red-100 dark:bg-red-900/30 flex items-center justify-center text-red-500">
+                                <span className="material-symbols-outlined text-[20px]">gpp_bad</span>
+                            </div>
+                            <div className="flex-1">
+                                <div className="flex justify-between items-start">
+                                    <h4 className="font-bold text-text-main dark:text-gray-100 text-[15px]">天诚家园附近</h4>
+                                    <span className="text-[10px] text-text-muted">3小时前</span>
+                                </div>
+                                <p className="text-xs text-text-muted mb-2">黑中介曝光</p>
+                                <p className="text-sm text-gray-700 dark:text-gray-300 leading-snug mb-3">
+                                    照片看着精装修，实地看房完全是另一个破旧的房子，还要求先交看房费。大家遇到这种直接拉黑！
+                                </p>
+                                <div className="flex gap-2">
+                                    <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-bold bg-[#fff0e6] text-[#e67326] border border-[#fcd5ba]">
+                                        <span className="material-symbols-outlined text-[12px]">photo_camera_back</span> 虚假房源
+                                    </span>
+                                    <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-bold bg-[#fff0e6] text-[#e67326] border border-[#fcd5ba]">
+                                        <span className="material-symbols-outlined text-[12px]">report</span> 黑中介
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            {/* CTA Section */}
-            <div className="rounded-[3rem] bg-gradient-to-br from-[#f28c4b] to-[#e06d2c] relative overflow-hidden text-white p-16 lg:p-24 text-center mb-12 shadow-2xl shadow-primary/20">
-                <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl transform translate-x-1/2 -translate-y-1/2"></div>
-                <div className="absolute bottom-0 left-0 w-80 h-80 bg-white/10 rounded-full blur-3xl transform -translate-x-1/2 translate-y-1/2"></div>
-                <div className="relative z-10 flex flex-col items-center gap-8">
-                    <div className="w-20 h-20 rounded-full bg-white/20 flex items-center justify-center backdrop-blur-md mb-2 shadow-inner border border-white/30">
-                        <span className="material-symbols-outlined text-5xl">edit_square</span>
-                    </div>
-                    <h2 className="text-4xl lg:text-5xl font-black tracking-normal">有故事想分享？</h2>
-                    <p className="text-xl lg:text-2xl font-medium max-w-3xl opacity-95 leading-relaxed">
-                        你的经验可能会让别人免受一场租房噩梦。加入我们的社区，帮助每个人创造一个更安全的租房市场。
-                    </p>
-                    <div className="flex flex-col sm:flex-row gap-6 mt-6">
-                        <button className="px-10 py-4 rounded-full bg-white text-primary text-lg font-black shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300">
-                            撰写评价
-                        </button>
-                        <button className="px-10 py-4 rounded-full bg-transparent border-2 border-white/80 text-white text-lg font-black hover:bg-white/10 transition-all duration-300">
-                            加入社区
-                        </button>
+
+            <div className="px-6">
+                <h2 className="text-xl font-bold text-text-main dark:text-gray-100 mb-6 tracking-tight flex items-center gap-2">
+                    最新评价
+                    <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
+                </h2>
+                <div className="flex flex-col gap-5">
+                    <div className="p-5 bg-surface-light dark:bg-surface-dark rounded-2xl shadow-card hover:shadow-md transition-shadow duration-300">
+                        <div className="flex gap-4">
+                            <div className="flex-shrink-0 relative">
+                                <img alt="Profile picture of a smiling woman" className="w-12 h-12 rounded-full object-cover ring-2 ring-offset-2 ring-emerald-100 dark:ring-emerald-900 ring-offset-surface-light dark:ring-offset-surface-dark" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDk3In2cF6gSAIk-JJ1HCm-k5SrDYH4uZGtAb0WOPyieHEMcYSrpr1CXJmod2P29SybVs-Va1F85zBHbCFeBt3kjlrMmJJCzwwM4IMafJ-ZfKuYMtTp0j78U67ZO5t1WQfHuB6hsSAAGeAc64xELohV02BN0EhWU1DzaPIsu44W7wqGACNf1WhYaZBT5qobukutSsxRwUHx3_r0mNoHPA32z3MQmSup622a53jCODo7P_V7Gqqdhj2JvzwuFAzhWvY8DUZjl3WIAA" />
+                                <span className="absolute -bottom-1 -right-1 bg-emerald-500 text-white p-0.5 rounded-full border-2 border-white dark:border-surface-dark">
+                                    <span className="material-symbols-outlined text-[10px] block">verified</span>
+                                </span>
+                            </div>
+                            <div className="flex-1 min-w-0">
+                                <div className="flex justify-between items-start mb-1.5">
+                                    <div>
+                                        <h4 className="font-bold text-text-main dark:text-gray-100 text-[15px]">陈静</h4>
+                                        <p className="text-xs text-text-muted mt-0.5">评价了 <span className="font-semibold text-primary">香樟花园</span></p>
+                                    </div>
+                                    <span className="text-xs text-text-muted bg-gray-50 dark:bg-white/5 px-2 py-1 rounded-lg">2小时前</span>
+                                </div>
+                                <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed mb-4">
+                                    住这里最大的感受就是安全感满满。物业非常负责，进出都需要门禁卡，晚上保安巡逻也很勤快。绿化环境特别好，适合散步。
+                                </p>
+                                <div className="flex items-center gap-3">
+                                    <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-600 dark:bg-emerald-900/20 dark:text-emerald-300 border border-emerald-100 dark:border-emerald-800/30">
+                                        <span className="material-symbols-outlined text-[14px]">shield</span> 安全系数高
+                                    </span>
+                                    <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-lime-50 text-lime-600 dark:bg-lime-900/20 dark:text-lime-300 border border-lime-100 dark:border-lime-800/30">
+                                        <span className="material-symbols-outlined text-[14px]">park</span> 环境优美
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </main>
+        </>
     );
-}
+};
+
+export default HomePage;
