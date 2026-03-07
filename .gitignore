@@ -119,7 +119,7 @@ dist
 # Project specific
 backend/dist/
 backend/node_modules/
-frontend/dist/
-frontend/node_modules/
+frontend_uniapp/dist/
+frontend_uniapp/node_modules/
 .agents/
 .gemini/

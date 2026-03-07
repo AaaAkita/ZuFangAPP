@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>小区详情深度解析</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#FF8C42", 
+                        "primary-soft": "#FFF0E6",
+                        "background-light": "#FAFAFA",
+                        "background-dark": "#1A1A1A",
+                        "surface-light": "#ffffff",
+                        "surface-dark": "#2d241d",
+                        "text-primary-light": "#333333",
+                        "text-primary-dark": "#f3ece7",
+                        "text-secondary-light": "#888888",
+                        "text-secondary-dark": "#d6bba6",
+                        "accent-yellow": "#FFD166",
+                        "accent-green": "#06D6A0",
+                        "accent-blue": "#118AB2",
+                        "bubble-bg": "#F3F4F6",
+                    },
+                    fontFamily: {
+                        "display": ["Noto Sans SC", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "2xl": "2rem",
+                        "3xl": "2.5rem",
+                        "full": "9999px"
+                    },
+                    boxShadow: {
+                        'soft': '0 4px 20px -2px rgba(0, 0, 0, 0.05)',
+                        'floating': '0 8px 30px rgba(255, 140, 66, 0.4)',
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        body {
+            min-height: max(884px, 100dvh);
+            -webkit-tap-highlight-color: transparent;
+        }
+        .bubble-triangle {
+            position: absolute;
+            top: 0;
+            left: -8px;
+            width: 0;
+            height: 0;
+            border-top: 0px solid transparent;
+            border-right: 12px solid #F3F4F6;border-bottom: 12px solid transparent;
+        }
+        .dark .bubble-triangle {
+            border-right-color: #2d241d;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display antialiased text-text-primary-light dark:text-text-primary-dark min-h-screen flex flex-col relative">
+<div class="relative w-full h-[340px] rounded-b-[2.5rem] overflow-hidden shadow-soft z-10 bg-gray-200">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 hover:scale-105" data-alt="Modern sunny apartment complex exterior with greenery" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAp_v7nyrkpQ0xdB127lc3BhGXDZiu76kESZr1QasI_8FNlikpNXzBSMpR_Q8cKzjEVRrzEXn99rkVKgBLqgCMZF8sJ0Qa2pCEzFBrvELXeZZVdDovCF3UF3H0JETavUFNEGc2ywkLtBZXglLSC2nlLLC53QfB7_kQvSnZ0uhfQXoLuidnr2kNxZKLugKMD6JAMaKHTjFqT4-IOA4q2ZmeURAo-NplsG0JisCLIGkkzslIPiTs3goTxu1IOpWt6nXqJWHSJUZ35WQ");'></div>
+<div class="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/70"></div>
+<div class="absolute top-0 left-0 right-0 p-4 pt-12 flex items-center justify-between z-20">
+<button class="bg-white/20 backdrop-blur-md hover:bg-white/30 text-white rounded-full p-2.5 transition-colors">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<div class="flex gap-3">
+<button class="bg-white/20 backdrop-blur-md hover:bg-white/30 text-white rounded-full p-2.5 transition-colors">
+<span class="material-symbols-outlined">share</span>
+</button>
+<button class="bg-white/20 backdrop-blur-md hover:bg-white/30 text-white rounded-full p-2.5 transition-colors">
+<span class="material-symbols-outlined">favorite_border</span>
+</button>
+</div>
+</div>
+<div class="absolute bottom-0 left-0 right-0 px-6 pb-8 text-white">
+<div class="flex items-end justify-between">
+<div>
+<h1 class="text-3xl font-bold tracking-tight mb-2 text-shadow-sm">阳光花园小区</h1>
+<div class="flex items-center gap-1.5 text-white/95 text-sm font-medium">
+<span class="material-symbols-outlined text-[18px]">location_on</span>
+<span>朝阳区 · 建国路88号</span>
+</div>
+</div>
+<div class="bg-white/90 backdrop-blur-sm text-primary font-bold px-3 py-1.5 rounded-xl flex items-center gap-1 shadow-lg transform translate-y-[-4px]">
+<span class="material-symbols-outlined text-[18px] fill-1 text-accent-yellow">star</span>
+<span class="text-lg">4.8</span>
+</div>
+</div>
+</div>
+</div>
+<div class="flex-1 px-5 pb-32 overflow-y-auto no-scrollbar">
+<div class="flex gap-2.5 mt-6 overflow-x-auto no-scrollbar pb-2 mask-linear-fade">
+<span class="bg-primary-soft dark:bg-primary/20 text-primary dark:text-primary-light px-4 py-1.5 rounded-full text-xs font-bold whitespace-nowrap shadow-sm border border-primary/10">允许宠物</span>
+<span class="bg-primary-soft dark:bg-primary/20 text-primary dark:text-primary-light px-4 py-1.5 rounded-full text-xs font-bold whitespace-nowrap shadow-sm border border-primary/10">近地铁</span>
+<span class="bg-primary-soft dark:bg-primary/20 text-primary dark:text-primary-light px-4 py-1.5 rounded-full text-xs font-bold whitespace-nowrap shadow-sm border border-primary/10">封闭管理</span>
+<span class="bg-primary-soft dark:bg-primary/20 text-primary dark:text-primary-light px-4 py-1.5 rounded-full text-xs font-bold whitespace-nowrap shadow-sm border border-primary/10">游泳池</span>
+</div>
+<div class="mt-8">
+<h2 class="text-lg font-bold mb-5 px-1 text-text-primary-light dark:text-white flex items-center gap-2">
+<span class="w-1.5 h-6 rounded-full bg-primary inline-block"></span>
+            核心指标
+        </h2>
+<div class="bg-surface-light dark:bg-surface-dark p-6 rounded-3xl shadow-soft border border-gray-100 dark:border-white/5 flex justify-between items-center gap-4">
+<div class="flex flex-col items-center gap-3 flex-1">
+<div class="relative w-[72px] h-[72px] flex items-center justify-center">
+<svg class="transform -rotate-90 w-[72px] h-[72px]">
+<circle class="text-gray-100 dark:text-gray-700" cx="36" cy="36" fill="transparent" r="30" stroke="currentColor" stroke-linecap="round" stroke-width="8"></circle>
+<circle class="text-accent-green" cx="36" cy="36" fill="transparent" r="30" stroke="currentColor" stroke-dasharray="188.5" stroke-dashoffset="18.8" stroke-linecap="round" stroke-width="8"></circle>
+</svg>
+<div class="absolute flex flex-col items-center leading-none">
+<span class="text-lg font-bold text-text-primary-light dark:text-white">9.0</span>
+</div>
+</div>
+<span class="text-xs font-semibold text-text-secondary-light dark:text-text-secondary-dark">安全性</span>
+</div>
+<div class="w-[1px] h-12 bg-gray-100 dark:bg-gray-700"></div>
+<div class="flex flex-col items-center gap-3 flex-1">
+<div class="relative w-[72px] h-[72px] flex items-center justify-center">
+<svg class="transform -rotate-90 w-[72px] h-[72px]">
+<circle class="text-gray-100 dark:text-gray-700" cx="36" cy="36" fill="transparent" r="30" stroke="currentColor" stroke-linecap="round" stroke-width="8"></circle>
+<circle class="text-accent-blue" cx="36" cy="36" fill="transparent" r="30" stroke="currentColor" stroke-dasharray="188.5" stroke-dashoffset="37.7" stroke-linecap="round" stroke-width="8"></circle>
+</svg>
+<div class="absolute flex flex-col items-center leading-none">
+<span class="text-lg font-bold text-text-primary-light dark:text-white">8.0</span>
+</div>
+</div>
+<span class="text-xs font-semibold text-text-secondary-light dark:text-text-secondary-dark">安静度</span>
+</div>
+<div class="w-[1px] h-12 bg-gray-100 dark:bg-gray-700"></div>
+<div class="flex flex-col items-center gap-3 flex-1">
+<div class="relative w-[72px] h-[72px] flex items-center justify-center">
+<svg class="transform -rotate-90 w-[72px] h-[72px]">
+<circle class="text-gray-100 dark:text-gray-700" cx="36" cy="36" fill="transparent" r="30" stroke="currentColor" stroke-linecap="round" stroke-width="8"></circle>
+<circle class="text-primary" cx="36" cy="36" fill="transparent" r="30" stroke="currentColor" stroke-dasharray="188.5" stroke-dashoffset="56.5" stroke-linecap="round" stroke-width="8"></circle>
+</svg>
+<div class="absolute flex flex-col items-center leading-none">
+<span class="text-lg font-bold text-text-primary-light dark:text-white">7.0</span>
+</div>
+</div>
+<span class="text-xs font-semibold text-text-secondary-light dark:text-text-secondary-dark">性价比</span>
+</div>
+</div>
+</div>
+<div class="mt-8">
+<h2 class="text-lg font-bold mb-3 px-1 text-text-primary-light dark:text-white flex items-center gap-2">
+<span class="w-1.5 h-6 rounded-full bg-primary inline-block"></span>
+            小区简介
+        </h2>
+<p class="text-text-secondary-light dark:text-text-secondary-dark text-[15px] leading-relaxed px-1 text-justify">
+            阳光花园坐落于繁华的朝阳区中心地带，为住户提供闹中取静的居住体验。小区绿化率高达40%，拥有现代化的园林设计。近期翻新的单元配备了全新的实木地板和智能家居系统，是年轻白领和家庭的理想居所。
+        </p>
+</div>
+<div class="mt-9">
+<div class="flex justify-between items-center mb-5 px-1">
+<h2 class="text-lg font-bold text-text-primary-light dark:text-white flex items-center gap-2">
+<span class="w-1.5 h-6 rounded-full bg-primary inline-block"></span>
+                住户评价
+                <span class="text-xs font-normal text-text-secondary-light ml-1">(128)</span>
+</h2>
+<a class="text-primary text-sm font-bold hover:text-primary/80 flex items-center" href="#">
+                查看全部 <span class="material-symbols-outlined text-sm ml-0.5">arrow_forward_ios</span>
+</a>
+</div>
+<div class="space-y-6">
+<div class="flex gap-4 group">
+<div class="shrink-0 relative">
+<img alt="Profile of Sarah" class="w-12 h-12 rounded-full object-cover border-2 border-white dark:border-background-dark shadow-md" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCvFQuaACVah8dC-gKIkD3uq5pFv1Oe7IyZ3BYx8lpi7UgDTUOKybHY-RHvOHW8hskEGa_GzLI1CCMgd2Mmh9oUzbXCEufVscbe6WS_QXJ9tDscBM0Fn8kyZwZg_7E7Zm1vJJVBw2beJBLaLqB5QibpFoqcp4BZAj3FnPcNm5LP38MiHb3QQ9QgtBJuS7ACncmwZwYsL7PJmyeEbH0ZZBmnMHFfVsdNgJ430G90b1azWAv6X9DZXR7fWDg45jeEeuWPYttzr7b90w"/>
+<div class="absolute -bottom-1 -right-1 bg-accent-yellow rounded-full p-0.5 border-2 border-white dark:border-background-dark">
+<span class="material-symbols-outlined text-[10px] text-white block font-bold">star</span>
+</div>
+</div>
+<div class="flex-1 relative">
+<div class="bg-bubble-bg dark:bg-surface-dark p-4 rounded-2xl rounded-tl-none shadow-sm relative transition-all duration-300 group-hover:shadow-md">
+<div class="absolute top-0 left-[-8px] w-0 h-0 border-t-[0px] border-r-[12px] border-b-[12px] border-transparent border-r-bubble-bg dark:border-r-surface-dark"></div>
+<div class="flex justify-between items-center mb-2">
+<span class="font-bold text-sm text-text-primary-light dark:text-white">张雨萱</span>
+<span class="text-[10px] text-text-secondary-light bg-white dark:bg-white/5 px-2 py-0.5 rounded-full">2天前</span>
+</div>
+<p class="text-sm text-text-primary-light dark:text-text-primary-dark leading-relaxed">
+                            超级喜欢这里的环境！物业管理非常负责，每天都能看到清洁人员在工作。唯一的缺点是周末访客停车位有点紧张。
+                        </p>
+<div class="flex gap-1 mt-2">
+<span class="text-[10px] text-accent-green bg-accent-green/10 px-1.5 py-0.5 rounded">环境好</span>
+<span class="text-[10px] text-accent-blue bg-accent-blue/10 px-1.5 py-0.5 rounded">物业负责</span>
+</div>
+</div>
+</div>
+</div>
+<div class="flex gap-4 group">
+<div class="shrink-0 relative">
+<div class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center border-2 border-white dark:border-background-dark shadow-md">
+<span class="material-symbols-outlined text-blue-500">face</span>
+</div>
+</div>
+<div class="flex-1 relative">
+<div class="bg-bubble-bg dark:bg-surface-dark p-4 rounded-2xl rounded-tl-none shadow-sm relative transition-all duration-300 group-hover:shadow-md">
+<div class="absolute top-0 left-[-8px] w-0 h-0 border-t-[0px] border-r-[12px] border-b-[12px] border-transparent border-r-bubble-bg dark:border-r-surface-dark"></div>
+<div class="flex justify-between items-center mb-2">
+<span class="font-bold text-sm text-text-primary-light dark:text-white">李明</span>
+<span class="text-[10px] text-text-secondary-light bg-white dark:bg-white/5 px-2 py-0.5 rounded-full">1周前</span>
+</div>
+<p class="text-sm text-text-primary-light dark:text-text-primary-dark leading-relaxed">
+                            地理位置绝佳，走路到地铁站只要5分钟。晚上很安静，非常适合需要早睡的上班族。
+                        </p>
+</div>
+</div>
+</div>
+<div class="flex gap-4 group">
+<div class="shrink-0 relative">
+<img alt="Profile of Michael" class="w-12 h-12 rounded-full object-cover border-2 border-white dark:border-background-dark shadow-md" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCwgr9AF_Q0BYUZ60cOMW8KaLm-8yUizn8aYvCaGNl3MtYqd8MJVK5OfXQUFkBrTpgZZ5521Mgs2sPTSD06WVxh6YmOE9XQTxJWCkdntdh7POf9o5-xrnT4dLIsSY2afuNYdfzs1mOeY-KDtvGmSWftHS1-UyCCPBkc2pcU9c52tL3kwF8XE0F3oIOiqvtkqfQJcpRkOe17OJTEOMUtbzY6PhQ50MMRfPghN85OdwzMBAPPo8Re9_3qTYaWdIInpt1NWIZJYhIbEQ"/>
+</div>
+<div class="flex-1 relative">
+<div class="bg-bubble-bg dark:bg-surface-dark p-4 rounded-2xl rounded-tl-none shadow-sm relative transition-all duration-300 group-hover:shadow-md">
+<div class="absolute top-0 left-[-8px] w-0 h-0 border-t-[0px] border-r-[12px] border-b-[12px] border-transparent border-r-bubble-bg dark:border-r-surface-dark"></div>
+<div class="flex justify-between items-center mb-2">
+<span class="font-bold text-sm text-text-primary-light dark:text-white">王强</span>
+<span class="text-[10px] text-text-secondary-light bg-white dark:bg-white/5 px-2 py-0.5 rounded-full">2周前</span>
+</div>
+<p class="text-sm text-text-primary-light dark:text-text-primary-dark leading-relaxed">
+                            新的健身房设备很棒！虽然租金比周边稍微贵一点，但是考虑到这些配套设施，我觉得还是值得的。
+                        </p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="fixed bottom-24 right-5 z-30">
+<button class="flex items-center gap-2 bg-gradient-to-r from-primary to-[#FF9F5E] hover:from-[#e67329] hover:to-[#ff8c42] text-white px-6 py-3.5 rounded-full shadow-floating transition-transform active:scale-95 group">
+<span class="material-symbols-outlined text-[20px] group-hover:rotate-12 transition-transform">edit_square</span>
+<span class="font-bold text-sm tracking-wide">发布评价</span>
+</button>
+</div>
+<div class="bg-surface-light dark:bg-surface-dark border-t border-gray-100 dark:border-white/5 px-6 pb-8 pt-4 sticky bottom-0 z-40 w-full shadow-[0_-5px_15px_rgba(0,0,0,0.02)]">
+<div class="flex justify-between items-end">
+<a class="flex flex-1 flex-col items-center gap-1.5 group" href="#">
+<span class="material-symbols-outlined text-text-secondary-light dark:text-text-secondary-dark group-hover:text-primary transition-colors text-[26px]">home</span>
+<p class="text-[10px] font-medium text-text-secondary-light dark:text-text-secondary-dark group-hover:text-primary">首页</p>
+</a>
+<a class="flex flex-1 flex-col items-center gap-1.5 group" href="#">
+<span class="material-symbols-outlined text-primary dark:text-primary text-[26px]">search</span>
+<p class="text-[10px] font-medium text-primary dark:text-primary">发现</p>
+</a>
+<a class="flex flex-1 flex-col items-center gap-1.5 group" href="#">
+<span class="material-symbols-outlined text-text-secondary-light dark:text-text-secondary-dark group-hover:text-primary transition-colors text-[26px]">bookmark</span>
+<p class="text-[10px] font-medium text-text-secondary-light dark:text-text-secondary-dark group-hover:text-primary">收藏</p>
+</a>
+<a class="flex flex-1 flex-col items-center gap-1.5 group" href="#">
+<span class="material-symbols-outlined text-text-secondary-light dark:text-text-secondary-dark group-hover:text-primary transition-colors text-[26px]">person</span>
+<p class="text-[10px] font-medium text-text-secondary-light dark:text-text-secondary-dark group-hover:text-primary">我的</p>
+</a>
+</div>
+</div>
+
+</body></html>

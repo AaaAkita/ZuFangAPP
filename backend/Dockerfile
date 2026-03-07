@@ -1,13 +1,21 @@
 FROM node:20-slim AS builder
 
 WORKDIR /usr/src/app
-# Set mirror for faster download
-RUN npm config set registry https://registry.npmmirror.com
+
+# 安装 curl 用于镜像源测试
+RUN apt-get update -y && apt-get install -y curl && rm -rf /var/lib/apt/lists/*
+
+# 复制并执行智能镜像源配置脚本
+COPY docker-entrypoint.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+
+# 运行镜像源配置
+RUN /usr/local/bin/docker-entrypoint.sh true || true
+
+# 安装系统依赖
+RUN apt-get update -y && apt-get install -y openssl && rm -rf /var/lib/apt/lists/*
 
 COPY package*.json ./
-# Make sure Prisma engine uses OpenSSL 3
-RUN sed -i 's/deb.debian.org/mirrors.aliyun.com/g' /etc/apt/sources.list.d/debian.sources \
-    && apt-get update -y && apt-get install -y openssl
 
 # Install dependencies including Prisma
 RUN npm ci
@@ -27,9 +35,16 @@ FROM node:20-slim AS production
 
 WORKDIR /usr/src/app
 
-RUN npm config set registry https://registry.npmmirror.com
-RUN sed -i 's/deb.debian.org/mirrors.aliyun.com/g' /etc/apt/sources.list.d/debian.sources \
-    && apt-get update -y && apt-get install -y openssl
+# 安装 curl 用于镜像源测试
+RUN apt-get update -y && apt-get install -y curl && rm -rf /var/lib/apt/lists/*
+
+# 复制并执行智能镜像源配置脚本
+COPY docker-entrypoint.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+RUN /usr/local/bin/docker-entrypoint.sh true || true
+
+# 安装系统依赖
+RUN apt-get update -y && apt-get install -y openssl && rm -rf /var/lib/apt/lists/*
 
 # Set this after dependencies install so devDependencies aren't skipped
 # but usually it's best practice to run production installs only
@@ -42,4 +57,5 @@ COPY --from=builder /usr/src/app/prisma ./prisma
 
 EXPOSE 3000
 
+ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
 CMD ["npm", "run", "start:prod"]

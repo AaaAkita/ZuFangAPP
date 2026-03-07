@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>个人中心管理</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ee7c2b",
+                        "background-light": "#fffaf5", // Adjusted to very light peach/cream base
+                        "background-dark": "#221810",
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans", "system-ui", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-gradient-to-b from-[#fff0e6] to-[#fffaf5] dark:from-background-dark dark:to-background-dark text-slate-900 dark:text-slate-100 font-display min-h-screen flex flex-col">
+<div class="flex items-center justify-between p-6 pb-2">
+<h2 class="text-xl font-bold leading-tight tracking-[-0.015em] flex-1 text-center pl-12 text-slate-800 dark:text-white">个人中心</h2>
+<div class="flex w-12 items-center justify-end">
+<button class="flex items-center justify-center rounded-full h-10 w-10 bg-white/80 dark:bg-slate-800 text-slate-900 dark:text-slate-100 shadow-sm hover:bg-orange-50 dark:hover:bg-slate-700 transition-colors">
+<span class="material-symbols-outlined text-xl">edit</span>
+</button>
+</div>
+</div>
+<div class="flex flex-col items-center p-6 gap-6">
+<div class="relative group">
+<div class="absolute -inset-4 bg-gradient-to-br from-primary/30 to-orange-200/40 rounded-full blur-xl opacity-60 group-hover:opacity-80 transition duration-700"></div>
+<div class="relative h-32 w-32 rounded-full ring-4 ring-white dark:ring-background-dark bg-cover bg-center shadow-lg shadow-orange-100 dark:shadow-none" data-alt="用户头像" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuD923g4BO4e90wR5iqWkTqhYtvCujz8IVhDHDnkNxjAjKet7YR_R1Mnhg_LDdN-OusEysohzB-RFXSCqjKoAF1V4xEe6c9t3kvBiKVpOgogd5UMmmf7U1KIkDBe2o8m3LL8IMxousnWZ4d8yH1JwFf-zEs4mUmghDmdPzZ7L4FX7hgWS4EfO5KIAd63KnnhSPDpb4J83ZLVkht56IFFnz8u4kadgBXuLADQdSmaZkpxlV0iXobSXBFr9hPhVUduoTtKndkjeNGCow');">
+</div>
+<div aria-label="在线状态" class="absolute bottom-1 right-1 h-7 w-7 bg-green-500 rounded-full border-[3px] border-white dark:border-background-dark flex items-center justify-center">
+</div>
+</div>
+<div class="flex flex-col items-center justify-center text-center space-y-1">
+<h1 class="text-2xl font-bold text-slate-900 dark:text-white">张晓琳</h1>
+<p class="text-slate-500 dark:text-slate-400 font-medium text-sm">2019年加入租客社区</p>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-5 px-6 mb-8">
+<div class="flex flex-col items-center justify-center p-6 rounded-2xl bg-white/60 dark:bg-slate-800 border border-white/50 dark:border-slate-700 shadow-sm backdrop-blur-sm transition-transform active:scale-95">
+<p class="text-3xl font-bold text-slate-900 dark:text-white mb-1">24</p>
+<div class="flex items-center gap-1.5 text-slate-500 dark:text-slate-400">
+<span class="material-symbols-outlined text-[18px]">rate_review</span>
+<span class="text-sm font-medium">发布的评价</span>
+</div>
+</div>
+<div class="flex flex-col items-center justify-center p-6 rounded-2xl bg-white/60 dark:bg-slate-800 border border-white/50 dark:border-slate-700 shadow-sm backdrop-blur-sm transition-transform active:scale-95">
+<p class="text-3xl font-bold text-slate-900 dark:text-white mb-1">158</p>
+<div class="flex items-center gap-1.5 text-slate-500 dark:text-slate-400">
+<span class="material-symbols-outlined text-[18px]">favorite</span>
+<span class="text-sm font-medium">获赞</span>
+</div>
+</div>
+</div>
+<div class="flex-1 flex flex-col gap-4 px-6 pb-28 overflow-y-auto no-scrollbar">
+<button class="flex items-center gap-5 p-5 w-full bg-white dark:bg-slate-800 rounded-2xl border border-slate-100/50 dark:border-slate-700 shadow-sm hover:shadow-md active:bg-orange-50/50 dark:active:bg-slate-700 transition-all group">
+<div class="flex items-center justify-center w-12 h-12 rounded-full bg-orange-100/50 dark:bg-orange-900/20 text-primary group-hover:scale-105 transition-transform">
+<span class="material-symbols-outlined">reviews</span>
+</div>
+<div class="flex flex-1 items-center justify-between">
+<span class="text-[17px] font-semibold text-slate-800 dark:text-white tracking-wide">我的评价</span>
+<span class="material-symbols-outlined text-slate-400 dark:text-slate-500 text-xl">chevron_right</span>
+</div>
+</button>
+<button class="flex items-center gap-5 p-5 w-full bg-white dark:bg-slate-800 rounded-2xl border border-slate-100/50 dark:border-slate-700 shadow-sm hover:shadow-md active:bg-blue-50/50 dark:active:bg-slate-700 transition-all group">
+<div class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-50 dark:bg-blue-900/20 text-blue-500 group-hover:scale-105 transition-transform">
+<span class="material-symbols-outlined">bookmark</span>
+</div>
+<div class="flex flex-1 items-center justify-between">
+<span class="text-[17px] font-semibold text-slate-800 dark:text-white tracking-wide">收藏房源</span>
+<span class="material-symbols-outlined text-slate-400 dark:text-slate-500 text-xl">chevron_right</span>
+</div>
+</button>
+<button class="flex items-center gap-5 p-5 w-full bg-white dark:bg-slate-800 rounded-2xl border border-slate-100/50 dark:border-slate-700 shadow-sm hover:shadow-md active:bg-slate-50 dark:active:bg-slate-700 transition-all group">
+<div class="flex items-center justify-center w-12 h-12 rounded-full bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 group-hover:scale-105 transition-transform">
+<span class="material-symbols-outlined">settings</span>
+</div>
+<div class="flex flex-1 items-center justify-between">
+<span class="text-[17px] font-semibold text-slate-800 dark:text-white tracking-wide">设置</span>
+<span class="material-symbols-outlined text-slate-400 dark:text-slate-500 text-xl">chevron_right</span>
+</div>
+</button>
+<button class="flex items-center gap-5 p-5 w-full bg-white dark:bg-slate-800 rounded-2xl border border-slate-100/50 dark:border-slate-700 shadow-sm hover:shadow-md active:bg-green-50/50 dark:active:bg-slate-700 transition-all group">
+<div class="flex items-center justify-center w-12 h-12 rounded-full bg-green-50 dark:bg-green-900/20 text-green-600 dark:text-green-400 group-hover:scale-105 transition-transform">
+<span class="material-symbols-outlined">help</span>
+</div>
+<div class="flex flex-1 items-center justify-between">
+<span class="text-[17px] font-semibold text-slate-800 dark:text-white tracking-wide">帮助与客服</span>
+<span class="material-symbols-outlined text-slate-400 dark:text-slate-500 text-xl">chevron_right</span>
+</div>
+</button>
+</div>
+<div class="fixed bottom-0 left-0 right-0 bg-white/90 dark:bg-background-dark/90 backdrop-blur-md border-t border-slate-100 dark:border-slate-800 px-6 py-4 z-50">
+<div class="flex justify-between items-center max-w-md mx-auto">
+<a class="flex flex-col items-center gap-1 text-slate-400 dark:text-slate-500 hover:text-primary dark:hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-2xl">home</span>
+<span class="text-[10px] font-medium tracking-wide">首页</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400 dark:text-slate-500 hover:text-primary dark:hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-2xl">search</span>
+<span class="text-[10px] font-medium tracking-wide">搜索</span>
+</a>
+<a class="relative -top-6 flex flex-col items-center justify-center h-14 w-14 rounded-full bg-primary text-white shadow-lg shadow-primary/30 hover:bg-orange-600 transition-colors" href="#">
+<span class="material-symbols-outlined text-3xl">add</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400 dark:text-slate-500 hover:text-primary dark:hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-2xl">chat_bubble</span>
+<span class="text-[10px] font-medium tracking-wide">消息</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-primary dark:text-primary font-medium" href="#">
+<span class="material-symbols-outlined text-2xl fill-current">account_circle</span>
+<span class="text-[10px] tracking-wide">我的</span>
+</a>
+</div>
+</div>
+
+</body></html>

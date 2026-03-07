@@ -19,6 +19,14 @@ export class RedisService implements OnModuleInit, OnModuleDestroy {
             host,
             port,
             db,
+            maxRetriesPerRequest: 1,
+            retryStrategy: (times: number) => {
+                if (times > 3) {
+                    this.logger.warn('Redis connection failed permanently. Application may not function correctly.');
+                    return null; // Stop retrying
+                }
+                return Math.min(times * 50, 2000);
+            }
         };
         if (password) {
             redisOptions.password = password;

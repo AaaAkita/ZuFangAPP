@@ -17,18 +17,6 @@ services:
     networks:
       - zufang_net
 
-  frontend:
-    build:
-      context: ./frontend
-    container_name: zufang_frontend
-    restart: unless-stopped
-    ports:
-      - "80:80"
-    depends_on:
-      - backend
-    networks:
-      - zufang_net
-
   postgres:
     image: postgres:15-alpine
     container_name: zufang_postgres
