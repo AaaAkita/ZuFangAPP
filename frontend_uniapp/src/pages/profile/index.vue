@@ -12,12 +12,12 @@
     <view class="user-section">
       <view class="avatar-wrapper">
         <view class="avatar-glow"></view>
-        <image class="avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD923g4BO4e90wR5iqWkTqhYtvCujz8IVhDHDnkNxjAjKet7YR_R1Mnhg_LDdN-OusEysohzB-RFXSCqjKoAF1V4xEe6c9t3kvBiKVpOgogd5UMmmf7U1KIkDBe2o8m3LL8IMxousnWZ4d8yH1JwFf-zEs4mUmghDmdPzZ7L4FX7hgWS4EfO5KIAd63KnnhSPDpb4J83ZLVkht56IFFnz8u4kadgBXuLADQdSmaZkpxlV0iXobSXBFr9hPhVUduoTtKndkjeNGCow" mode="aspectFill" />
+        <image class="avatar" :src="userAvatar" mode="aspectFill" />
         <view class="online-status"></view>
       </view>
       <view class="user-info">
-        <text class="user-name">张晓琳</text>
-        <text class="user-join">2019年加入租客社区</text>
+        <text class="user-name">{{ userDisplayName }}</text>
+        <text class="user-join">{{ userJoinDate }}</text>
       </view>
     </view>
 
@@ -119,6 +119,43 @@
 </template>
 
 <script setup lang="ts">
+import { onMounted, computed } from 'vue'
+import { useAuthStore } from '@/utils/auth'
+
+const authStore = useAuthStore()
+
+// 显示用户信息
+const userDisplayName = computed(() => {
+  return authStore.userNickname || '租客用户'
+})
+
+const userAvatar = computed(() => {
+  // 默认头像占位符
+  const defaultAvatar = 'https://lh3.googleusercontent.com/ida-public/AB6AXuD923g4BO4e90wR5iqWkTqhYtvCujz8IVhDHDnkNxjAjKet7YR_R1Mnhg_LDdN-OusEysohzB-RFXSCqjKoAF1V4xEe6c9t3kvBiKVpOgogd5UMmmf7U1KIkDBe2o8m3LL8IMxousnWZ4d8yH1JwFf-zEs4mUmghDmdPzZ7L4FX7hgWS4EfO5KIAd63KnnhSPDpb4J83ZLVkht56IFFnz8u4kadgBXuLADQdSmaZkpxlV0iXobSXBFr9hPhVUduoTtKndkjeNGCow'
+  return authStore.userInfo?.avatar || defaultAvatar
+})
+
+const userJoinDate = computed(() => {
+  // 如果有注册日期，显示格式化的日期
+  if (authStore.userInfo?.createdAt) {
+    return `2024年加入租客社区`
+  }
+  return '欢迎加入租客社区'
+})
+
+onMounted(() => {
+  // 如果未登录，跳转到登录页
+  if (!authStore.isLoggedIn) {
+    uni.showToast({
+      title: '请先登录',
+      icon: 'none'
+    })
+    setTimeout(() => {
+      uni.navigateTo({ url: '/pages/login/index' })
+    }, 1000)
+  }
+})
+
 // 跳转到新页面
 const navigateTo = (url: string) => {
   uni.navigateTo({ url })

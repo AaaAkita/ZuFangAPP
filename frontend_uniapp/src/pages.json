@@ -66,5 +66,29 @@
 		"navigationBarTitleText": "租房避雷",
 		"navigationBarBackgroundColor": "#faf9f8",
 		"backgroundColor": "#faf9f8"
+	},
+	"tabBar": {
+		"color": "#8C817D",
+		"selectedColor": "#E07A5F",
+		"backgroundColor": "#ffffff",
+		"borderStyle": "black",
+		"list": [
+			{
+				"pagePath": "pages/index/index",
+				"text": "首页"
+			},
+			{
+				"pagePath": "pages/community/index",
+				"text": "社区"
+			},
+			{
+				"pagePath": "pages/message/index",
+				"text": "消息"
+			},
+			{
+				"pagePath": "pages/profile/index",
+				"text": "我的"
+			}
+		]
 	}
 }

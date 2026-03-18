@@ -8,6 +8,7 @@ import { UserModule } from './modules/user/user.module';
 import { CommunityModule } from './modules/community/community.module';
 import { CommentModule } from './modules/comment/comment.module';
 import { SearchModule } from './modules/search/search.module';
+import { AuthModule } from './modules/auth/auth.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { SearchModule } from './modules/search/search.module';
     CommunityModule,
     CommentModule,
     SearchModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

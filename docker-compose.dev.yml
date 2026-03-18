@@ -39,6 +39,7 @@ services:
     container_name: zufang_frontend_dev
     environment:
       - NODE_ENV=development
+      - SKIP_MIRROR_CHECK=true
     volumes:
       - ./frontend_uniapp/src:/app/src
       - ./frontend_uniapp/index.html:/app/index.html

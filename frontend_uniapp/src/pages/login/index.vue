@@ -19,8 +19,9 @@
           <input
             v-model="formData.account"
             class="input-field"
-            placeholder="手机号 / 邮箱"
-            type="text"
+            placeholder="手机号"
+            type="number"
+            maxlength="11"
             placeholder-class="input-placeholder"
           />
         </view>
@@ -34,6 +35,7 @@
             class="input-field"
             :password="!showPassword"
             placeholder="密码"
+            type="text"
             placeholder-class="input-placeholder"
           />
           <view class="toggle-password" @click="togglePassword">
@@ -47,9 +49,12 @@
           <text class="forgot-link" @click="handleForgotPassword">忘记密码？</text>
         </view>
 
-        <button class="login-btn" @click="handleLogin">
-          <text class="login-text">登录</text>
-          <text class="material-symbols-outlined arrow-icon">arrow_forward</text>
+        <button class="login-btn" @click="handleLogin" :disabled="isLoading">
+          <text v-if="isLoading" class="login-text">登录中...</text>
+          <template v-else>
+            <text class="login-text">登录</text>
+            <text class="material-symbols-outlined arrow-icon">arrow_forward</text>
+          </template>
         </button>
       </view>
 
@@ -61,17 +66,7 @@
       <view class="social-section">
         <view class="social-btn wechat" @click="handleWechatLogin">
           <view class="social-icon-wrapper">
-            <text class="material-symbols-outlined social-icon">chat</text>
-          </view>
-        </view>
-        <view class="social-btn apple" @click="handleAppleLogin">
-          <view class="social-icon-wrapper">
-            <text class="material-symbols-outlined social-icon">apple</text>
-          </view>
-        </view>
-        <view class="social-btn more" @click="handleMoreLogin">
-          <view class="social-icon-wrapper">
-            <text class="material-symbols-outlined social-icon">more_horiz</text>
+            <text class="material-symbols-outlined social-icon">wechat</text>
           </view>
         </view>
       </view>
@@ -85,9 +80,16 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, reactive } from 'vue'
+import { wechatLogin } from '@/utils/wechat'
+import { config } from '@/config'
+import { validatePhone, handleApiError, handleSuccess } from '@/utils/auth-helpers'
+import { useAuthStore } from '@/utils/auth'
 
-const formData = ref({
+const authStore = useAuthStore()
+const isLoading = ref(false)
+
+const formData = reactive({
   account: '',
   password: ''
 })
@@ -98,62 +100,106 @@ const togglePassword = () => {
   showPassword.value = !showPassword.value
 }
 
-const handleLogin = () => {
-  if (!formData.value.account) {
+const handleLogin = async () => {
+  // 防止重复提交
+  if (isLoading.value) {
+    return
+  }
+
+  // 验证手机号
+  if (!formData.account) {
     uni.showToast({
-      title: '请输入手机号或邮箱',
+      title: '请输入手机号',
       icon: 'none'
     })
     return
   }
-  if (!formData.value.password) {
+
+  if (!validatePhone(formData.account)) {
+    uni.showToast({
+      title: '请输入有效的11位手机号',
+      icon: 'none'
+    })
+    return
+  }
+
+  // 验证密码
+  if (!formData.password) {
     uni.showToast({
       title: '请输入密码',
       icon: 'none'
     })
     return
   }
-  
-  uni.showLoading({ title: '登录中...' })
-  
-  setTimeout(() => {
-    uni.hideLoading()
-    uni.showToast({
-      title: '登录成功',
-      icon: 'success'
+
+  try {
+    isLoading.value = true
+    uni.showLoading({ title: '登录中...' })
+
+    const response = await fetch(`${config.apiBaseUrl}/auth/login`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        phone: formData.account,
+        password: formData.password
+      })
     })
-    setTimeout(() => {
-      uni.switchTab({ url: '/pages/index/index' })
-    }, 1500)
-  }, 1000)
+
+    uni.hideLoading()
+    isLoading.value = false
+
+    const data = await response.json()
+
+    if (data.success && data.data?.token) {
+      // 保存 Token
+      authStore.setToken(data.data.token)
+
+      // 获取用户信息并保存
+      try {
+        const userResponse = await fetch(`${config.apiBaseUrl}/users/profile`, {
+          headers: authStore.getRequestHeaders()
+        })
+
+        const userData = await userResponse.json()
+        if (userData.success && userData.data) {
+          authStore.setUserInfo({
+            id: userData.data.id,
+            phone: userData.data.phone,
+            nickname: userData.data.nickname || ''
+          })
+        }
+      } catch (error) {
+        console.error('获取用户信息失败:', error)
+        // 即使获取用户信息失败，也继续登录流程
+        authStore.setUserInfo({
+          id: 0,
+          phone: formData.account,
+          nickname: ''
+        })
+      }
+
+      handleSuccess('登录成功')
+    } else {
+      handleApiError(data.error?.message || data.message)
+    }
+  } catch (error) {
+    isLoading.value = false
+    uni.hideLoading()
+    handleApiError(error, '网络错误，请重试')
+  }
 }
 
 const handleForgotPassword = () => {
   uni.showToast({
-    title: '忘记密码功能开发中',
+    title: '找回密码功能开发中',
     icon: 'none'
   })
 }
 
-const handleWechatLogin = () => {
-  uni.showToast({
-    title: '微信登录功能开发中',
-    icon: 'none'
-  })
-}
-
-const handleAppleLogin = () => {
-  uni.showToast({
-    title: 'Apple登录功能开发中',
-    icon: 'none'
-  })
-}
-
-const handleMoreLogin = () => {
-  uni.showToast({
-    title: '更多登录方式开发中',
-    icon: 'none'
-  })
+const handleWechatLogin = async () => {
+  await wechatLogin()
 }
 
 const goToRegister = () => {
@@ -168,7 +214,6 @@ const goToRegister = () => {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0 48rpx;
 }
 
 .login-wrapper {
@@ -231,8 +276,8 @@ const goToRegister = () => {
 .form-section {
   display: flex;
   flex-direction: column;
-  gap: 40rpx;
-  margin-top: 64rpx;
+  gap: 32rpx;
+  margin-top: 48rpx;
 }
 
 .input-group {
@@ -303,18 +348,14 @@ const goToRegister = () => {
 .forgot-row {
   display: flex;
   justify-content: flex-end;
-  padding-right: 16rpx;
-  margin-top: -16rpx;
+  margin-top: -8rpx;
+  margin-bottom: 8rpx;
 }
 
 .forgot-link {
   font-size: 28rpx;
-  font-weight: 600;
+  font-weight: 500;
   color: #E07A5F;
-}
-
-.forgot-link:active {
-  color: #D0654B;
 }
 
 .login-btn {
@@ -325,7 +366,7 @@ const goToRegister = () => {
   height: 112rpx;
   background-color: #E07A5F;
   border-radius: 112rpx;
-  margin-top: 32rpx;
+  margin-top: 24rpx;
   box-shadow: 0 16rpx 48rpx -12rpx rgba(224, 122, 95, 0.3);
   transition: all 0.3s ease;
   border: none;
@@ -339,6 +380,11 @@ const goToRegister = () => {
   background-color: #D0654B;
   transform: scale(0.98);
   box-shadow: 0 20rpx 56rpx -12rpx rgba(224, 122, 95, 0.4);
+}
+
+.login-btn:disabled {
+  opacity: 0.6;
+  pointer-events: none;
 }
 
 .login-text {
@@ -358,30 +404,36 @@ const goToRegister = () => {
 }
 
 .divider-section {
-  position: relative;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  margin-top: 64rpx;
-  margin-bottom: 48rpx;
+  margin-top: 48rpx;
 }
 
 .divider-line {
-  position: absolute;
-  left: 0;
-  right: 0;
+  width: 100%;
   height: 2rpx;
-  background-color: rgba(244, 209, 198, 0.6);
+  background-color: rgba(140, 129, 125, 0.2);
+  margin-bottom: 16rpx;
+  position: relative;
+}
+
+.divider-line::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 48rpx;
+  height: 48rpx;
+  background-color: #FFFDF5;
+  border-radius: 50%;
 }
 
 .divider-text {
   font-size: 24rpx;
-  font-weight: 500;
-  color: #8C817D;
-  text-transform: uppercase;
-  letter-spacing: 2rpx;
-  background-color: #FFFDF5;
-  padding: 0 32rpx;
+  color: rgba(140, 129, 125, 0.6);
+  margin-bottom: 32rpx;
   position: relative;
   z-index: 1;
 }
@@ -389,40 +441,34 @@ const goToRegister = () => {
 .social-section {
   display: flex;
   justify-content: center;
-  gap: 64rpx;
-  padding-bottom: 32rpx;
+  gap: 32rpx;
+  margin-bottom: 32rpx;
 }
 
 .social-btn {
-  width: 96rpx;
-  height: 96rpx;
-  background-color: #ffffff;
-  border: 4rpx solid rgba(244, 209, 198, 0.5);
-  border-radius: 50%;
+  width: 112rpx;
+  height: 112rpx;
+  border-radius: 56rpx;
+  border: 2rpx solid rgba(140, 129, 125, 0.2);
   display: flex;
   align-items: center;
   justify-content: center;
+  background-color: #ffffff;
   transition: all 0.3s ease;
-  box-shadow: 0 4rpx 16rpx -4rpx rgba(0, 0, 0, 0.05);
 }
 
 .social-btn:active {
-  transform: translateY(-8rpx);
+  transform: scale(0.95);
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+.social-btn.wechat {
+  border-color: rgba(7, 193, 96, 0.3);
 }
 
 .social-btn.wechat:active {
   border-color: #07c160;
   background-color: rgba(7, 193, 96, 0.05);
-}
-
-.social-btn.apple:active {
-  border-color: #1d1d1f;
-  background-color: rgba(29, 29, 31, 0.05);
-}
-
-.social-btn.more:active {
-  border-color: #E07A5F;
-  background-color: rgba(224, 122, 95, 0.05);
 }
 
 .social-icon-wrapper {
@@ -433,20 +479,10 @@ const goToRegister = () => {
 
 .social-icon {
   font-size: 48rpx;
-  color: #8C817D;
-  transition: color 0.3s ease;
 }
 
-.social-btn.wechat:active .social-icon {
+.social-btn.wechat .social-icon {
   color: #07c160;
-}
-
-.social-btn.apple:active .social-icon {
-  color: #1d1d1f;
-}
-
-.social-btn.more:active .social-icon {
-  color: #E07A5F;
 }
 
 .register-section {
