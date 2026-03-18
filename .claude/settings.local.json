@@ -20,7 +20,8 @@
       "Bash(docker network:*)",
       "Bash(docker-compose:*)",
       "Bash(curl:*)",
-      "Bash(docker info:*)"
+      "Bash(docker info:*)",
+      "Bash(ls:*)"
     ]
   }
 }
