@@ -4,9 +4,9 @@
     <view class="header sticky-top">
       <view class="location-box">
         <view class="location-main">
-          <text class="material-symbols-outlined icon-location">location_on</text>
+          <Icon name="location" :size="40" color="var(--primary)" class="icon-location" />
           <text class="location-text">北京市</text>
-          <text class="material-symbols-outlined icon-expand">expand_more</text>
+          <Icon name="arrow-down" :size="28" color="var(--text-muted)" class="icon-expand" />
         </view>
         <text class="location-sub">发现身边的美好社区</text>
       </view>
@@ -17,11 +17,11 @@
     <view class="search-container">
       <view class="search-bar" @click="navigateTo('/pages/search/index')">
         <view class="search-icon-box">
-          <text class="material-symbols-outlined">search</text>
+          <Icon name="search" :size="32" color="var(--text-muted)" />
         </view>
         <text class="search-placeholder">搜索小区或避雷信息</text>
         <view class="filter-btn" @click.stop="goToSearchWithFilter">
-          <text class="material-symbols-outlined">tune</text>
+          <Icon name="filter" :size="32" color="var(--primary)" />
         </view>
       </view>
     </view>
@@ -31,7 +31,7 @@
       <view class="section-header">
         <text class="section-title">推荐小区</text>
         <navigator url="/pages/community/index" class="more-link">
-          查看全部 <text class="material-symbols-outlined icon-next">chevron_right</text>
+          查看全部 <Icon name="arrow-right" :size="32" color="var(--text-muted)" class="icon-next" />
         </navigator>
       </view>
       <scroll-view class="recommend-scroll" scroll-x="true" show-scrollbar="false">
@@ -41,13 +41,13 @@
             <image class="card-img" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCYGS65YhEGX-VAmU5CqyDsgWyG8gaaZiuRfx-ekQzPIVLfxpzNq1djHcEn_13Y2gPwXAcpSFMjTsHmT4MGbi4WfKWLjQf0DtKHr9tNX6Pf4SohBiRPhuLJx870V_Am05iUBZo26_kmAtdd5ciku3xJA-cjgsuQYaGmr1g7Cd1wS3x9IjwLmrOwNOspzkjYUkqs3DdlU3ieyGSg7ycg0_unOdNX39XFQl0aqJ8S4Q__lfTOvih-8eZCo0sKlg8STlsvJZoxpaVnPQ" mode="aspectFill" />
             <view class="card-overlay"></view>
             <view class="card-tag">
-              <text class="material-symbols-outlined star-icon">star</text>
+              <Icon name="star" :size="28" color="#facc15" class="star-icon" />
               <text class="rating">4.9</text>
             </view>
             <view class="card-info">
               <text class="card-title">阳光锦城</text>
               <view class="card-loc">
-                <text class="material-symbols-outlined loc-small">location_on</text>
+                <Icon name="location" :size="28" color="#fff" class="loc-small" />
                 <text>朝阳区 · 建国路</text>
               </view>
               <view class="badge-row">
@@ -61,13 +61,13 @@
             <image class="card-img" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCYELfyEv7EK1UlHySb9Jpg-m9ses9RZ9ULQIVVVrABL76qXIokTpeSaFhOU6R8YyfWcpq2b1qPA5-r7xwhoAWIQPcTxvDektfOL0fgWGINGjJcjXzogA6koV8qBFTAfIBSBdDuvr-RhWaSWTNM8fW3Ao1VCSXbazPJ_Y9hwus34kys0VkAt3HFANJD2w06gXovGDY95Wlop7c_xexIdDv3I3WTcJ83bY7CrWcPker_MrF5fqEjtYiOmmgIRfJT-NEIPBL0ddkb3g" mode="aspectFill" />
             <view class="card-overlay"></view>
             <view class="card-tag">
-              <text class="material-symbols-outlined star-icon">star</text>
+              <Icon name="star" :size="28" color="#facc15" class="star-icon" />
               <text class="rating">4.7</text>
             </view>
             <view class="card-info">
               <text class="card-title">云尚国际</text>
               <view class="card-loc">
-                <text class="material-symbols-outlined loc-small">location_on</text>
+                <Icon name="location" :size="28" color="#fff" class="loc-small" />
                 <text>海淀区 · 中关村</text>
               </view>
               <view class="badge-row">
@@ -81,13 +81,13 @@
             <image class="card-img" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCGwpkHsxHUfmBFlEWfrN4-8lomr1e0uzaBma8AYyYxGrB83_7sZydfW8zSq7mhy-HGuCMNh8p5YTjRfvZI-RgMqY6P3oQ3OaCqZ-dIMkJYV9zA2ckMKZtgevmnBGQcJm6jYGrvWY2C5DyhLSmL_VuJH5kIq5_NrBgWKONYG6kBXjtuX73Nt4hlEAJChFklISJ723mjtcbGYoz2PGz79XzLag9i3x4Rw0iXqCVvDuTiD6j7Sev7bWiYmUnIqzvMpzKhc4q9hRt9Ww" mode="aspectFill" />
             <view class="card-overlay"></view>
             <view class="card-tag">
-              <text class="material-symbols-outlined star-icon">star</text>
+              <Icon name="star" :size="28" color="#facc15" class="star-icon" />
               <text class="rating">4.2</text>
             </view>
             <view class="card-info">
               <text class="card-title">老弄堂公寓</text>
               <view class="card-loc">
-                <text class="material-symbols-outlined loc-small">location_on</text>
+                <Icon name="location" :size="28" color="#fff" class="loc-small" />
                 <text>西城区 · 鼓楼</text>
               </view>
               <view class="badge-row">
@@ -105,11 +105,11 @@
       <view class="banner-box">
         <view class="banner-content">
           <view class="promo-tag">
-            <text class="material-symbols-outlined">loyalty</text> 搬家特惠
+            <Icon name="tag" :size="20" color="var(--primary)" /> 搬家特惠
           </view>
           <text class="banner-title">省心搬家服务</text>
           <text class="banner-sub">专业团队，轻拿轻放，温馨送到家</text>
-          <button class="banner-btn">立即预约</button>
+          <Button type="primary" size="small" custom-class="banner-btn">立即预约</Button>
         </view>
         <image class="banner-bg" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBJ-0S8s3_G7aKFKFWwm8wLEob_K3PVbXuqi3HKxKgmypBMVDdMTfoO3NEabxKb9vLXrXt1SpvMYyKsioqJ0CfBOZzM_pkRPMP4Hg6AmkMuvGNj7MuNfNrKlUcX29WtN8KpVUnCANpwWyZoFALStXxBezN00PMzCbYekUdHQDfjrUssfEY7fNQfuFfgxLig3TDagkXxMBKurT_AickewsyiXZCZKRITHaFK7oRdFEAwoxohxhkFk5LUOFEfoNrBYHnUOomm0vzUSw" mode="aspectFit" />
       </view>
@@ -120,14 +120,14 @@
       <view class="section-header">
         <view class="title-with-icon">
           <text class="section-title">租房避雷信息</text>
-          <text class="material-symbols-outlined warning-icon">warning</text>
+          <Icon name="warning" :size="40" color="var(--primary)" class="warning-icon" />
         </view>
       </view>
       <view class="warning-list">
         <!-- 避雷信息 1 -->
         <view class="warning-item">
           <view class="warning-icon-bg orange">
-            <text class="material-symbols-outlined">volume_off</text>
+            <Icon name="warning" :size="40" color="#f97316" />
           </view>
           <view class="warning-body">
             <view class="warning-header">
@@ -138,7 +138,7 @@
             <text class="warning-desc">墙壁薄得像纸一样，邻居晚上说话都能听得一清二楚，严重影响睡眠质量。看房时一定要注意隔音问题！</text>
             <view class="tag-row">
               <view class="tag-warn">
-                <text class="material-symbols-outlined">campaign</text> 隔音极差
+                <Icon name="warning" :size="20" color="#e67326" /> 隔音极差
               </view>
             </view>
           </view>
@@ -146,7 +146,7 @@
         <!-- 避雷信息 2 -->
         <view class="warning-item">
           <view class="warning-icon-bg red">
-            <text class="material-symbols-outlined">gpp_bad</text>
+            <Icon name="error" :size="40" color="#ef4444" />
           </view>
           <view class="warning-body">
             <view class="warning-header">
@@ -157,10 +157,10 @@
             <text class="warning-desc">照片看着精装修，实地看房完全是另一个破旧的房子，还要求先交看房费。大家遇到这种直接拉黑！</text>
             <view class="tag-row">
               <view class="tag-warn">
-                <text class="material-symbols-outlined">photo_camera_back</text> 虚假房源
+                <Icon name="camera" :size="20" color="#e67326" /> 虚假房源
               </view>
               <view class="tag-warn">
-                <text class="material-symbols-outlined">report</text> 黑中介
+                <Icon name="warning" :size="20" color="#e67326" /> 黑中介
               </view>
             </view>
           </view>
@@ -182,7 +182,7 @@
           <view class="review-user">
             <image class="user-avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDk3In2cF6gSAIk-JJ1HCm-k5SrDYH4uZGtAb0WOPyieHEMcYSrpr1CXJmod2P29SybVs-Va1F85zBHbCFeBt3kjlrMmJJCzwwM4IMafJ-ZfKuYMtTp0j78U67ZO5t1WQfHuB6hsSAAGeAc64xELohV02BN0EhWU1DzaPIsu44W7wqGACNf1WhYaZBT5qobukutSsxRwUHx3_r0mNoHPA32z3MQmSup622a53jCODo7P_V7Gqqdhj2JvzwuFAzhWvY8DUZjl3WIAA" mode="aspectFill" />
             <view class="verified-badge">
-              <text class="material-symbols-outlined">verified</text>
+              <Icon name="check" :size="20" color="#fff" />
             </view>
           </view>
           <view class="review-content">
@@ -196,10 +196,10 @@
             <text class="review-text">住这里最大的感受就是安全感满满。物业非常负责，进出都需要门禁卡，晚上保安巡逻也很勤快。绿化环境特别好，适合散步。</text>
             <view class="review-tags">
               <view class="review-tag emerald">
-                <text class="material-symbols-outlined">shield</text> 安全系数高
+                <Icon name="shield" :size="22" color="#059669" /> 安全系数高
               </view>
               <view class="review-tag lime">
-                <text class="material-symbols-outlined">park</text> 环境优美
+                <Icon name="park" :size="22" color="#65a30d" /> 环境优美
               </view>
             </view>
           </view>
@@ -220,10 +220,10 @@
             <text class="review-text">这里的视野确实不错，但是电梯真的是硬伤，经常只有一部能用，早晚高峰等电梯能等到绝望。</text>
             <view class="review-tags">
               <view class="review-tag orange">
-                <text class="material-symbols-outlined">warning</text> 注意避雷
+                <Icon name="warning" :size="22" color="#ea580c" /> 注意避雷
               </view>
               <view class="review-tag gray">
-                <text class="material-symbols-outlined">elevator</text> 电梯故障
+                <Icon name="warning" :size="22" color="#6b7280" /> 电梯故障
               </view>
             </view>
           </view>
@@ -244,10 +244,10 @@
             <text class="review-text">地铁真的很近，就在楼下。就是周末晚上稍微有点吵，毕竟附近有酒吧街。不过为了通勤方便，可以忍受。</text>
             <view class="review-tags">
               <view class="review-tag amber">
-                <text class="material-symbols-outlined">directions_subway</text> 交通便利
+                <Icon name="location" :size="22" color="#d97706" /> 交通便利
               </view>
               <view class="review-tag gray">
-                <text class="material-symbols-outlined">volume_up</text> 略有噪音
+                <Icon name="warning" :size="22" color="#6b7280" /> 略有噪音
               </view>
             </view>
           </view>
@@ -263,31 +263,31 @@
   <view class="tab-bar">
     <view class="tab-item active" @click="switchTab('/pages/index/index')">
       <view class="tab-icon active">
-        <text class="material-symbols-outlined">home</text>
+        <Icon name="home" :size="48" color="var(--primary)" />
       </view>
       <text class="tab-text active">首页</text>
     </view>
     <view class="tab-item" @click="switchTab('/pages/community/index')">
       <view class="tab-icon">
-        <text class="material-symbols-outlined">explore</text>
+        <Icon name="community" :size="48" color="var(--text-muted)" />
       </view>
       <text class="tab-text">发现</text>
     </view>
     <view class="tab-item center" @click="navigateTo('/pages/safety/index')">
       <view class="tab-center-btn">
-        <text class="material-symbols-outlined">add</text>
+        <Icon name="plus" :size="56" color="#fff" />
       </view>
       <text class="tab-text">发布</text>
     </view>
     <view class="tab-item" @click="switchTab('/pages/message/index')">
       <view class="tab-icon">
-        <text class="material-symbols-outlined">chat_bubble</text>
+        <Icon name="message" :size="48" color="var(--text-muted)" />
       </view>
       <text class="tab-text">消息</text>
     </view>
     <view class="tab-item" @click="switchTab('/pages/profile/index')">
       <view class="tab-icon">
-        <text class="material-symbols-outlined">person</text>
+        <Icon name="profile" :size="48" color="var(--text-muted)" />
       </view>
       <text class="tab-text">我的</text>
     </view>
@@ -296,15 +296,30 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import Icon from '@/components/ui/Icon.vue'
+import Button from '@/components/ui/Button.vue'
+
+// TabBar 页面列表
+const tabBarPages = [
+  '/pages/index/index',
+  '/pages/community/index',
+  '/pages/message/index',
+  '/pages/profile/index'
+]
 
 // 跳转到新页面
 const navigateTo = (url: string) => {
-  uni.navigateTo({ url })
+  // 如果目标是 tabBar 页面，使用 switchTab
+  if (tabBarPages.includes(url)) {
+    uni.switchTab({ url })
+  } else {
+    uni.navigateTo({ url })
+  }
 }
 
 // 切换 Tab 页面
 const switchTab = (url: string) => {
-  uni.navigateTo({ url })
+  uni.switchTab({ url })
 }
 
 // 跳转到搜索页面并打开筛选
@@ -315,7 +330,8 @@ const goToSearchWithFilter = () => {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+@import '../../styles/variables.scss';
 .container {
   padding-bottom: 40rpx;
   min-height: 100vh;
@@ -379,9 +395,9 @@ const goToSearchWithFilter = () => {
   display: flex;
   align-items: center;
   height: 110rpx;
-  background-color: #fff;
-  border-radius: 60rpx;
-  box-shadow: 0 4rpx 24rpx rgba(0, 0, 0, 0.04);
+  background-color: $color-bg-secondary;
+  border-radius: $border-radius-xl;
+  box-shadow: $shadow-sm;
 }
 
 .search-icon-box {
@@ -421,7 +437,7 @@ const goToSearchWithFilter = () => {
 }
 
 .section-title {
-  font-size: 40rpx;
+  font-size: $font-size-hero;
   font-weight: bold;
   color: var(--text-main);
 }
@@ -523,33 +539,33 @@ const goToSearchWithFilter = () => {
 }
 
 .card-title {
-  font-size: 40rpx;
+  font-size: $font-size-hero;
   font-weight: bold;
   display: block;
-  margin-bottom: 8rpx;
+  margin-bottom: $spacing-xs;
 }
 
 .card-loc {
-  font-size: 28rpx;
+  font-size: $font-size-body;
   display: flex;
   align-items: center;
-  gap: 4rpx;
+  gap: $spacing-xs;
   opacity: 0.9;
-  margin-bottom: 20rpx;
+  margin-bottom: $spacing-lg;
 }
 
 .loc-small { font-size: 28rpx; }
 
 .badge-row {
   display: flex;
-  gap: 16rpx;
+  gap: $spacing-md;
 }
 
 .badge {
-  font-size: 20rpx;
+  font-size: $font-size-tiny;
   font-weight: bold;
-  padding: 6rpx 20rpx;
-  border-radius: 20rpx;
+  padding: $spacing-xs $spacing-md;
+  border-radius: $border-radius-md;
   background-color: rgba(255, 255, 255, 0.2);
   border: 1rpx solid rgba(255, 255, 255, 0.3);
 }
@@ -568,8 +584,8 @@ const goToSearchWithFilter = () => {
 
 .banner-box {
   background-color: #fcf3eb;
-  border-radius: 48rpx;
-  padding: 40rpx;
+  border-radius: $border-radius-xl;
+  padding: $spacing-lg;
   position: relative;
   display: flex;
   overflow: hidden;
@@ -595,14 +611,14 @@ const goToSearchWithFilter = () => {
 }
 
 .banner-title {
-  font-size: 36rpx;
+  font-size: $font-size-h2;
   font-weight: bold;
   color: #8a5d3b;
   display: block;
 }
 
 .banner-sub {
-  font-size: 24rpx;
+  font-size: $font-size-body-sm;
   color: #a6866f;
   margin: 10rpx 0 30rpx;
   display: block;
@@ -637,11 +653,11 @@ const goToSearchWithFilter = () => {
 
 .warning-item {
   display: flex;
-  gap: 24rpx;
-  background-color: #fff;
-  padding: 30rpx;
-  border-radius: 40rpx;
-  border: 1rpx solid #f5e6d8;
+  gap: $spacing-lg;
+  background-color: $color-bg-secondary;
+  padding: $spacing-lg;
+  border-radius: $border-radius-lg;
+  border: 1rpx solid $color-border-light;
 }
 
 .warning-icon-bg {
@@ -675,28 +691,28 @@ const goToSearchWithFilter = () => {
 }
 
 .warning-name {
-  font-size: 30rpx;
+  font-size: $font-size-body;
   font-weight: bold;
   color: var(--text-main);
 }
 
 .warning-time {
-  font-size: 20rpx;
+  font-size: $font-size-tiny;
   color: var(--text-muted);
 }
 
 .warning-sub {
-  font-size: 24rpx;
+  font-size: $font-size-caption;
   color: var(--text-muted);
   display: block;
-  margin-bottom: 12rpx;
+  margin-bottom: $spacing-sm;
 }
 
 .warning-desc {
-  font-size: 28rpx;
+  font-size: $font-size-body;
   color: #4b5563;
-  line-height: 1.6;
-  margin-bottom: 20rpx;
+  line-height: $line-height-normal;
+  margin-bottom: $spacing-lg;
   display: block;
 }
 
@@ -709,13 +725,13 @@ const goToSearchWithFilter = () => {
 .tag-warn {
   display: inline-flex;
   align-items: center;
-  gap: 8rpx;
-  font-size: 20rpx;
+  gap: $spacing-xs;
+  font-size: $font-size-tiny;
   font-weight: bold;
   color: #e67326;
   background-color: #fff0e6;
-  padding: 8rpx 20rpx;
-  border-radius: 30rpx;
+  padding: $spacing-xs $spacing-md;
+  border-radius: $border-radius-lg;
   border: 1rpx solid #fcd5ba;
 }
 
@@ -732,11 +748,11 @@ const goToSearchWithFilter = () => {
 
 .review-item {
   display: flex;
-  gap: 24rpx;
-  background-color: #fff;
-  padding: 40rpx;
-  border-radius: 32rpx;
-  box-shadow: 0 4rpx 20rpx -5rpx rgba(0, 0, 0, 0.05);
+  gap: $spacing-lg;
+  background-color: $color-bg-secondary;
+  padding: $spacing-lg;
+  border-radius: $border-radius-lg;
+  box-shadow: $shadow-sm;
 }
 
 .review-user {
@@ -784,15 +800,15 @@ const goToSearchWithFilter = () => {
 }
 
 .user-name {
-  font-size: 30rpx;
+  font-size: $font-size-body;
   font-weight: bold;
   color: var(--text-main);
 }
 
 .review-target {
-  font-size: 24rpx;
+  font-size: $font-size-caption;
   color: var(--text-muted);
-  margin-top: 4rpx;
+  margin-top: $spacing-xs;
 }
 
 .target-name {
@@ -801,18 +817,18 @@ const goToSearchWithFilter = () => {
 }
 
 .review-time {
-  font-size: 22rpx;
+  font-size: $font-size-tiny;
   color: var(--text-muted);
   background-color: #f9fafb;
-  padding: 8rpx 16rpx;
-  border-radius: 16rpx;
+  padding: $spacing-xs $spacing-md;
+  border-radius: $border-radius-sm;
 }
 
 .review-text {
-  font-size: 28rpx;
+  font-size: $font-size-body;
   color: #4b5563;
-  line-height: 1.6;
-  margin-bottom: 24rpx;
+  line-height: $line-height-normal;
+  margin-bottom: $spacing-lg;
   display: block;
 }
 
@@ -825,11 +841,11 @@ const goToSearchWithFilter = () => {
 .review-tag {
   display: inline-flex;
   align-items: center;
-  gap: 12rpx;
-  font-size: 22rpx;
+  gap: $spacing-md;
+  font-size: $font-size-tiny;
   font-weight: 600;
-  padding: 12rpx 24rpx;
-  border-radius: 32rpx;
+  padding: $spacing-sm $spacing-md;
+  border-radius: $border-radius-lg;
 }
 
 .review-tag.emerald {
@@ -874,13 +890,13 @@ const goToSearchWithFilter = () => {
   left: 0;
   right: 0;
   background-color: rgba(255, 255, 255, 0.95);
-  border-top: 1rpx solid #f3f4f6;
+  border-top: 1rpx solid $color-border-light;
   backdrop-filter: blur(20px);
   display: flex;
   justify-content: space-around;
   align-items: flex-end;
-  padding: 16rpx 20rpx 40rpx;
-  z-index: 1000;
+  padding: $spacing-sm $spacing-md $spacing-lg;
+  z-index: $z-index-fixed;
   max-width: 750rpx;
   margin: 0 auto;
 }
@@ -912,10 +928,6 @@ const goToSearchWithFilter = () => {
   color: var(--primary);
 }
 
-.tab-icon .material-symbols-outlined {
-  font-size: 48rpx;
-}
-
 .tab-center-btn {
   width: 112rpx;
   height: 112rpx;
@@ -925,15 +937,11 @@ const goToSearchWithFilter = () => {
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 16rpx 40rpx -12rpx rgba(238, 124, 43, 0.5);
-}
-
-.tab-center-btn .material-symbols-outlined {
-  font-size: 56rpx;
+  box-shadow: 0 16rpxrpx -12rpx rgba(238, 124, 43, 0.5);
 }
 
 .tab-text {
-  font-size: 20rpx;
+  font-size: $font-size-tiny;
   color: var(--text-muted);
 }
 

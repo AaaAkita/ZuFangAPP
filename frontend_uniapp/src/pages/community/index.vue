@@ -5,7 +5,7 @@
     </view>
     <view class="content">
       <view class="empty-state">
-        <text class="material-symbols-outlined empty-icon">explore</text>
+        <Icon name="community" :size="120" color="var(--text-muted)" class="empty-icon" />
         <text class="empty-text">发现页面</text>
         <text class="empty-sub">更多精彩内容即将上线</text>
       </view>
@@ -19,31 +19,31 @@
   <view class="tab-bar">
     <view class="tab-item" @click="switchTab('/pages/index/index')">
       <view class="tab-icon">
-        <text class="material-symbols-outlined">home</text>
+        <Icon name="home" :size="48" color="var(--text-tertiary)" />
       </view>
       <text class="tab-text">首页</text>
     </view>
     <view class="tab-item active" @click="switchTab('/pages/community/index')">
       <view class="tab-icon active">
-        <text class="material-symbols-outlined">explore</text>
+        <Icon name="community" :size="48" color="var(--primary)" />
       </view>
       <text class="tab-text active">发现</text>
     </view>
     <view class="tab-item center" @click="navigateTo('/pages/safety/index')">
       <view class="tab-center-btn">
-        <text class="material-symbols-outlined">add</text>
+        <Icon name="plus" :size="56" color="var(--text-inverse)" />
       </view>
       <text class="tab-text">发布</text>
     </view>
     <view class="tab-item" @click="switchTab('/pages/message/index')">
       <view class="tab-icon">
-        <text class="material-symbols-outlined">chat_bubble</text>
+        <Icon name="message" :size="48" color="var(--text-tertiary)" />
       </view>
       <text class="tab-text">消息</text>
     </view>
     <view class="tab-item" @click="switchTab('/pages/profile/index')">
       <view class="tab-icon">
-        <text class="material-symbols-outlined">person</text>
+        <Icon name="profile" :size="48" color="var(--text-tertiary)" />
       </view>
       <text class="tab-text">我的</text>
     </view>
@@ -51,37 +51,52 @@
 </template>
 
 <script setup lang="ts">
+import Icon from '@/components/ui/Icon.vue'
+// TabBar 页面列表
+const tabBarPages = [
+  '/pages/index/index',
+  '/pages/community/index',
+  '/pages/message/index',
+  '/pages/profile/index'
+]
+
 // 跳转到新页面
 const navigateTo = (url: string) => {
-  uni.navigateTo({ url })
+  // 如果目标是 tabBar 页面，使用 switchTab
+  if (tabBarPages.includes(url)) {
+    uni.switchTab({ url })
+  } else {
+    uni.navigateTo({ url })
+  }
 }
 
 // 切换 Tab 页面
 const switchTab = (url: string) => {
-  uni.navigateTo({ url })
+  uni.switchTab({ url })
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+@import '../../styles/variables.scss';
 .container {
   min-height: 100vh;
   background-color: var(--background-light);
 }
 
 .header {
-  padding: 60rpx 40rpx 30rpx;
-  background-color: #fff;
-  border-bottom: 1rpx solid #f0f0f0;
+  padding: $spacing-lg $spacing-xl $spacing-md $spacing-lg;
+  background-color: $color-bg-secondary;
+  border-bottom: 1rpx solid $color-border-light;
 }
 
 .title {
-  font-size: 40rpx;
+  font-size: $font-size-hero;
   font-weight: bold;
   color: var(--text-main);
 }
 
 .content {
-  padding: 40rpx;
+  padding: $spacing-lg;
 }
 
 .empty-state {
@@ -95,18 +110,18 @@ const switchTab = (url: string) => {
 .empty-icon {
   font-size: 120rpx;
   color: var(--text-muted);
-  margin-bottom: 30rpx;
+  margin-bottom: $spacing-lg;
 }
 
 .empty-text {
-  font-size: 32rpx;
+  font-size: $font-size-h2;
   color: var(--text-main);
   font-weight: 600;
-  margin-bottom: 16rpx;
+  margin-bottom: $spacing-md;
 }
 
 .empty-sub {
-  font-size: 26rpx;
+  font-size: $font-size-body-sm;
   color: var(--text-muted);
 }
 
@@ -122,13 +137,13 @@ const switchTab = (url: string) => {
   left: 0;
   right: 0;
   background-color: rgba(255, 255, 255, 0.95);
-  border-top: 1rpx solid #f3f4f6;
+  border-top: 1rpx solid $color-border-light;
   backdrop-filter: blur(20rpx);
   display: flex;
   justify-content: space-around;
   align-items: flex-end;
-  padding: 16rpx 20rpx 40rpx;
-  z-index: 1000;
+  padding: $spacing-sm $spacing-md $spacing-lg;
+  z-index: $z-index-fixed;
   max-width: 750rpx;
   margin: 0 auto;
 }
@@ -137,7 +152,7 @@ const switchTab = (url: string) => {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8rpx;
+  gap: $spacing-xs;
   flex: 1;
 }
 
@@ -152,23 +167,19 @@ const switchTab = (url: string) => {
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  color: #94a3b8;
+  color: $color-text-tertiary;
 }
 
 .tab-icon.active {
   background-color: rgba(238, 124, 43, 0.1);
-  color: #ee7c2b;
-}
-
-.tab-icon .material-symbols-outlined {
-  font-size: 48rpx;
+  color: $color-primary;
 }
 
 .tab-center-btn {
   width: 112rpx;
   height: 112rpx;
-  background-color: #ee7c2b;
-  color: #fff;
+  background-color: $color-primary;
+  color: $color-text-inverse;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -176,18 +187,14 @@ const switchTab = (url: string) => {
   box-shadow: 0 16rpx 40rpx -12rpx rgba(238, 124, 43, 0.5);
 }
 
-.tab-center-btn .material-symbols-outlined {
-  font-size: 56rpx;
-}
-
 .tab-text {
-  font-size: 20rpx;
-  color: #94a3b8;
+  font-size: $font-size-tiny;
+  color: $color-text-tertiary;
   font-weight: 500;
 }
 
 .tab-text.active {
-  color: #ee7c2b;
+  color: $color-primary;
   font-weight: bold;
 }
 </style>

@@ -1,0 +1,148 @@
+// ============================================
+// 全局CSS变量系统
+// ============================================
+
+// ============================================
+// 颜色系统
+// ============================================
+
+// 主色（品牌色）
+$color-primary: #ee7c2b;
+$color-primary-light: #f5a66d;
+$color-primary-dark: #d96a1f;
+$color-primary-bg: #fff7ed;
+
+// 辅助色
+$color-secondary: #3D405B;
+$color-secondary-light: #5A5E7A;
+$color-secondary-dark: #2A2D3F;
+
+// 状态色
+$color-success: #22c55e;
+$color-success-light: #4ade80;
+$color-success-bg: #f0fdf4;
+
+$color-warning: #f59e0b;
+$color-warning-light: #fbbf24;
+$color-warning-bg: #fffbeb;
+
+$color-error: #ef4444;
+$color-error-light: #f87171;
+$color-error-bg: #fef2f2;
+
+$color-info: #3b82f6;
+$color-info-light: #60a5fa;
+$color-info-bg: #eff6ff;
+
+// 文字色
+$color-text-primary: #1e293b;
+$color-text-secondary: #64748b;
+$color-text-tertiary: #94a3b8;
+$color-text-disabled: #cbd5e1;
+$color-text-inverse: #FFFFFF;
+
+// 背景色
+$color-bg-primary: #FAF9F8;
+$color-bg-secondary: #FFFFFF;
+$color-bg-tertiary: #F5F3F0;
+$color-bg-dark: #3D405B;
+
+// 边框色
+$color-border: #E8E5E3;
+$color-border-light: #f1f5f9;
+$color-border-dark: #D0CCC9;
+
+// ============================================
+// 字体系统
+// ============================================
+
+// 字体大小
+$font-size-h1: 36rpx;
+$font-size-h2: 32rpx;
+$font-size-h3: 28rpx;
+$font-size-body: 28rpx;
+$font-size-body-sm: 26rpx;
+$font-size-caption: 24rpx;
+$font-size-tiny: 22rpx;
+
+// 字体大小（大标题，用于特殊场景）
+$font-size-display: 48rpx;
+$font-size-hero: 40rpx;
+
+// 字重
+$font-weight-regular: 400;
+$font-weight-medium: 500;
+$font-weight-semibold: 600;
+$font-weight-bold: 700;
+
+// 行高
+$line-height-tight: 1.25;
+$line-height-normal: 1.5;
+$line-height-relaxed: 1.75;
+
+// ============================================
+// 间距系统
+// ============================================
+
+// 基础间距
+$spacing-unit: 8rpx;
+
+// 间距级别
+$spacing-xs: 8rpx;
+$spacing-sm: 16rpx;
+$spacing-md: 24rpx;
+$spacing-lg: 32rpx;
+$spacing-xl: 48rpx;
+$spacing-xxl: 64rpx;
+$spacing-xxxl: 96rpx;
+
+// ============================================
+// 圆角系统
+// ============================================
+
+$border-radius-none: 0;
+$border-radius-xs: 4rpx;
+$border-radius-sm: 8rpx;
+$border-radius-md: 12rpx;
+$border-radius-lg: 16rpx;
+$border-radius-xl: 24rpx;
+$border-radius-full: 9999rpx;
+
+// ============================================
+// 阴影系统
+// ============================================
+
+$shadow-none: none;
+$shadow-xs: 0 2rpx 4rpx rgba(0, 0, 0, 0.05);
+$shadow-sm: 0 4rpx 8rpx rgba(0, 0, 0, 0.08);
+$shadow-md: 0 8rpx 16rpx rgba(0, 0, 0, 0.1);
+$shadow-lg: 0 12rpx 24rpx rgba(0, 0, 0, 0.12);
+$shadow-xl: 0 16rpx 32rpx rgba(0, 0, 0, 0.15);
+
+// 主色阴影
+$shadow-primary: 0 8rpx 16rpx rgba(224, 122, 95, 0.3);
+
+// ============================================
+// 过渡动画
+// ============================================
+
+$duration-fast: 150ms;
+$duration-normal: 300ms;
+$duration-slow: 500ms;
+
+$easing-default: ease-in-out;
+$easing-in: ease-in;
+$easing-out: ease-out;
+$easing-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+// ============================================
+// Z-Index层级
+// ============================================
+
+$z-index-dropdown: 1000;
+$z-index-sticky: 1020;
+$z-index-fixed: 1030;
+$z-index-modal-backdrop: 1040;
+$z-index-modal: 1050;
+$z-index-popover: 1060;
+$z-index-tooltip: 1070;

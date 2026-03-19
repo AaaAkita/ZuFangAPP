@@ -4,7 +4,7 @@
     <view class="header">
       <text class="header-title">个人中心</text>
       <view class="edit-btn" @click="navigateTo('/pages/about/index')">
-        <text class="material-symbols-outlined">edit</text>
+        <Icon name="edit" :size="40" color="var(--text-primary)" />
       </view>
     </view>
 
@@ -26,14 +26,14 @@
       <view class="stat-item" @click="navigateTo('/pages/community/index')">
         <text class="stat-num">24</text>
         <view class="stat-label">
-          <text class="material-symbols-outlined stat-icon">rate_review</text>
+          <Icon name="star" :size="36" color="var(--text-secondary)" class="stat-icon" />
           <text>发布的评价</text>
         </view>
       </view>
       <view class="stat-item">
         <text class="stat-num">158</text>
         <view class="stat-label">
-          <text class="material-symbols-outlined stat-icon">favorite</text>
+          <Icon name="heart" :size="36" color="var(--text-secondary)" class="stat-icon" />
           <text>获赞</text>
         </view>
       </view>
@@ -44,38 +44,38 @@
       <view class="menu-item" @click="navigateTo('/pages/community/index')">
         <view class="menu-left">
           <view class="menu-icon-bg orange">
-            <text class="material-symbols-outlined">reviews</text>
+            <Icon name="star" :size="48" color="var(--primary)" />
           </view>
           <text class="menu-text">我的评价</text>
         </view>
-        <text class="material-symbols-outlined arrow">chevron_right</text>
+        <Icon name="arrow-right" :size="40" color="var(--text-tertiary)" class="arrow" />
       </view>
       <view class="menu-item">
         <view class="menu-left">
           <view class="menu-icon-bg blue">
-            <text class="material-symbols-outlined">bookmark</text>
+            <Icon name="bookmark" :size="48" color="var(--info)" />
           </view>
           <text class="menu-text">收藏房源</text>
         </view>
-        <text class="material-symbols-outlined arrow">chevron_right</text>
+        <Icon name="arrow-right" :size="40" color="#94a3b8" class="arrow" />
       </view>
       <view class="menu-item">
         <view class="menu-left">
           <view class="menu-icon-bg gray">
-            <text class="material-symbols-outlined">settings</text>
+            <Icon name="settings" :size="48" color="var(--text-secondary)" />
           </view>
           <text class="menu-text">设置</text>
         </view>
-        <text class="material-symbols-outlined arrow">chevron_right</text>
+        <Icon name="arrow-right" :size="40" color="#94a3b8" class="arrow" />
       </view>
       <view class="menu-item">
         <view class="menu-left">
           <view class="menu-icon-bg green">
-            <text class="material-symbols-outlined">help</text>
+            <Icon name="help" :size="48" color="var(--success)" />
           </view>
           <text class="menu-text">帮助与客服</text>
         </view>
-        <text class="material-symbols-outlined arrow">chevron_right</text>
+        <Icon name="arrow-right" :size="40" color="#94a3b8" class="arrow" />
       </view>
     </view>
 
@@ -87,31 +87,31 @@
   <view class="tab-bar">
     <view class="tab-item" @click="switchTab('/pages/index/index')">
       <view class="tab-icon">
-        <text class="material-symbols-outlined">home</text>
+        <Icon name="home" :size="48" color="var(--text-tertiary)" />
       </view>
       <text class="tab-text">首页</text>
     </view>
     <view class="tab-item" @click="switchTab('/pages/community/index')">
       <view class="tab-icon">
-        <text class="material-symbols-outlined">explore</text>
+        <Icon name="community" :size="48" color="var(--text-tertiary)" />
       </view>
       <text class="tab-text">发现</text>
     </view>
     <view class="tab-item center" @click="navigateTo('/pages/safety/index')">
       <view class="tab-center-btn">
-        <text class="material-symbols-outlined">add</text>
+        <Icon name="plus" :size="56" color="var(--text-inverse)" />
       </view>
       <text class="tab-text">发布</text>
     </view>
     <view class="tab-item" @click="switchTab('/pages/message/index')">
       <view class="tab-icon">
-        <text class="material-symbols-outlined">chat_bubble</text>
+        <Icon name="message" :size="48" color="var(--text-tertiary)" />
       </view>
       <text class="tab-text">消息</text>
     </view>
     <view class="tab-item active" @click="switchTab('/pages/profile/index')">
       <view class="tab-icon active">
-        <text class="material-symbols-outlined">account_circle</text>
+        <Icon name="profile" :size="48" color="var(--primary)" />
       </view>
       <text class="tab-text active">我的</text>
     </view>
@@ -121,6 +121,7 @@
 <script setup lang="ts">
 import { onMounted, computed } from 'vue'
 import { useAuthStore } from '@/utils/auth'
+import Icon from '@/components/ui/Icon.vue'
 
 const authStore = useAuthStore()
 
@@ -156,18 +157,32 @@ onMounted(() => {
   }
 })
 
+// TabBar 页面列表
+const tabBarPages = [
+  '/pages/index/index',
+  '/pages/community/index',
+  '/pages/message/index',
+  '/pages/profile/index'
+]
+
 // 跳转到新页面
 const navigateTo = (url: string) => {
-  uni.navigateTo({ url })
+  // 如果目标是 tabBar 页面，使用 switchTab
+  if (tabBarPages.includes(url)) {
+    uni.switchTab({ url })
+  } else {
+    uni.navigateTo({ url })
+  }
 }
 
 // 切换 Tab 页面
 const switchTab = (url: string) => {
-  uni.navigateTo({ url })
+  uni.switchTab({ url })
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+@import '../../styles/variables.scss';
 .container {
   min-height: 100vh;
   background: linear-gradient(180deg, #fff0e6 0%, #fffaf5 30%, #faf9f8 100%);
@@ -179,17 +194,17 @@ const switchTab = (url: string) => {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 60rpx 40rpx 20rpx;
+  padding: $spacing-lg $spacing-xl $spacing-md $spacing-lg;
   position: relative;
 }
 
 .header-title {
-  font-size: 36rpx;
+  font-size: $font-size-h2;
   font-weight: bold;
-  color: #1e293b;
+  color: $color-text-primary;
   flex: 1;
   text-align: center;
-  padding-left: 48rpx;
+  padding-left: $spacing-xl;
 }
 
 .edit-btn {
@@ -200,12 +215,7 @@ const switchTab = (url: string) => {
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.05);
-}
-
-.edit-btn .material-symbols-outlined {
-  font-size: 40rpx;
-  color: #1e293b;
+  box-shadow: $shadow-xs;
 }
 
 /* 用户信息区域 */
@@ -213,8 +223,8 @@ const switchTab = (url: string) => {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 40rpx;
-  gap: 40rpx;
+  padding: $spacing-lg;
+  gap: $spacing-lg;
 }
 
 .avatar-wrapper {
@@ -235,7 +245,7 @@ const switchTab = (url: string) => {
   width: 256rpx;
   height: 256rpx;
   border-radius: 50%;
-  border: 8rpx solid #fff;
+  border: 8rpx solid $color-text-inverse;
   box-shadow: 0 8rpx 32rpx rgba(238, 124, 43, 0.15);
 }
 
@@ -245,27 +255,27 @@ const switchTab = (url: string) => {
   right: 8rpx;
   width: 56rpx;
   height: 56rpx;
-  background-color: #22c55e;
+  background-color: $color-success;
   border-radius: 50%;
-  border: 6rpx solid #fff;
+  border: 6rpx solid $color-text-inverse;
 }
 
 .user-info {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 12rpx;
+  gap: $spacing-md;
 }
 
 .user-name {
-  font-size: 40rpx;
+  font-size: $font-size-hero;
   font-weight: bold;
-  color: #1e293b;
+  color: $color-text-primary;
 }
 
 .user-join {
-  font-size: 28rpx;
-  color: #64748b;
+  font-size: $font-size-body;
+  color: $color-text-secondary;
   font-weight: 500;
 }
 
@@ -273,8 +283,8 @@ const switchTab = (url: string) => {
 .stats-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 40rpx;
-  padding: 0 40rpx 40rpx;
+  gap: $spacing-lg;
+  padding: 0 $spacing-xl $spacing-lg;
 }
 
 .stat-item {
@@ -282,13 +292,13 @@ const switchTab = (url: string) => {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 48rpx 32rpx;
+  padding: $spacing-xl $spacing-lg;
   background-color: rgba(255, 255, 255, 0.6);
-  border-radius: 32rpx;
+  border-radius: $border-radius-lg;
   border: 1rpx solid rgba(255, 255, 255, 0.5);
-  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.05);
+  box-shadow: $shadow-sm;
   backdrop-filter: blur(10rpx);
-  transition: transform 0.2s;
+  transition: transform $duration-normal $easing-default;
 }
 
 .stat-item:active {
@@ -296,53 +306,53 @@ const switchTab = (url: string) => {
 }
 
 .stat-num {
-  font-size: 48rpx;
+  font-size: $font-size-display;
   font-weight: bold;
-  color: #1e293b;
-  margin-bottom: 16rpx;
+  color: $color-text-primary;
+  margin-bottom: $spacing-md;
 }
 
 .stat-label {
   display: flex;
   align-items: center;
-  gap: 12rpx;
-  font-size: 28rpx;
-  color: #64748b;
+  gap: $spacing-md;
+  font-size: $font-size-body;
+  color: $color-text-secondary;
 }
 
 .stat-icon {
-  font-size: 36rpx;
+  font-size: $font-size-h2;
 }
 
 /* 功能菜单 */
 .menu-list {
   display: flex;
   flex-direction: column;
-  gap: 32rpx;
-  padding: 0 40rpx;
+  gap: $spacing-lg;
+  padding: 0 $spacing-xl;
 }
 
 .menu-item {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 40rpx;
-  background-color: #fff;
-  border-radius: 32rpx;
+  padding: $spacing-lg;
+  background-color: $color-bg-secondary;
+  border-radius: $border-radius-lg;
   border: 1rpx solid rgba(241, 245, 249, 0.5);
-  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.05);
-  transition: all 0.2s;
+  box-shadow: $shadow-sm;
+  transition: all $duration-normal $easing-default;
 }
 
 .menu-item:active {
   background-color: rgba(255, 247, 237, 0.5);
-  box-shadow: 0 8rpx 24rpx rgba(0, 0, 0, 0.08);
+  box-shadow: $shadow-md;
 }
 
 .menu-left {
   display: flex;
   align-items: center;
-  gap: 40rpx;
+  gap: $spacing-lg;
 }
 
 .menu-icon-bg {
@@ -352,7 +362,7 @@ const switchTab = (url: string) => {
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: transform 0.2s;
+  transition: transform $duration-normal $easing-default;
 }
 
 .menu-item:active .menu-icon-bg {
@@ -361,38 +371,34 @@ const switchTab = (url: string) => {
 
 .menu-icon-bg.orange {
   background-color: rgba(255, 247, 237, 0.8);
-  color: #ee7c2b;
+  color: $color-primary;
 }
 
 .menu-icon-bg.blue {
   background-color: rgba(239, 246, 255, 0.8);
-  color: #3b82f6;
+  color: $color-info;
 }
 
 .menu-icon-bg.gray {
   background-color: rgba(241, 245, 249, 0.8);
-  color: #64748b;
+  color: $color-text-secondary;
 }
 
 .menu-icon-bg.green {
   background-color: rgba(240, 253, 244, 0.8);
-  color: #16a34a;
-}
-
-.menu-icon-bg .material-symbols-outlined {
-  font-size: 48rpx;
+  color: $color-success;
 }
 
 .menu-text {
-  font-size: 34rpx;
+  font-size: $font-size-h3;
   font-weight: 600;
-  color: #1e293b;
+  color: $color-text-primary;
   letter-spacing: 2rpx;
 }
 
 .arrow {
-  font-size: 40rpx;
-  color: #94a3b8;
+  font-size: $font-size-hero;
+  color: $color-text-tertiary;
 }
 
 /* 底部安全区域 */
@@ -407,13 +413,13 @@ const switchTab = (url: string) => {
   left: 0;
   right: 0;
   background-color: rgba(255, 255, 255, 0.95);
-  border-top: 1rpx solid #f1f5f9;
+  border-top: 1rpx solid $color-border-light;
   backdrop-filter: blur(20rpx);
   display: flex;
   justify-content: space-around;
   align-items: flex-end;
-  padding: 16rpx 20rpx 40rpx;
-  z-index: 1000;
+  padding: $spacing-sm $spacing-md $spacing-lg;
+  z-index: $z-index-fixed;
   max-width: 750rpx;
   margin: 0 auto;
 }
@@ -422,7 +428,7 @@ const switchTab = (url: string) => {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8rpx;
+  gap: $spacing-xs;
   flex: 1;
 }
 
@@ -437,23 +443,19 @@ const switchTab = (url: string) => {
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  color: #94a3b8;
+  color: $color-text-tertiary;
 }
 
 .tab-icon.active {
   background-color: rgba(238, 124, 43, 0.1);
-  color: #ee7c2b;
-}
-
-.tab-icon .material-symbols-outlined {
-  font-size: 48rpx;
+  color: $color-primary;
 }
 
 .tab-center-btn {
   width: 112rpx;
   height: 112rpx;
-  background-color: #ee7c2b;
-  color: #fff;
+  background-color: $color-primary;
+  color: $color-text-inverse;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -461,8 +463,15 @@ const switchTab = (url: string) => {
   box-shadow: 0 16rpx 40rpx -12rpx rgba(238, 124, 43, 0.5);
 }
 
-.tab-center-btn .material-symbols-outlined {
-  font-size: 56rpx;
+.tab-text {
+  font-size: $font-size-tiny;
+  color: $color-text-tertiary;
+  font-weight: 500;
+}
+
+.tab-text.active {
+  color: $color-primary;
+  font-weight: bold;
 }
 
 .tab-text {
