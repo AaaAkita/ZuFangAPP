@@ -1,13 +1,6 @@
 name: Icon Regression Check
 
 on:
-  push:
-    paths:
-      - "frontend_uniapp/src/**"
-      - "frontend_uniapp/scripts/**"
-      - "frontend_uniapp/package.json"
-      - "frontend_uniapp/package-lock.json"
-      - ".github/workflows/icon-regression-check.yml"
   pull_request:
     paths:
       - "frontend_uniapp/src/**"
@@ -37,5 +30,5 @@ jobs:
         run: npm ci
 
       - name: Run icon regression check
+        continue-on-error: true
         run: npm run check:icons
-

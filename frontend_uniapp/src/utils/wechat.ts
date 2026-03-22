@@ -154,6 +154,16 @@ export function isWechatEnv(): boolean {
  * 获取微信版本
  */
 export function getWechatVersion(): string {
+  // 微信基础库建议使用拆分后的信息接口，这里优先走新接口
+  // 仅在不可用时回退到 getSystemInfoSync，保证兼容旧版本。
+  // #ifdef MP-WEIXIN
+  const wxApi = (globalThis as any).wx
+  if (wxApi && typeof wxApi.getAppBaseInfo === 'function') {
+    const appBaseInfo = wxApi.getAppBaseInfo()
+    return appBaseInfo?.SDKVersion || ''
+  }
+  // #endif
+
   const systemInfo = uni.getSystemInfoSync()
   return systemInfo.SDKVersion || ''
 }

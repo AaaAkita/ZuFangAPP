@@ -50,6 +50,8 @@
             placeholder="密码（至少8位，包含字母和数字）"
             type="text"
             placeholder-class="input-placeholder"
+            @focus="isPasswordFocused = true"
+            @blur="isPasswordFocused = false"
           />
           <view class="toggle-password" @click="togglePassword">
             <Icon
@@ -60,7 +62,7 @@
           </view>
         </view>
 
-        <view class="password-hint">
+        <view class="password-hint" :class="{ show: isPasswordFocused || !!formData.password }">
           <text class="hint-text" :class="{ valid: passwordStrength.length }">
             <Icon class="app-icon" :name="passwordStrength.length ? 'check_circle' : 'radio_button_unchecked'" size="inherit" />
             至少8位
@@ -72,7 +74,7 @@
         </view>
 
         <button class="register-btn" @click="handleRegister">
-          <text class="register-text">注册</text>
+          <text class="submit-text">注册</text>
           <Icon class="app-icon arrow-icon" name="arrow_forward" size="inherit" />
         </button>
       </view>
@@ -102,6 +104,7 @@ const formData = reactive({
 })
 
 const showPassword = ref(false)
+const isPasswordFocused = ref(false)
 
 // 密码强度检测
 const passwordStrength = computed(() => getPasswordStrength(formData.password))
@@ -229,33 +232,37 @@ const goToLogin = () => {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0 48rpx;
+  padding: 0 44rpx;
+  box-sizing: border-box;
 }
 
 .register-wrapper {
   width: 100%;
-  max-width: 800rpx;
+  max-width: 680rpx;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
-  padding-top: 80rpx;
+  padding-top: calc(var(--status-bar-height, 0px) + 56rpx);
+  padding-bottom: 40rpx;
+  box-sizing: border-box;
 }
 
 .header-section {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 80rpx;
+  padding-top: 32rpx;
 }
 
 .logo-box {
-  width: 192rpx;
-  height: 192rpx;
+  width: 172rpx;
+  height: 172rpx;
   background-color: rgba(224, 122, 95, 0.1);
-  border-radius: 64rpx;
+  border-radius: 54rpx;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 32rpx;
+  margin-bottom: 28rpx;
   transform: rotate(3deg);
   transition: transform 0.3s ease;
 }
@@ -265,7 +272,7 @@ const goToLogin = () => {
 }
 
 .logo-icon {
-  font-size: 96rpx;
+  font-size: 84rpx;
   color: #E07A5F;
 }
 
@@ -277,14 +284,14 @@ const goToLogin = () => {
 }
 
 .welcome-title {
-  font-size: 60rpx;
+  font-size: 56rpx;
   font-weight: 800;
   color: #4A403A;
   letter-spacing: -1rpx;
 }
 
 .welcome-subtitle {
-  font-size: 32rpx;
+  font-size: 30rpx;
   font-weight: 500;
   color: #8C817D;
 }
@@ -292,22 +299,23 @@ const goToLogin = () => {
 .form-section {
   display: flex;
   flex-direction: column;
-  gap: 32rpx;
-  margin-top: 48rpx;
+  gap: 18rpx;
+  margin-top: 54rpx;
 }
 
 .input-group {
   position: relative;
   display: flex;
   align-items: center;
-  height: 112rpx;
+  height: 96rpx;
   background-color: #ffffff;
-  border: 4rpx solid #F4D1C6;
-  border-radius: 112rpx;
-  padding-left: 48rpx;
-  padding-right: 48rpx;
+  border: 3rpx solid #F4D1C6;
+  border-radius: 96rpx;
+  padding-left: 34rpx;
+  padding-right: 30rpx;
   transition: all 0.3s ease;
   box-shadow: 0 4rpx 20rpx -8rpx rgba(224, 122, 95, 0.1);
+  box-sizing: border-box;
 }
 
 .input-group:focus-within {
@@ -319,11 +327,11 @@ const goToLogin = () => {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-right: 24rpx;
+  margin-right: 18rpx;
 }
 
 .input-icon {
-  font-size: 48rpx;
+  font-size: 38rpx;
   color: rgba(224, 122, 95, 0.5);
   transition: color 0.3s ease;
 }
@@ -335,7 +343,7 @@ const goToLogin = () => {
 .input-field {
   flex: 1;
   height: 100%;
-  font-size: 32rpx;
+  font-size: 28rpx;
   color: #4A403A;
 }
 
@@ -352,7 +360,7 @@ const goToLogin = () => {
 }
 
 .toggle-icon {
-  font-size: 40rpx;
+  font-size: 32rpx;
   color: #8C817D;
   transition: color 0.3s ease;
 }
@@ -364,16 +372,28 @@ const goToLogin = () => {
 .password-hint {
   display: flex;
   flex-direction: row;
-  gap: 32rpx;
-  margin-top: -16rpx;
-  padding-left: 16rpx;
+  gap: 22rpx;
+  margin-top: 0;
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transform: translateY(-6rpx);
+  transition: max-height 0.24s ease, opacity 0.24s ease, transform 0.24s ease;
+  padding-left: 6rpx;
+  flex-wrap: wrap;
+}
+
+.password-hint.show {
+  max-height: 56rpx;
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .hint-text {
   display: flex;
   align-items: center;
   gap: 8rpx;
-  font-size: 24rpx;
+  font-size: 20rpx;
   color: rgba(140, 129, 125, 0.6);
   transition: color 0.3s ease;
 }
@@ -383,21 +403,23 @@ const goToLogin = () => {
 }
 
 .hint-text .app-icon {
-  font-size: 28rpx;
+  font-size: 22rpx;
 }
 
 .register-btn {
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 100%;
   gap: 16rpx;
-  height: 112rpx;
+  height: 104rpx;
   background-color: #E07A5F;
-  border-radius: 112rpx;
-  margin-top: 24rpx;
+  border-radius: 104rpx;
+  margin-top: 8rpx;
   box-shadow: 0 16rpx 48rpx -12rpx rgba(224, 122, 95, 0.3);
   transition: all 0.3s ease;
   border: none;
+  box-sizing: border-box;
 }
 
 .register-btn::after {
@@ -410,14 +432,14 @@ const goToLogin = () => {
   box-shadow: 0 20rpx 56rpx -12rpx rgba(224, 122, 95, 0.4);
 }
 
-.register-text {
-  font-size: 36rpx;
+.submit-text {
+  font-size: 34rpx;
   font-weight: 700;
   color: #ffffff;
 }
 
 .arrow-icon {
-  font-size: 40rpx;
+  font-size: 36rpx;
   color: #ffffff;
   transition: transform 0.3s ease;
 }
@@ -431,7 +453,7 @@ const goToLogin = () => {
   justify-content: center;
   align-items: center;
   margin-top: auto;
-  padding-bottom: 64rpx;
+  padding-bottom: 28rpx;
 }
 
 .register-text {

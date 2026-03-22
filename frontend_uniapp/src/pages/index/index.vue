@@ -103,12 +103,24 @@
     <!-- 搬家特惠 -->
     <view class="banner-section">
       <view class="banner-box">
+        <view class="banner-glow"></view>
         <view class="banner-content">
           <view class="promo-tag">
             <Icon name="tag" :size="20" color="var(--primary)" /> 搬家特惠
           </view>
           <text class="banner-title">省心搬家服务</text>
           <text class="banner-sub">专业团队，轻拿轻放，温馨送到家</text>
+          <view class="banner-points">
+            <view class="banner-point">
+              <Icon name="check" :size="18" color="#8a5d3b" /> 全程打包
+            </view>
+            <view class="banner-point">
+              <Icon name="time" :size="18" color="#8a5d3b" /> 准点上门
+            </view>
+            <view class="banner-point">
+              <Icon name="shield" :size="18" color="#8a5d3b" /> 损坏赔付
+            </view>
+          </view>
           <Button type="primary" size="small" custom-class="banner-btn">立即预约</Button>
         </view>
         <image class="banner-bg" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBJ-0S8s3_G7aKFKFWwm8wLEob_K3PVbXuqi3HKxKgmypBMVDdMTfoO3NEabxKb9vLXrXt1SpvMYyKsioqJ0CfBOZzM_pkRPMP4Hg6AmkMuvGNj7MuNfNrKlUcX29WtN8KpVUnCANpwWyZoFALStXxBezN00PMzCbYekUdHQDfjrUssfEY7fNQfuFfgxLig3TDagkXxMBKurT_AickewsyiXZCZKRITHaFK7oRdFEAwoxohxhkFk5LUOFEfoNrBYHnUOomm0vzUSw" mode="aspectFit" />
@@ -529,18 +541,35 @@ const goToSearchWithFilter = () => {
 }
 
 .banner-box {
-  background-color: #fcf3eb;
-  border-radius: 48rpx;
-  padding: 40rpx;
+  background: linear-gradient(135deg, #fff6ed 0%, #fbe8d8 55%, #f5d8be 100%);
+  border: 1rpx solid rgba(230, 159, 105, 0.25);
+  border-radius: 40rpx;
+  padding: 36rpx 32rpx;
+  min-height: 250rpx;
   position: relative;
   display: flex;
+  align-items: stretch;
   overflow: hidden;
+  box-shadow: 0 12rpx 36rpx rgba(138, 93, 59, 0.12);
+}
+
+.banner-glow {
+  position: absolute;
+  right: -80rpx;
+  top: -80rpx;
+  width: 260rpx;
+  height: 260rpx;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(238, 124, 43, 0.25) 0%, rgba(238, 124, 43, 0) 70%);
+  z-index: 0;
 }
 
 .banner-content {
-  width: 70%;
+  width: 66%;
   position: relative;
   z-index: 2;
+  display: flex;
+  flex-direction: column;
 }
 
 .promo-tag {
@@ -557,37 +586,60 @@ const goToSearchWithFilter = () => {
 }
 
 .banner-title {
-  font-size: 36rpx;
+  font-size: 40rpx;
   font-weight: bold;
   color: #8a5d3b;
   display: block;
+  letter-spacing: 1rpx;
 }
 
 .banner-sub {
   font-size: 24rpx;
   color: #a6866f;
-  margin: 10rpx 0 30rpx;
+  margin: 10rpx 0 20rpx;
   display: block;
+  line-height: 1.5;
+}
+
+.banner-points {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10rpx 14rpx;
+  margin-bottom: 24rpx;
+}
+
+.banner-point {
+  display: inline-flex;
+  align-items: center;
+  gap: 6rpx;
+  font-size: 20rpx;
+  color: #8a5d3b;
+  background-color: rgba(255, 255, 255, 0.62);
+  border: 1rpx solid rgba(230, 159, 105, 0.3);
+  border-radius: 999rpx;
+  padding: 6rpx 14rpx;
 }
 
 .banner-btn {
-  background-color: #e69f69;
+  background-color: #d98f54;
   color: #fff;
   font-size: 24rpx;
   font-weight: bold;
-  padding: 10rpx 40rpx;
+  padding: 10rpx 36rpx;
   border-radius: 40rpx;
   margin: 0;
   width: fit-content;
+  box-shadow: 0 8rpx 22rpx rgba(217, 143, 84, 0.32);
 }
 
 .banner-bg {
   position: absolute;
-  right: 0;
+  right: 4rpx;
   bottom: 0;
-  width: 240rpx;
-  height: 240rpx;
-  opacity: 0.8;
+  width: 228rpx;
+  height: 228rpx;
+  opacity: 0.9;
+  z-index: 1;
 }
 
 /* 避雷信息 */
@@ -703,6 +755,8 @@ const goToSearchWithFilter = () => {
 
 .review-user {
   position: relative;
+  width: 96rpx;
+  height: 96rpx;
   flex-shrink: 0;
 }
 
@@ -715,17 +769,23 @@ const goToSearchWithFilter = () => {
 
 .verified-badge {
   position: absolute;
-  bottom: -4rpx;
-  right: -4rpx;
+  left: -8rpx;
+  bottom: -8rpx;
+  width: 36rpx;
+  height: 36rpx;
   background-color: #10b981;
   color: #fff;
-  padding: 4rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border-radius: 50%;
   border: 4rpx solid #fff;
+  box-shadow: 0 6rpx 16rpx rgba(16, 185, 129, 0.35);
+  z-index: 2;
 }
 
 .verified-badge .app-icon {
-  font-size: 20rpx;
+  font-size: 18rpx;
 }
 
 .review-content {

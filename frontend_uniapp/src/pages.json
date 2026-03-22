@@ -1,4 +1,4 @@
-{
+﻿{
 	"pages": [
 		{
 			"path": "pages/index/index",
@@ -39,13 +39,13 @@
 		{
 			"path": "pages/about/index",
 			"style": {
-				"navigationBarTitleText": "关于我们"
+				"navigationBarTitleText": "鍏充簬鎴戜滑"
 			}
 		},
 		{
 			"path": "pages/safety/index",
 			"style": {
-				"navigationBarTitleText": "安全指南"
+				"navigationBarTitleText": "瀹夊叏鎸囧崡"
 			}
 		},
 		{
@@ -57,13 +57,13 @@
 		{
 			"path": "pages/register/index",
 			"style": {
-				"navigationBarTitleText": "注册"
+				"navigationStyle": "custom"
 			}
 		}
 	],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
-		"navigationBarTitleText": "租房避雷",
+		"navigationBarTitleText": "绉熸埧閬块浄",
 		"navigationBarBackgroundColor": "#faf9f8",
 		"backgroundColor": "#faf9f8"
 	},
@@ -75,19 +75,19 @@
 		"list": [
 			{
 				"pagePath": "pages/index/index",
-				"text": "首页"
+				"text": "棣栭〉"
 			},
 			{
 				"pagePath": "pages/community/index",
-				"text": "社区"
+				"text": "绀惧尯"
 			},
 			{
 				"pagePath": "pages/message/index",
-				"text": "消息"
+				"text": "娑堟伅"
 			},
 			{
 				"pagePath": "pages/profile/index",
-				"text": "我的"
+				"text": "鎴戠殑"
 			}
 		]
 	}

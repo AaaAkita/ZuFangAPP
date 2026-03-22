@@ -104,39 +104,10 @@
           </view>
         </view>
       </view>
-
-      <view class="bottom-safe-area"></view>
     </scroll-view>
 
     <view class="map-fab" @click="handleMap">
       <Icon class="app-icon map-icon" name="map" size="inherit" />
-    </view>
-
-    <view class="tab-bar">
-      <view class="tab-item active" @click="switchTab('/pages/search/index')">
-        <view class="tab-icon active">
-          <Icon class="app-icon" name="search" size="inherit" />
-        </view>
-        <text class="tab-text active">搜索</text>
-      </view>
-      <view class="tab-item" @click="switchTab('/pages/index/index')">
-        <view class="tab-icon">
-          <Icon class="app-icon" name="favorite" size="inherit" />
-        </view>
-        <text class="tab-text">收藏</text>
-      </view>
-      <view class="tab-item" @click="switchTab('/pages/message/index')">
-        <view class="tab-icon">
-          <Icon class="app-icon" name="chat_bubble" size="inherit" />
-        </view>
-        <text class="tab-text">消息</text>
-      </view>
-      <view class="tab-item" @click="switchTab('/pages/profile/index')">
-        <view class="tab-icon">
-          <Icon class="app-icon" name="person" size="inherit" />
-        </view>
-        <text class="tab-text">我的</text>
-      </view>
     </view>
 
     <view class="filter-modal" :class="{ show: showFilterModal }" @click="closeFilterModal">
@@ -447,11 +418,6 @@ const handleMap = () => {
 const navigateToDetail = (item: Property) => {
   uni.showToast({ title: `查看: ${item.title}`, icon: 'none' })
 }
-
-const switchTab = (url: string) => {
-  if (url === '/pages/search/index') return
-  uni.navigateTo({ url })
-}
 </script>
 
 <style scoped>
@@ -460,12 +426,14 @@ const switchTab = (url: string) => {
   background-color: #fcfaf8;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 }
 
 .header {
-  padding: 48rpx 40rpx 16rpx;
+  padding: calc(var(--status-bar-height, 0px) + 30rpx) 24rpx 16rpx;
   background-color: #fcfaf8;
   z-index: 10;
+  box-sizing: border-box;
 }
 
 .search-wrapper {
@@ -477,12 +445,13 @@ const switchTab = (url: string) => {
   display: flex;
   align-items: center;
   width: 100%;
-  height: 112rpx;
+  height: 94rpx;
   background-color: #ffffff;
-  border-radius: 60rpx;
+  border-radius: 48rpx;
   border: 2rpx solid #f3ece7;
-  padding: 0 32rpx;
+  padding: 0 20rpx;
   box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.04);
+  box-sizing: border-box;
 }
 
 .search-bar:focus-within {
@@ -491,15 +460,16 @@ const switchTab = (url: string) => {
 }
 
 .search-icon {
-  font-size: 48rpx;
+  font-size: 36rpx;
   color: #ee7c2b;
 }
 
 .search-input {
   flex: 1;
-  font-size: 30rpx;
+  font-size: 28rpx;
   color: #1b130d;
-  padding: 0 24rpx;
+  padding: 0 14rpx;
+  min-width: 0;
 }
 
 .search-input::placeholder {
@@ -507,8 +477,8 @@ const switchTab = (url: string) => {
 }
 
 .filter-btn {
-  width: 64rpx;
-  height: 64rpx;
+  width: 54rpx;
+  height: 54rpx;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -517,27 +487,28 @@ const switchTab = (url: string) => {
 }
 
 .filter-btn .app-icon {
-  font-size: 40rpx;
+  font-size: 32rpx;
   color: #1b130d;
 }
 
 .filter-scroll {
   white-space: nowrap;
-  padding: 16rpx 40rpx 32rpx;
+  padding: 8rpx 24rpx 18rpx;
   background-color: #fcfaf8;
+  box-sizing: border-box;
 }
 
 .filter-tags {
   display: flex;
-  gap: 24rpx;
+  gap: 12rpx;
 }
 
 .filter-tag {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 64rpx;
-  padding: 0 32rpx;
+  height: 56rpx;
+  padding: 0 24rpx;
   border-radius: 40rpx;
   flex-shrink: 0;
 }
@@ -547,24 +518,26 @@ const switchTab = (url: string) => {
 }
 
 .tag-text {
-  font-size: 28rpx;
+  font-size: 24rpx;
   font-weight: 500;
 }
 
 .content-scroll {
   flex: 1;
-  padding: 0 40rpx;
+  padding: 0 24rpx;
+  box-sizing: border-box;
 }
 
 .result-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-bottom: 16rpx;
+  padding-bottom: 12rpx;
+  column-gap: 16rpx;
 }
 
 .result-title {
-  font-size: 36rpx;
+  font-size: 34rpx;
   font-weight: bold;
   color: #1b130d;
 }
@@ -578,23 +551,25 @@ const switchTab = (url: string) => {
 }
 
 .sort-text {
-  font-size: 28rpx;
+  font-size: 26rpx;
 }
 
 .sort-icon {
-  font-size: 36rpx;
+  font-size: 32rpx;
 }
 
 .property-list {
   display: flex;
   flex-direction: column;
-  gap: 40rpx;
-  padding-bottom: 200rpx;
+  gap: 24rpx;
+  padding-bottom: calc(constant(safe-area-inset-bottom) + 56rpx);
+  padding-bottom: calc(env(safe-area-inset-bottom) + 56rpx);
 }
 
 .property-card {
   background-color: #ffffff;
-  border-radius: 48rpx;
+  border-radius: 30rpx;
+  border: 1rpx solid #f3ece7;
   overflow: hidden;
   box-shadow: 0 8rpx 40rpx rgba(0, 0, 0, 0.04);
 }
@@ -602,24 +577,25 @@ const switchTab = (url: string) => {
 .card-image-wrapper {
   position: relative;
   width: 100%;
-  aspect-ratio: 4 / 3;
-  padding: 16rpx;
+  aspect-ratio: 16 / 10;
+  padding: 12rpx;
   padding-bottom: 0;
+  box-sizing: border-box;
 }
 
 .card-image {
   width: 100%;
   height: 100%;
-  border-radius: 40rpx;
+  border-radius: 22rpx;
   object-fit: cover;
 }
 
 .favorite-btn {
   position: absolute;
-  top: 40rpx;
-  right: 40rpx;
-  width: 72rpx;
-  height: 72rpx;
+  top: 24rpx;
+  right: 24rpx;
+  width: 60rpx;
+  height: 60rpx;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -629,7 +605,7 @@ const switchTab = (url: string) => {
 }
 
 .favorite-icon {
-  font-size: 40rpx;
+  font-size: 34rpx;
   color: #9a6c4c;
 }
 
@@ -640,9 +616,9 @@ const switchTab = (url: string) => {
 
 .card-badge {
   position: absolute;
-  bottom: 24rpx;
-  left: 40rpx;
-  padding: 8rpx 24rpx;
+  bottom: 18rpx;
+  left: 26rpx;
+  padding: 8rpx 20rpx;
   border-radius: 40rpx;
   backdrop-filter: blur(10px);
 }
@@ -654,10 +630,10 @@ const switchTab = (url: string) => {
 }
 
 .card-content {
-  padding: 32rpx;
+  padding: 22rpx;
   display: flex;
   flex-direction: column;
-  gap: 16rpx;
+  gap: 12rpx;
 }
 
 .card-header {
@@ -672,43 +648,44 @@ const switchTab = (url: string) => {
 }
 
 .card-title {
-  font-size: 36rpx;
+  font-size: 33rpx;
   font-weight: bold;
   color: #1b130d;
   line-height: 1.3;
 }
 
 .card-location {
-  font-size: 28rpx;
+  font-size: 24rpx;
   color: #9a6c4c;
-  margin-top: 8rpx;
+  margin-top: 6rpx;
 }
 
 .rating-box {
   display: flex;
   align-items: center;
-  gap: 8rpx;
+  gap: 6rpx;
   background-color: #f3ece7;
-  padding: 8rpx 16rpx;
-  border-radius: 16rpx;
+  padding: 6rpx 12rpx;
+  border-radius: 14rpx;
 }
 
 .star-icon {
-  font-size: 32rpx;
+  font-size: 24rpx;
   color: #ee7c2b;
   font-variation-settings: 'FILL' 1;
 }
 
 .rating-text {
-  font-size: 28rpx;
+  font-size: 24rpx;
   font-weight: bold;
   color: #1b130d;
 }
 
 .card-features {
   display: flex;
-  gap: 32rpx;
-  margin-top: 8rpx;
+  gap: 20rpx;
+  margin-top: 2rpx;
+  flex-wrap: wrap;
 }
 
 .feature-item {
@@ -718,12 +695,12 @@ const switchTab = (url: string) => {
 }
 
 .feature-icon {
-  font-size: 32rpx;
+  font-size: 24rpx;
   color: #9a6c4c;
 }
 
 .feature-text {
-  font-size: 24rpx;
+  font-size: 22rpx;
   font-weight: 500;
   color: #9a6c4c;
 }
@@ -732,8 +709,8 @@ const switchTab = (url: string) => {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  margin-top: 16rpx;
-  padding-top: 24rpx;
+  margin-top: 8rpx;
+  padding-top: 16rpx;
   border-top: 2rpx solid #f3ece7;
 }
 
@@ -743,28 +720,29 @@ const switchTab = (url: string) => {
 }
 
 .price {
-  font-size: 40rpx;
+  font-size: 38rpx;
   font-weight: bold;
   color: #ee7c2b;
 }
 
 .price-unit {
-  font-size: 28rpx;
+  font-size: 24rpx;
   color: #9a6c4c;
 }
 
 .detail-btn {
-  font-size: 28rpx;
+  font-size: 24rpx;
   font-weight: 600;
   color: #ee7c2b;
 }
 
 .map-fab {
   position: fixed;
-  right: 40rpx;
-  bottom: 200rpx;
-  width: 112rpx;
-  height: 112rpx;
+  right: 24rpx;
+  bottom: calc(constant(safe-area-inset-bottom) + 36rpx);
+  bottom: calc(env(safe-area-inset-bottom) + 36rpx);
+  width: 94rpx;
+  height: 94rpx;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -775,69 +753,9 @@ const switchTab = (url: string) => {
 }
 
 .map-icon {
-  font-size: 52rpx;
+  font-size: 44rpx;
   color: #ffffff;
   font-variation-settings: 'FILL' 1;
-}
-
-.bottom-safe-area {
-  height: 200rpx;
-}
-
-.tab-bar {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background-color: rgba(252, 250, 248, 0.95);
-  border-top: 2rpx solid #f3ece7;
-  backdrop-filter: blur(20px);
-  display: flex;
-  justify-content: space-around;
-  align-items: flex-end;
-  padding: 24rpx 48rpx 48rpx;
-  z-index: 1000;
-}
-
-.tab-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8rpx;
-  flex: 1;
-}
-
-.tab-icon {
-  width: 80rpx;
-  height: 80rpx;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  color: #9a6c4c;
-}
-
-.tab-icon.active {
-  color: #ee7c2b;
-}
-
-.tab-icon .app-icon {
-  font-size: 56rpx;
-}
-
-.tab-icon.active .app-icon {
-  font-variation-settings: 'FILL' 1;
-}
-
-.tab-text {
-  font-size: 20rpx;
-  color: #9a6c4c;
-  font-weight: 500;
-}
-
-.tab-text.active {
-  color: #ee7c2b;
-  font-weight: bold;
 }
 
 .filter-modal {

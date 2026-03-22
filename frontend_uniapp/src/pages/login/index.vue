@@ -217,32 +217,37 @@ const goToRegister = () => {
   display: flex;
   flex-direction: column;
   align-items: center;
+  box-sizing: border-box;
+  padding: 0 44rpx;
 }
 
 .login-wrapper {
   width: 100%;
-  max-width: 800rpx;
+  max-width: 680rpx;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
-  padding-top: 120rpx;
+  padding-top: calc(var(--status-bar-height, 0px) + 56rpx);
+  padding-bottom: 44rpx;
+  box-sizing: border-box;
 }
 
 .header-section {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 80rpx;
+  padding-top: 32rpx;
 }
 
 .logo-box {
-  width: 192rpx;
-  height: 192rpx;
+  width: 172rpx;
+  height: 172rpx;
   background-color: rgba(224, 122, 95, 0.1);
-  border-radius: 64rpx;
+  border-radius: 54rpx;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 32rpx;
+  margin-bottom: 28rpx;
   transform: rotate(3deg);
   transition: transform 0.3s ease;
 }
@@ -252,7 +257,7 @@ const goToRegister = () => {
 }
 
 .logo-icon {
-  font-size: 96rpx;
+  font-size: 84rpx;
   color: #E07A5F;
 }
 
@@ -264,14 +269,14 @@ const goToRegister = () => {
 }
 
 .welcome-title {
-  font-size: 60rpx;
+  font-size: 56rpx;
   font-weight: 800;
   color: #4A403A;
   letter-spacing: -1rpx;
 }
 
 .welcome-subtitle {
-  font-size: 32rpx;
+  font-size: 30rpx;
   font-weight: 500;
   color: #8C817D;
 }
@@ -279,22 +284,23 @@ const goToRegister = () => {
 .form-section {
   display: flex;
   flex-direction: column;
-  gap: 32rpx;
-  margin-top: 48rpx;
+  gap: 24rpx;
+  margin-top: 54rpx;
 }
 
 .input-group {
   position: relative;
   display: flex;
   align-items: center;
-  height: 112rpx;
+  height: 104rpx;
   background-color: #ffffff;
-  border: 4rpx solid #F4D1C6;
-  border-radius: 112rpx;
-  padding-left: 48rpx;
-  padding-right: 48rpx;
+  border: 3rpx solid #F4D1C6;
+  border-radius: 104rpx;
+  padding-left: 38rpx;
+  padding-right: 34rpx;
   transition: all 0.3s ease;
   box-shadow: 0 4rpx 20rpx -8rpx rgba(224, 122, 95, 0.1);
+  box-sizing: border-box;
 }
 
 .input-group:focus-within {
@@ -306,11 +312,11 @@ const goToRegister = () => {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-right: 24rpx;
+  margin-right: 18rpx;
 }
 
 .input-icon {
-  font-size: 48rpx;
+  font-size: 42rpx;
   color: rgba(224, 122, 95, 0.5);
   transition: color 0.3s ease;
 }
@@ -322,7 +328,7 @@ const goToRegister = () => {
 .input-field {
   flex: 1;
   height: 100%;
-  font-size: 32rpx;
+  font-size: 30rpx;
   color: #4A403A;
 }
 
@@ -339,7 +345,7 @@ const goToRegister = () => {
 }
 
 .toggle-icon {
-  font-size: 40rpx;
+  font-size: 36rpx;
   color: #8C817D;
   transition: color 0.3s ease;
 }
@@ -351,8 +357,8 @@ const goToRegister = () => {
 .forgot-row {
   display: flex;
   justify-content: flex-end;
-  margin-top: -8rpx;
-  margin-bottom: 8rpx;
+  margin-top: -4rpx;
+  margin-bottom: 4rpx;
 }
 
 .forgot-link {
@@ -365,14 +371,16 @@ const goToRegister = () => {
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 100%;
   gap: 16rpx;
-  height: 112rpx;
+  height: 104rpx;
   background-color: #E07A5F;
-  border-radius: 112rpx;
-  margin-top: 24rpx;
+  border-radius: 104rpx;
+  margin-top: 10rpx;
   box-shadow: 0 16rpx 48rpx -12rpx rgba(224, 122, 95, 0.3);
   transition: all 0.3s ease;
   border: none;
+  box-sizing: border-box;
 }
 
 .login-btn::after {
@@ -391,13 +399,13 @@ const goToRegister = () => {
 }
 
 .login-text {
-  font-size: 36rpx;
+  font-size: 34rpx;
   font-weight: 700;
   color: #ffffff;
 }
 
 .arrow-icon {
-  font-size: 40rpx;
+  font-size: 36rpx;
   color: #ffffff;
   transition: transform 0.3s ease;
 }
@@ -410,7 +418,7 @@ const goToRegister = () => {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 48rpx;
+  margin-top: 52rpx;
 }
 
 .divider-line {
@@ -436,7 +444,7 @@ const goToRegister = () => {
 .divider-text {
   font-size: 24rpx;
   color: rgba(140, 129, 125, 0.6);
-  margin-bottom: 32rpx;
+  margin-bottom: 28rpx;
   position: relative;
   z-index: 1;
 }
@@ -445,7 +453,7 @@ const goToRegister = () => {
   display: flex;
   justify-content: center;
   gap: 32rpx;
-  margin-bottom: 32rpx;
+  margin-bottom: 40rpx;
 }
 
 .social-btn {
@@ -493,7 +501,7 @@ const goToRegister = () => {
   justify-content: center;
   align-items: center;
   margin-top: auto;
-  padding-bottom: 64rpx;
+  padding-bottom: 24rpx;
 }
 
 .register-text {

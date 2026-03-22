@@ -179,7 +179,7 @@
             </navigator>
           </view>
           
-          <view class="review-list">
+        <view class="review-list">
             <view v-for="(review, index) in reviews" :key="index" class="review-item">
               <view class="review-avatar-wrapper">
                 <image
@@ -213,8 +213,6 @@
             </view>
           </view>
         </view>
-        
-        <view class="bottom-safe-area"></view>
       </scroll-view>
     </view>
     
@@ -264,25 +262,6 @@
         <view class="cancel-btn" @click="closeMapPopup">
           <text>取消</text>
         </view>
-      </view>
-    </view>
-    
-    <view class="tab-bar">
-      <view class="tab-item" @click="switchTab('/pages/index/index')">
-        <Icon class="app-icon" name="home" size="inherit" />
-        <text class="tab-label">首页</text>
-      </view>
-      <view class="tab-item active">
-        <Icon class="app-icon" name="search" size="inherit" />
-        <text class="tab-label">发现</text>
-      </view>
-      <view class="tab-item" @click="switchTab('/pages/message/index')">
-        <Icon class="app-icon" name="bookmark" size="inherit" />
-        <text class="tab-label">收藏</text>
-      </view>
-      <view class="tab-item" @click="switchTab('/pages/profile/index')">
-        <Icon class="app-icon" name="person" size="inherit" />
-        <text class="tab-label">我的</text>
       </view>
     </view>
   </view>
@@ -388,10 +367,6 @@ const handlePublishReview = () => {
   })
 }
 
-const switchTab = (url: string) => {
-  uni.navigateTo({ url })
-}
-
 const closeMapPopup = () => {
   showMapPopup.value = false
 }
@@ -444,7 +419,7 @@ const selectMap = (mapType: string) => {
   top: 0;
   left: 0;
   right: 0;
-  padding: 80rpx 32rpx 32rpx;
+  padding: calc(var(--status-bar-height, 0px) + 20rpx) 32rpx 32rpx;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -811,13 +786,10 @@ const selectMap = (mapType: string) => {
   padding-bottom: 48rpx;
 }
 
-.bottom-safe-area {
-  height: 200rpx;
-}
-
 .fab-buttons {
   position: fixed;
-  bottom: 200rpx;
+  bottom: calc(constant(safe-area-inset-bottom) + 48rpx);
+  bottom: calc(env(safe-area-inset-bottom) + 48rpx);
   right: 40rpx;
   display: flex;
   flex-direction: column;
@@ -849,48 +821,6 @@ const selectMap = (mapType: string) => {
   font-size: 28rpx;
   font-weight: bold;
   color: #fff;
-}
-
-.tab-bar {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background-color: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(20px);
-  border-top: 1rpx solid #f3f4f6;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  padding: 24rpx 40rpx 48rpx;
-  z-index: 1000;
-}
-
-.tab-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8rpx;
-  flex: 1;
-}
-
-.tab-item .app-icon {
-  font-size: 52rpx;
-  color: #888;
-}
-
-.tab-item.active .app-icon {
-  color: #FF8C42;
-}
-
-.tab-label {
-  font-size: 20rpx;
-  color: #888;
-}
-
-.tab-item.active .tab-label {
-  color: #FF8C42;
-  font-weight: bold;
 }
 
 .popup-overlay {
