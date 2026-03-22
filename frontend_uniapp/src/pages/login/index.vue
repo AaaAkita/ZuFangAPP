@@ -3,7 +3,7 @@
     <view class="login-wrapper">
       <view class="header-section">
         <view class="logo-box">
-          <Icon class="material-symbols-outlined logo-icon" name="cottage" size="inherit" />
+          <Icon class="app-icon logo-icon" name="cottage" size="inherit" />
         </view>
         <view class="welcome-text">
           <text class="welcome-title">欢迎回来</text>
@@ -14,7 +14,7 @@
       <view class="form-section">
         <view class="input-group">
           <view class="input-icon-box">
-            <Icon class="material-symbols-outlined input-icon" name="person" size="inherit" />
+            <Icon class="app-icon input-icon" name="person" size="inherit" />
           </view>
           <input
             v-model="formData.account"
@@ -28,7 +28,7 @@
 
         <view class="input-group">
           <view class="input-icon-box">
-            <Icon class="material-symbols-outlined input-icon" name="lock" size="inherit" />
+            <Icon class="app-icon input-icon" name="lock" size="inherit" />
           </view>
           <input
             v-model="formData.password"
@@ -40,7 +40,7 @@
           />
           <view class="toggle-password" @click="togglePassword">
             <Icon
-              class="material-symbols-outlined toggle-icon"
+              class="app-icon toggle-icon"
               :name="showPassword ? 'visibility' : 'visibility_off'"
               size="inherit"
             />
@@ -55,7 +55,7 @@
           <text v-if="isLoading" class="login-text">登录中...</text>
           <template v-else>
             <text class="login-text">登录</text>
-            <Icon class="material-symbols-outlined arrow-icon" name="arrow_forward" size="inherit" />
+            <Icon class="app-icon arrow-icon" name="arrow_forward" size="inherit" />
           </template>
         </button>
       </view>
@@ -68,7 +68,7 @@
       <view class="social-section">
         <view class="social-btn wechat" @click="handleWechatLogin">
           <view class="social-icon-wrapper">
-            <Icon class="material-symbols-outlined social-icon" name="wechat" size="inherit" />
+            <Icon class="app-icon social-icon" name="wechat" size="inherit" />
           </view>
         </view>
       </view>

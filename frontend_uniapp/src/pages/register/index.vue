@@ -3,7 +3,7 @@
     <view class="register-wrapper">
       <view class="header-section">
         <view class="logo-box">
-          <Icon class="material-symbols-outlined logo-icon" name="cottage" size="inherit" />
+          <Icon class="app-icon logo-icon" name="cottage" size="inherit" />
         </view>
         <view class="welcome-text">
           <text class="welcome-title">创建账号</text>
@@ -14,7 +14,7 @@
       <view class="form-section">
         <view class="input-group">
           <view class="input-icon-box">
-            <Icon class="material-symbols-outlined input-icon" name="phone" size="inherit" />
+            <Icon class="app-icon input-icon" name="phone" size="inherit" />
           </view>
           <input
             v-model="formData.phone"
@@ -28,7 +28,7 @@
 
         <view class="input-group">
           <view class="input-icon-box">
-            <Icon class="material-symbols-outlined input-icon" name="person" size="inherit" />
+            <Icon class="app-icon input-icon" name="person" size="inherit" />
           </view>
           <input
             v-model="formData.nickname"
@@ -41,7 +41,7 @@
 
         <view class="input-group">
           <view class="input-icon-box">
-            <Icon class="material-symbols-outlined input-icon" name="lock" size="inherit" />
+            <Icon class="app-icon input-icon" name="lock" size="inherit" />
           </view>
           <input
             v-model="formData.password"
@@ -53,7 +53,7 @@
           />
           <view class="toggle-password" @click="togglePassword">
             <Icon
-              class="material-symbols-outlined toggle-icon"
+              class="app-icon toggle-icon"
               :name="showPassword ? 'visibility' : 'visibility_off'"
               size="inherit"
             />
@@ -62,18 +62,18 @@
 
         <view class="password-hint">
           <text class="hint-text" :class="{ valid: passwordStrength.length }">
-            <Icon class="material-symbols-outlined" :name="passwordStrength.length ? 'check_circle' : 'radio_button_unchecked'" size="inherit" />
+            <Icon class="app-icon" :name="passwordStrength.length ? 'check_circle' : 'radio_button_unchecked'" size="inherit" />
             至少8位
           </text>
           <text class="hint-text" :class="{ valid: passwordStrength.hasLetterAndNumber }">
-            <Icon class="material-symbols-outlined" :name="passwordStrength.hasLetterAndNumber ? 'check_circle' : 'radio_button_unchecked'" size="inherit" />
+            <Icon class="app-icon" :name="passwordStrength.hasLetterAndNumber ? 'check_circle' : 'radio_button_unchecked'" size="inherit" />
             字母+数字
           </text>
         </view>
 
         <button class="register-btn" @click="handleRegister">
           <text class="register-text">注册</text>
-          <Icon class="material-symbols-outlined arrow-icon" name="arrow_forward" size="inherit" />
+          <Icon class="app-icon arrow-icon" name="arrow_forward" size="inherit" />
         </button>
       </view>
 
@@ -382,7 +382,7 @@ const goToLogin = () => {
   color: #10b981;
 }
 
-.hint-text .material-symbols-outlined {
+.hint-text .app-icon {
   font-size: 28rpx;
 }
 

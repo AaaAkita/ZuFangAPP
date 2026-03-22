@@ -31,7 +31,7 @@ onHide(() => {
   font-display: swap;
 }
 
-.material-symbols-outlined {
+.app-icon {
   font-family: "Material Symbols Outlined";
   font-weight: normal;
   font-style: normal;

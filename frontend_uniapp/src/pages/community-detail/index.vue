@@ -10,15 +10,15 @@
       
       <view class="hero-header">
         <view class="header-btn" @click="goBack">
-          <Icon class="material-symbols-outlined" name="arrow_back" size="inherit" />
+          <Icon class="app-icon" name="arrow_back" size="inherit" />
         </view>
         <view class="header-actions">
           <view class="header-btn" @click="handleShare">
-            <Icon class="material-symbols-outlined" name="share" size="inherit" />
+            <Icon class="app-icon" name="share" size="inherit" />
           </view>
           <view class="header-btn" @click="toggleFavorite">
             <Icon
-              class="material-symbols-outlined"
+              class="app-icon"
               :name="isFavorite ? 'favorite' : 'favorite_border'"
               size="inherit"
             />
@@ -30,12 +30,12 @@
         <view class="hero-info">
           <text class="hero-title">{{ communityInfo.name }}</text>
           <view class="hero-location">
-            <Icon class="material-symbols-outlined" name="location_on" size="inherit" />
+            <Icon class="app-icon" name="location_on" size="inherit" />
             <text>{{ communityInfo.district }} · {{ communityInfo.address }}</text>
           </view>
         </view>
         <view class="hero-rating">
-          <Icon class="material-symbols-outlined star-icon" name="star" size="inherit" />
+          <Icon class="app-icon star-icon" name="star" size="inherit" />
           <text class="rating-value">{{ communityInfo.rating }}</text>
         </view>
       </view>
@@ -175,7 +175,7 @@
               <text class="review-count">({{ reviews.length }})</text>
             </view>
             <navigator url="/pages/reviews/index" class="view-all-link">
-              查看全部 <Icon class="material-symbols-outlined" name="arrow_forward_ios" size="inherit" />
+              查看全部 <Icon class="app-icon" name="arrow_forward_ios" size="inherit" />
             </navigator>
           </view>
           
@@ -189,10 +189,10 @@
                   mode="aspectFill"
                 />
                 <view v-else class="review-avatar-placeholder">
-                  <Icon class="material-symbols-outlined" name="face" size="inherit" />
+                  <Icon class="app-icon" name="face" size="inherit" />
                 </view>
                 <view v-if="review.verified" class="verified-badge">
-                  <Icon class="material-symbols-outlined" name="star" size="inherit" />
+                  <Icon class="app-icon" name="star" size="inherit" />
                 </view>
               </view>
               <view class="review-bubble">
@@ -220,11 +220,11 @@
     
     <view class="fab-buttons">
       <view class="fab-button nav-button" @click="showMapPopup = true">
-        <Icon class="material-symbols-outlined" name="navigation" size="inherit" />
+        <Icon class="app-icon" name="navigation" size="inherit" />
         <text class="fab-text">导航</text>
       </view>
       <view class="fab-button" @click="handlePublishReview">
-        <Icon class="material-symbols-outlined" name="edit_square" size="inherit" />
+        <Icon class="app-icon" name="edit_square" size="inherit" />
         <text class="fab-text">发布评价</text>
       </view>
     </view>
@@ -239,7 +239,7 @@
           <view class="map-option" @click="selectMap('amap')">
             <view class="map-icon-wrapper">
               <view class="map-icon amap-icon">
-                <Icon class="material-symbols-outlined" name="near_me" size="inherit" />
+                <Icon class="app-icon" name="near_me" size="inherit" />
               </view>
             </view>
             <text class="map-name">高德地图</text>
@@ -247,7 +247,7 @@
           <view class="map-option" @click="selectMap('baidu')">
             <view class="map-icon-wrapper">
               <view class="map-icon baidu-icon">
-                <Icon class="material-symbols-outlined" name="explore" size="inherit" />
+                <Icon class="app-icon" name="explore" size="inherit" />
               </view>
             </view>
             <text class="map-name">百度地图</text>
@@ -255,7 +255,7 @@
           <view class="map-option" @click="selectMap('tencent')">
             <view class="map-icon-wrapper">
               <view class="map-icon tencent-icon">
-                <Icon class="material-symbols-outlined" name="map" size="inherit" />
+                <Icon class="app-icon" name="map" size="inherit" />
               </view>
             </view>
             <text class="map-name">腾讯地图</text>
@@ -269,19 +269,19 @@
     
     <view class="tab-bar">
       <view class="tab-item" @click="switchTab('/pages/index/index')">
-        <Icon class="material-symbols-outlined" name="home" size="inherit" />
+        <Icon class="app-icon" name="home" size="inherit" />
         <text class="tab-label">首页</text>
       </view>
       <view class="tab-item active">
-        <Icon class="material-symbols-outlined" name="search" size="inherit" />
+        <Icon class="app-icon" name="search" size="inherit" />
         <text class="tab-label">发现</text>
       </view>
       <view class="tab-item" @click="switchTab('/pages/message/index')">
-        <Icon class="material-symbols-outlined" name="bookmark" size="inherit" />
+        <Icon class="app-icon" name="bookmark" size="inherit" />
         <text class="tab-label">收藏</text>
       </view>
       <view class="tab-item" @click="switchTab('/pages/profile/index')">
-        <Icon class="material-symbols-outlined" name="person" size="inherit" />
+        <Icon class="app-icon" name="person" size="inherit" />
         <text class="tab-label">我的</text>
       </view>
     </view>
@@ -468,7 +468,7 @@ const selectMap = (mapType: string) => {
   color: #fff;
 }
 
-.header-btn .material-symbols-outlined {
+.header-btn .app-icon {
   font-size: 40rpx;
 }
 
@@ -503,7 +503,7 @@ const selectMap = (mapType: string) => {
   font-size: 28rpx;
 }
 
-.hero-location .material-symbols-outlined {
+.hero-location .app-icon {
   font-size: 36rpx;
 }
 
@@ -675,7 +675,7 @@ const selectMap = (mapType: string) => {
   align-items: center;
 }
 
-.view-all-link .material-symbols-outlined {
+.view-all-link .app-icon {
   font-size: 28rpx;
   margin-left: 4rpx;
 }
@@ -716,7 +716,7 @@ const selectMap = (mapType: string) => {
   box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.1);
 }
 
-.review-avatar-placeholder .material-symbols-outlined {
+.review-avatar-placeholder .app-icon {
   font-size: 48rpx;
   color: #3b82f6;
 }
@@ -731,7 +731,7 @@ const selectMap = (mapType: string) => {
   border: 4rpx solid #fff;
 }
 
-.verified-badge .material-symbols-outlined {
+.verified-badge .app-icon {
   font-size: 20rpx;
   color: #fff;
 }
@@ -840,7 +840,7 @@ const selectMap = (mapType: string) => {
   box-shadow: 0 16rpx 60rpx rgba(17, 138, 178, 0.4);
 }
 
-.fab-button .material-symbols-outlined {
+.fab-button .app-icon {
   font-size: 40rpx;
   color: #fff;
 }
@@ -874,12 +874,12 @@ const selectMap = (mapType: string) => {
   flex: 1;
 }
 
-.tab-item .material-symbols-outlined {
+.tab-item .app-icon {
   font-size: 52rpx;
   color: #888;
 }
 
-.tab-item.active .material-symbols-outlined {
+.tab-item.active .app-icon {
   color: #FF8C42;
 }
 
@@ -978,7 +978,7 @@ const selectMap = (mapType: string) => {
   justify-content: center;
 }
 
-.map-icon .material-symbols-outlined {
+.map-icon .app-icon {
   font-size: 48rpx;
   color: #fff;
 }

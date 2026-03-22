@@ -724,7 +724,7 @@ const goToSearchWithFilter = () => {
   border: 4rpx solid #fff;
 }
 
-.verified-badge .material-symbols-outlined {
+.verified-badge .app-icon {
   font-size: 20rpx;
 }
 

@@ -3,7 +3,7 @@
     <view class="header">
       <label class="search-wrapper">
         <view class="search-bar">
-          <Icon class="material-symbols-outlined search-icon" name="search" size="inherit" />
+          <Icon class="app-icon search-icon" name="search" size="inherit" />
           <input
             class="search-input"
             placeholder="搜索地点或房源"
@@ -11,7 +11,7 @@
             v-model="searchKeyword"
           />
           <view class="filter-btn" @click="handleFilter">
-            <Icon class="material-symbols-outlined" name="tune" size="inherit" />
+            <Icon class="app-icon" name="tune" size="inherit" />
           </view>
         </view>
       </label>
@@ -38,7 +38,7 @@
         <text class="result-title">找到 {{ propertyList.length }} 套房源</text>
         <view class="sort-btn" @click="handleSort">
           <text class="sort-text">排序</text>
-          <Icon class="material-symbols-outlined sort-icon" name="sort" size="inherit" />
+          <Icon class="app-icon sort-icon" name="sort" size="inherit" />
         </view>
       </view>
 
@@ -56,7 +56,7 @@
               @click.stop="toggleFavorite(index)"
             >
               <Icon
-                class="material-symbols-outlined favorite-icon"
+                class="app-icon favorite-icon"
                 :class="{ filled: item.isFavorite }"
                 :name="item.isFavorite ? 'favorite' : 'favorite_border'"
                 size="inherit"
@@ -74,22 +74,22 @@
                 <text class="card-location">{{ item.location }}</text>
               </view>
               <view class="rating-box">
-                <Icon class="material-symbols-outlined star-icon" name="star" size="inherit" />
+                <Icon class="app-icon star-icon" name="star" size="inherit" />
                 <text class="rating-text">{{ item.rating }}</text>
               </view>
             </view>
 
             <view class="card-features">
               <view class="feature-item">
-                <Icon class="material-symbols-outlined feature-icon" name="bed" size="inherit" />
+                <Icon class="app-icon feature-icon" name="bed" size="inherit" />
                 <text class="feature-text">{{ item.rooms }}</text>
               </view>
               <view class="feature-item">
-                <Icon class="material-symbols-outlined feature-icon" name="bathtub" size="inherit" />
+                <Icon class="app-icon feature-icon" name="bathtub" size="inherit" />
                 <text class="feature-text">{{ item.bathrooms }}</text>
               </view>
               <view class="feature-item">
-                <Icon class="material-symbols-outlined feature-icon" name="straighten" size="inherit" />
+                <Icon class="app-icon feature-icon" name="straighten" size="inherit" />
                 <text class="feature-text">{{ item.area }}</text>
               </view>
             </view>
@@ -109,31 +109,31 @@
     </scroll-view>
 
     <view class="map-fab" @click="handleMap">
-      <Icon class="material-symbols-outlined map-icon" name="map" size="inherit" />
+      <Icon class="app-icon map-icon" name="map" size="inherit" />
     </view>
 
     <view class="tab-bar">
       <view class="tab-item active" @click="switchTab('/pages/search/index')">
         <view class="tab-icon active">
-          <Icon class="material-symbols-outlined" name="search" size="inherit" />
+          <Icon class="app-icon" name="search" size="inherit" />
         </view>
         <text class="tab-text active">搜索</text>
       </view>
       <view class="tab-item" @click="switchTab('/pages/index/index')">
         <view class="tab-icon">
-          <Icon class="material-symbols-outlined" name="favorite" size="inherit" />
+          <Icon class="app-icon" name="favorite" size="inherit" />
         </view>
         <text class="tab-text">收藏</text>
       </view>
       <view class="tab-item" @click="switchTab('/pages/message/index')">
         <view class="tab-icon">
-          <Icon class="material-symbols-outlined" name="chat_bubble" size="inherit" />
+          <Icon class="app-icon" name="chat_bubble" size="inherit" />
         </view>
         <text class="tab-text">消息</text>
       </view>
       <view class="tab-item" @click="switchTab('/pages/profile/index')">
         <view class="tab-icon">
-          <Icon class="material-symbols-outlined" name="person" size="inherit" />
+          <Icon class="app-icon" name="person" size="inherit" />
         </view>
         <text class="tab-text">我的</text>
       </view>
@@ -147,7 +147,7 @@
         <view class="filter-header">
           <text class="filter-title">筛选</text>
           <view class="close-btn" @click="closeFilterModal">
-            <Icon class="material-symbols-outlined" name="close" size="inherit" />
+            <Icon class="app-icon" name="close" size="inherit" />
           </view>
         </view>
 
@@ -244,7 +244,7 @@
                   <Icon
                     v-for="n in rating.stars"
                     :key="n"
-                    class="material-symbols-outlined rating-star"
+                    class="app-icon rating-star"
                     :class="{ active: selectedRating === index }"
                     name="star"
                     size="inherit"
@@ -516,7 +516,7 @@ const switchTab = (url: string) => {
   border-radius: 50%;
 }
 
-.filter-btn .material-symbols-outlined {
+.filter-btn .app-icon {
   font-size: 40rpx;
   color: #1b130d;
 }
@@ -821,11 +821,11 @@ const switchTab = (url: string) => {
   color: #ee7c2b;
 }
 
-.tab-icon .material-symbols-outlined {
+.tab-icon .app-icon {
   font-size: 56rpx;
 }
 
-.tab-icon.active .material-symbols-outlined {
+.tab-icon.active .app-icon {
   font-variation-settings: 'FILL' 1;
 }
 
@@ -909,7 +909,7 @@ const switchTab = (url: string) => {
   border-radius: 50%;
 }
 
-.close-btn .material-symbols-outlined {
+.close-btn .app-icon {
   font-size: 40rpx;
   color: #9a6c4c;
 }
