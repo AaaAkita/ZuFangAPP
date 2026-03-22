@@ -22,6 +22,32 @@ onHide(() => {
   --text-muted: #9a8c7c;
 }
 
+/* Local icon font to avoid runtime network dependency */
+@font-face {
+  font-family: "Material Symbols Outlined";
+  src: url("/static/fonts/MaterialSymbolsOutlined.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 100 700;
+  font-display: swap;
+}
+
+.material-symbols-outlined {
+  font-family: "Material Symbols Outlined";
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-feature-settings: "liga";
+  -webkit-font-smoothing: antialiased;
+  font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+}
+
 /* 基础重置 */
 page {
   background-color: var(--background-light);

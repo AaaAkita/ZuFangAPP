@@ -3,7 +3,7 @@
     <view class="header">
       <label class="search-wrapper">
         <view class="search-bar">
-          <text class="material-symbols-outlined search-icon">search</text>
+          <Icon class="material-symbols-outlined search-icon" name="search" size="inherit" />
           <input
             class="search-input"
             placeholder="搜索地点或房源"
@@ -11,7 +11,7 @@
             v-model="searchKeyword"
           />
           <view class="filter-btn" @click="handleFilter">
-            <text class="material-symbols-outlined">tune</text>
+            <Icon class="material-symbols-outlined" name="tune" size="inherit" />
           </view>
         </view>
       </label>
@@ -38,7 +38,7 @@
         <text class="result-title">找到 {{ propertyList.length }} 套房源</text>
         <view class="sort-btn" @click="handleSort">
           <text class="sort-text">排序</text>
-          <text class="material-symbols-outlined sort-icon">sort</text>
+          <Icon class="material-symbols-outlined sort-icon" name="sort" size="inherit" />
         </view>
       </view>
 
@@ -55,12 +55,12 @@
               class="favorite-btn"
               @click.stop="toggleFavorite(index)"
             >
-              <text
+              <Icon
                 class="material-symbols-outlined favorite-icon"
                 :class="{ filled: item.isFavorite }"
-              >
-                favorite
-              </text>
+                :name="item.isFavorite ? 'favorite' : 'favorite_border'"
+                size="inherit"
+              />
             </view>
             <view v-if="item.tag" class="card-badge" :style="{ backgroundColor: item.tagColor }">
               <text class="badge-text">{{ item.tag }}</text>
@@ -74,22 +74,22 @@
                 <text class="card-location">{{ item.location }}</text>
               </view>
               <view class="rating-box">
-                <text class="material-symbols-outlined star-icon">star</text>
+                <Icon class="material-symbols-outlined star-icon" name="star" size="inherit" />
                 <text class="rating-text">{{ item.rating }}</text>
               </view>
             </view>
 
             <view class="card-features">
               <view class="feature-item">
-                <text class="material-symbols-outlined feature-icon">bed</text>
+                <Icon class="material-symbols-outlined feature-icon" name="bed" size="inherit" />
                 <text class="feature-text">{{ item.rooms }}</text>
               </view>
               <view class="feature-item">
-                <text class="material-symbols-outlined feature-icon">bathtub</text>
+                <Icon class="material-symbols-outlined feature-icon" name="bathtub" size="inherit" />
                 <text class="feature-text">{{ item.bathrooms }}</text>
               </view>
               <view class="feature-item">
-                <text class="material-symbols-outlined feature-icon">straighten</text>
+                <Icon class="material-symbols-outlined feature-icon" name="straighten" size="inherit" />
                 <text class="feature-text">{{ item.area }}</text>
               </view>
             </view>
@@ -109,31 +109,31 @@
     </scroll-view>
 
     <view class="map-fab" @click="handleMap">
-      <text class="material-symbols-outlined map-icon">map</text>
+      <Icon class="material-symbols-outlined map-icon" name="map" size="inherit" />
     </view>
 
     <view class="tab-bar">
       <view class="tab-item active" @click="switchTab('/pages/search/index')">
         <view class="tab-icon active">
-          <text class="material-symbols-outlined">search</text>
+          <Icon class="material-symbols-outlined" name="search" size="inherit" />
         </view>
         <text class="tab-text active">搜索</text>
       </view>
       <view class="tab-item" @click="switchTab('/pages/index/index')">
         <view class="tab-icon">
-          <text class="material-symbols-outlined">favorite</text>
+          <Icon class="material-symbols-outlined" name="favorite" size="inherit" />
         </view>
         <text class="tab-text">收藏</text>
       </view>
       <view class="tab-item" @click="switchTab('/pages/message/index')">
         <view class="tab-icon">
-          <text class="material-symbols-outlined">chat_bubble</text>
+          <Icon class="material-symbols-outlined" name="chat_bubble" size="inherit" />
         </view>
         <text class="tab-text">消息</text>
       </view>
       <view class="tab-item" @click="switchTab('/pages/profile/index')">
         <view class="tab-icon">
-          <text class="material-symbols-outlined">person</text>
+          <Icon class="material-symbols-outlined" name="person" size="inherit" />
         </view>
         <text class="tab-text">我的</text>
       </view>
@@ -147,7 +147,7 @@
         <view class="filter-header">
           <text class="filter-title">筛选</text>
           <view class="close-btn" @click="closeFilterModal">
-            <text class="material-symbols-outlined">close</text>
+            <Icon class="material-symbols-outlined" name="close" size="inherit" />
           </view>
         </view>
 
@@ -241,12 +241,14 @@
               >
                 <text class="rating-value" :class="{ active: selectedRating === index }">{{ rating.value }}</text>
                 <view class="rating-stars">
-                  <text
+                  <Icon
                     v-for="n in rating.stars"
                     :key="n"
                     class="material-symbols-outlined rating-star"
                     :class="{ active: selectedRating === index }"
-                  >star</text>
+                    name="star"
+                    size="inherit"
+                  />
                 </view>
               </view>
             </view>
@@ -269,6 +271,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
+import Icon from '@/components/ui/Icon.vue'
 
 interface Property {
   id: number

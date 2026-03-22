@@ -10,14 +10,18 @@
       
       <view class="hero-header">
         <view class="header-btn" @click="goBack">
-          <text class="material-symbols-outlined">arrow_back</text>
+          <Icon class="material-symbols-outlined" name="arrow_back" size="inherit" />
         </view>
         <view class="header-actions">
           <view class="header-btn" @click="handleShare">
-            <text class="material-symbols-outlined">share</text>
+            <Icon class="material-symbols-outlined" name="share" size="inherit" />
           </view>
           <view class="header-btn" @click="toggleFavorite">
-            <text class="material-symbols-outlined">{{ isFavorite ? 'favorite' : 'favorite_border' }}</text>
+            <Icon
+              class="material-symbols-outlined"
+              :name="isFavorite ? 'favorite' : 'favorite_border'"
+              size="inherit"
+            />
           </view>
         </view>
       </view>
@@ -26,12 +30,12 @@
         <view class="hero-info">
           <text class="hero-title">{{ communityInfo.name }}</text>
           <view class="hero-location">
-            <text class="material-symbols-outlined">location_on</text>
+            <Icon class="material-symbols-outlined" name="location_on" size="inherit" />
             <text>{{ communityInfo.district }} · {{ communityInfo.address }}</text>
           </view>
         </view>
         <view class="hero-rating">
-          <text class="material-symbols-outlined star-icon">star</text>
+          <Icon class="material-symbols-outlined star-icon" name="star" size="inherit" />
           <text class="rating-value">{{ communityInfo.rating }}</text>
         </view>
       </view>
@@ -171,7 +175,7 @@
               <text class="review-count">({{ reviews.length }})</text>
             </view>
             <navigator url="/pages/reviews/index" class="view-all-link">
-              查看全部 <text class="material-symbols-outlined">arrow_forward_ios</text>
+              查看全部 <Icon class="material-symbols-outlined" name="arrow_forward_ios" size="inherit" />
             </navigator>
           </view>
           
@@ -185,10 +189,10 @@
                   mode="aspectFill"
                 />
                 <view v-else class="review-avatar-placeholder">
-                  <text class="material-symbols-outlined">face</text>
+                  <Icon class="material-symbols-outlined" name="face" size="inherit" />
                 </view>
                 <view v-if="review.verified" class="verified-badge">
-                  <text class="material-symbols-outlined">star</text>
+                  <Icon class="material-symbols-outlined" name="star" size="inherit" />
                 </view>
               </view>
               <view class="review-bubble">
@@ -216,11 +220,11 @@
     
     <view class="fab-buttons">
       <view class="fab-button nav-button" @click="showMapPopup = true">
-        <text class="material-symbols-outlined">navigation</text>
+        <Icon class="material-symbols-outlined" name="navigation" size="inherit" />
         <text class="fab-text">导航</text>
       </view>
       <view class="fab-button" @click="handlePublishReview">
-        <text class="material-symbols-outlined">edit_square</text>
+        <Icon class="material-symbols-outlined" name="edit_square" size="inherit" />
         <text class="fab-text">发布评价</text>
       </view>
     </view>
@@ -235,7 +239,7 @@
           <view class="map-option" @click="selectMap('amap')">
             <view class="map-icon-wrapper">
               <view class="map-icon amap-icon">
-                <text class="material-symbols-outlined">near_me</text>
+                <Icon class="material-symbols-outlined" name="near_me" size="inherit" />
               </view>
             </view>
             <text class="map-name">高德地图</text>
@@ -243,7 +247,7 @@
           <view class="map-option" @click="selectMap('baidu')">
             <view class="map-icon-wrapper">
               <view class="map-icon baidu-icon">
-                <text class="material-symbols-outlined">explore</text>
+                <Icon class="material-symbols-outlined" name="explore" size="inherit" />
               </view>
             </view>
             <text class="map-name">百度地图</text>
@@ -251,7 +255,7 @@
           <view class="map-option" @click="selectMap('tencent')">
             <view class="map-icon-wrapper">
               <view class="map-icon tencent-icon">
-                <text class="material-symbols-outlined">map</text>
+                <Icon class="material-symbols-outlined" name="map" size="inherit" />
               </view>
             </view>
             <text class="map-name">腾讯地图</text>
@@ -265,19 +269,19 @@
     
     <view class="tab-bar">
       <view class="tab-item" @click="switchTab('/pages/index/index')">
-        <text class="material-symbols-outlined">home</text>
+        <Icon class="material-symbols-outlined" name="home" size="inherit" />
         <text class="tab-label">首页</text>
       </view>
       <view class="tab-item active">
-        <text class="material-symbols-outlined">search</text>
+        <Icon class="material-symbols-outlined" name="search" size="inherit" />
         <text class="tab-label">发现</text>
       </view>
       <view class="tab-item" @click="switchTab('/pages/message/index')">
-        <text class="material-symbols-outlined">bookmark</text>
+        <Icon class="material-symbols-outlined" name="bookmark" size="inherit" />
         <text class="tab-label">收藏</text>
       </view>
       <view class="tab-item" @click="switchTab('/pages/profile/index')">
-        <text class="material-symbols-outlined">person</text>
+        <Icon class="material-symbols-outlined" name="person" size="inherit" />
         <text class="tab-label">我的</text>
       </view>
     </view>
@@ -286,6 +290,7 @@
 
 <script setup lang="ts">
 import { ref, reactive } from 'vue'
+import Icon from '@/components/ui/Icon.vue'
 
 interface ReviewTag {
   text: string

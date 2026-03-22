@@ -41,13 +41,13 @@
             <image class="card-img" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCYGS65YhEGX-VAmU5CqyDsgWyG8gaaZiuRfx-ekQzPIVLfxpzNq1djHcEn_13Y2gPwXAcpSFMjTsHmT4MGbi4WfKWLjQf0DtKHr9tNX6Pf4SohBiRPhuLJx870V_Am05iUBZo26_kmAtdd5ciku3xJA-cjgsuQYaGmr1g7Cd1wS3x9IjwLmrOwNOspzkjYUkqs3DdlU3ieyGSg7ycg0_unOdNX39XFQl0aqJ8S4Q__lfTOvih-8eZCo0sKlg8STlsvJZoxpaVnPQ" mode="aspectFill" />
             <view class="card-overlay"></view>
             <view class="card-tag">
-              <Icon name="star" :size="28" color="#facc15" class="star-icon" />
+              <Icon name="star" :size="14" color="#facc15" class="star-icon" />
               <text class="rating">4.9</text>
             </view>
             <view class="card-info">
               <text class="card-title">阳光锦城</text>
               <view class="card-loc">
-                <Icon name="location" :size="28" color="#fff" class="loc-small" />
+                <Icon name="location" :size="14" color="#fff" class="loc-small" />
                 <text>朝阳区 · 建国路</text>
               </view>
               <view class="badge-row">
@@ -61,13 +61,13 @@
             <image class="card-img" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCYELfyEv7EK1UlHySb9Jpg-m9ses9RZ9ULQIVVVrABL76qXIokTpeSaFhOU6R8YyfWcpq2b1qPA5-r7xwhoAWIQPcTxvDektfOL0fgWGINGjJcjXzogA6koV8qBFTAfIBSBdDuvr-RhWaSWTNM8fW3Ao1VCSXbazPJ_Y9hwus34kys0VkAt3HFANJD2w06gXovGDY95Wlop7c_xexIdDv3I3WTcJ83bY7CrWcPker_MrF5fqEjtYiOmmgIRfJT-NEIPBL0ddkb3g" mode="aspectFill" />
             <view class="card-overlay"></view>
             <view class="card-tag">
-              <Icon name="star" :size="28" color="#facc15" class="star-icon" />
+              <Icon name="star" :size="14" color="#facc15" class="star-icon" />
               <text class="rating">4.7</text>
             </view>
             <view class="card-info">
               <text class="card-title">云尚国际</text>
               <view class="card-loc">
-                <Icon name="location" :size="28" color="#fff" class="loc-small" />
+                <Icon name="location" :size="14" color="#fff" class="loc-small" />
                 <text>海淀区 · 中关村</text>
               </view>
               <view class="badge-row">
@@ -81,13 +81,13 @@
             <image class="card-img" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCGwpkHsxHUfmBFlEWfrN4-8lomr1e0uzaBma8AYyYxGrB83_7sZydfW8zSq7mhy-HGuCMNh8p5YTjRfvZI-RgMqY6P3oQ3OaCqZ-dIMkJYV9zA2ckMKZtgevmnBGQcJm6jYGrvWY2C5DyhLSmL_VuJH5kIq5_NrBgWKONYG6kBXjtuX73Nt4hlEAJChFklISJ723mjtcbGYoz2PGz79XzLag9i3x4Rw0iXqCVvDuTiD6j7Sev7bWiYmUnIqzvMpzKhc4q9hRt9Ww" mode="aspectFill" />
             <view class="card-overlay"></view>
             <view class="card-tag">
-              <Icon name="star" :size="28" color="#facc15" class="star-icon" />
+              <Icon name="star" :size="14" color="#facc15" class="star-icon" />
               <text class="rating">4.2</text>
             </view>
             <view class="card-info">
               <text class="card-title">老弄堂公寓</text>
               <view class="card-loc">
-                <Icon name="location" :size="28" color="#fff" class="loc-small" />
+                <Icon name="location" :size="14" color="#fff" class="loc-small" />
                 <text>西城区 · 鼓楼</text>
               </view>
               <view class="badge-row">
@@ -255,42 +255,6 @@
       </view>
     </view>
 
-    <!-- 底部占位，避免被导航栏遮挡 -->
-    <view class="bottom-safe-area"></view>
-  </view>
-
-  <!-- 底部导航栏 -->
-  <view class="tab-bar">
-    <view class="tab-item active" @click="switchTab('/pages/index/index')">
-      <view class="tab-icon active">
-        <Icon name="home" :size="48" color="var(--primary)" />
-      </view>
-      <text class="tab-text active">首页</text>
-    </view>
-    <view class="tab-item" @click="switchTab('/pages/community/index')">
-      <view class="tab-icon">
-        <Icon name="community" :size="48" color="var(--text-muted)" />
-      </view>
-      <text class="tab-text">发现</text>
-    </view>
-    <view class="tab-item center" @click="navigateTo('/pages/safety/index')">
-      <view class="tab-center-btn">
-        <Icon name="plus" :size="56" color="#fff" />
-      </view>
-      <text class="tab-text">发布</text>
-    </view>
-    <view class="tab-item" @click="switchTab('/pages/message/index')">
-      <view class="tab-icon">
-        <Icon name="message" :size="48" color="var(--text-muted)" />
-      </view>
-      <text class="tab-text">消息</text>
-    </view>
-    <view class="tab-item" @click="switchTab('/pages/profile/index')">
-      <view class="tab-icon">
-        <Icon name="profile" :size="48" color="var(--text-muted)" />
-      </view>
-      <text class="tab-text">我的</text>
-    </view>
   </view>
 </template>
 
@@ -299,27 +263,9 @@ import { ref } from 'vue'
 import Icon from '@/components/ui/Icon.vue'
 import Button from '@/components/ui/Button.vue'
 
-// TabBar 页面列表
-const tabBarPages = [
-  '/pages/index/index',
-  '/pages/community/index',
-  '/pages/message/index',
-  '/pages/profile/index'
-]
-
 // 跳转到新页面
 const navigateTo = (url: string) => {
-  // 如果目标是 tabBar 页面，使用 switchTab
-  if (tabBarPages.includes(url)) {
-    uni.switchTab({ url })
-  } else {
-    uni.navigateTo({ url })
-  }
-}
-
-// 切换 Tab 页面
-const switchTab = (url: string) => {
-  uni.switchTab({ url })
+  uni.navigateTo({ url })
 }
 
 // 跳转到搜索页面并打开筛选
@@ -349,7 +295,7 @@ const goToSearchWithFilter = () => {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 30rpx 40rpx 20rpx;
+  padding: calc(var(--status-bar-height, 0px) + 20rpx) 40rpx 20rpx;
 }
 
 .location-box {
@@ -484,14 +430,14 @@ const goToSearchWithFilter = () => {
 
 .card-list {
   display: flex;
-  gap: 30rpx;
+  gap: 16rpx;
 }
 
 .card-item {
   position: relative;
-  width: 520rpx;
-  height: 680rpx;
-  border-radius: 48rpx;
+  width: 260rpx;
+  height: 340rpx;
+  border-radius: 24rpx;
   overflow: hidden;
   flex-shrink: 0;
 }
@@ -509,52 +455,52 @@ const goToSearchWithFilter = () => {
 
 .card-tag {
   position: absolute;
-  top: 30rpx;
-  left: 30rpx;
+  top: 15rpx;
+  left: 15rpx;
   display: flex;
   align-items: center;
   gap: 4rpx;
   background-color: rgba(255, 255, 255, 0.9);
-  padding: 8rpx 24rpx;
-  border-radius: 40rpx;
+  padding: 4rpx 12rpx;
+  border-radius: 20rpx;
 }
 
 .star-icon {
-  font-size: 28rpx;
+  font-size: 14rpx;
   color: #facc15;
 }
 
 .rating {
-  font-size: 24rpx;
+  font-size: 12rpx;
   font-weight: bold;
   color: #333;
 }
 
 .card-info {
   position: absolute;
-  bottom: 40rpx;
-  left: 30rpx;
-  right: 30rpx;
+  bottom: 20rpx;
+  left: 15rpx;
+  right: 15rpx;
   color: #fff;
 }
 
 .card-title {
-  font-size: 40rpx;
+  font-size: 20rpx;
   font-weight: bold;
   display: block;
-  margin-bottom: 8rpx;
+  margin-bottom: 4rpx;
 }
 
 .card-loc {
-  font-size: 28rpx;
+  font-size: 14rpx;
   display: flex;
   align-items: center;
   gap: 4rpx;
   opacity: 0.9;
-  margin-bottom: 20rpx;
+  margin-bottom: 10rpx;
 }
 
-.loc-small { font-size: 28rpx; }
+.loc-small { font-size: 14rpx; }
 
 .badge-row {
   display: flex;
@@ -562,10 +508,10 @@ const goToSearchWithFilter = () => {
 }
 
 .badge {
-  font-size: 20rpx;
+  font-size: 10rpx;
   font-weight: bold;
-  padding: 6rpx 20rpx;
-  border-radius: 20rpx;
+  padding: 3rpx 10rpx;
+  border-radius: 10rpx;
   background-color: rgba(255, 255, 255, 0.2);
   border: 1rpx solid rgba(255, 255, 255, 0.3);
 }
@@ -878,83 +824,4 @@ const goToSearchWithFilter = () => {
   border: 1rpx solid #e5e7eb;
 }
 
-/* 底部安全区域 */
-.bottom-safe-area {
-  height: 160rpx;
-}
-
-/* 底部导航栏 */
-.tab-bar {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background-color: rgba(255, 255, 255, 0.95);
-  border-top: 1rpx solid #f3f4f6;
-  backdrop-filter: blur(20px);
-  display: flex;
-  justify-content: space-around;
-  align-items: flex-end;
-  padding: 16rpx 20rpx 40rpx;
-  z-index: 1000;
-  max-width: 750rpx;
-  margin: 0 auto;
-}
-
-.tab-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8rpx;
-  flex: 1;
-}
-
-.tab-item.center {
-  margin-top: -40rpx;
-}
-
-.tab-icon {
-  width: 80rpx;
-  height: 80rpx;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  color: var(--text-muted);
-}
-
-.tab-icon.active {
-  background-color: rgba(238, 124, 43, 0.1);
-  color: var(--primary);
-}
-
-.tab-icon .material-symbols-outlined {
-  font-size: 48rpx;
-}
-
-.tab-center-btn {
-  width: 112rpx;
-  height: 112rpx;
-  background-color: var(--primary);
-  color: #fff;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 16rpx 40rpx -12rpx rgba(238, 124, 43, 0.5);
-}
-
-.tab-center-btn .material-symbols-outlined {
-  font-size: 56rpx;
-}
-
-.tab-text {
-  font-size: 20rpx;
-  color: var(--text-muted);
-}
-
-.tab-text.active {
-  color: var(--primary);
-  font-weight: bold;
-}
 </style>

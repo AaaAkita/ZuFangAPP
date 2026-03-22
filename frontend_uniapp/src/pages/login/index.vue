@@ -3,7 +3,7 @@
     <view class="login-wrapper">
       <view class="header-section">
         <view class="logo-box">
-          <text class="material-symbols-outlined logo-icon">cottage</text>
+          <Icon class="material-symbols-outlined logo-icon" name="cottage" size="inherit" />
         </view>
         <view class="welcome-text">
           <text class="welcome-title">欢迎回来</text>
@@ -14,7 +14,7 @@
       <view class="form-section">
         <view class="input-group">
           <view class="input-icon-box">
-            <text class="material-symbols-outlined input-icon">person</text>
+            <Icon class="material-symbols-outlined input-icon" name="person" size="inherit" />
           </view>
           <input
             v-model="formData.account"
@@ -28,7 +28,7 @@
 
         <view class="input-group">
           <view class="input-icon-box">
-            <text class="material-symbols-outlined input-icon">lock</text>
+            <Icon class="material-symbols-outlined input-icon" name="lock" size="inherit" />
           </view>
           <input
             v-model="formData.password"
@@ -39,9 +39,11 @@
             placeholder-class="input-placeholder"
           />
           <view class="toggle-password" @click="togglePassword">
-            <text class="material-symbols-outlined toggle-icon">
-              {{ showPassword ? 'visibility' : 'visibility_off' }}
-            </text>
+            <Icon
+              class="material-symbols-outlined toggle-icon"
+              :name="showPassword ? 'visibility' : 'visibility_off'"
+              size="inherit"
+            />
           </view>
         </view>
 
@@ -53,7 +55,7 @@
           <text v-if="isLoading" class="login-text">登录中...</text>
           <template v-else>
             <text class="login-text">登录</text>
-            <text class="material-symbols-outlined arrow-icon">arrow_forward</text>
+            <Icon class="material-symbols-outlined arrow-icon" name="arrow_forward" size="inherit" />
           </template>
         </button>
       </view>
@@ -66,7 +68,7 @@
       <view class="social-section">
         <view class="social-btn wechat" @click="handleWechatLogin">
           <view class="social-icon-wrapper">
-            <text class="material-symbols-outlined social-icon">wechat</text>
+            <Icon class="material-symbols-outlined social-icon" name="wechat" size="inherit" />
           </view>
         </view>
       </view>
@@ -81,6 +83,7 @@
 
 <script setup lang="ts">
 import { ref, reactive } from 'vue'
+import Icon from '@/components/ui/Icon.vue'
 import { wechatLogin } from '@/utils/wechat'
 import { config } from '@/config'
 import { validatePhone, handleApiError, handleSuccess } from '@/utils/auth-helpers'

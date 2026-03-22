@@ -3,7 +3,7 @@
     <view class="register-wrapper">
       <view class="header-section">
         <view class="logo-box">
-          <text class="material-symbols-outlined logo-icon">cottage</text>
+          <Icon class="material-symbols-outlined logo-icon" name="cottage" size="inherit" />
         </view>
         <view class="welcome-text">
           <text class="welcome-title">创建账号</text>
@@ -14,7 +14,7 @@
       <view class="form-section">
         <view class="input-group">
           <view class="input-icon-box">
-            <text class="material-symbols-outlined input-icon">phone</text>
+            <Icon class="material-symbols-outlined input-icon" name="phone" size="inherit" />
           </view>
           <input
             v-model="formData.phone"
@@ -28,7 +28,7 @@
 
         <view class="input-group">
           <view class="input-icon-box">
-            <text class="material-symbols-outlined input-icon">person</text>
+            <Icon class="material-symbols-outlined input-icon" name="person" size="inherit" />
           </view>
           <input
             v-model="formData.nickname"
@@ -41,7 +41,7 @@
 
         <view class="input-group">
           <view class="input-icon-box">
-            <text class="material-symbols-outlined input-icon">lock</text>
+            <Icon class="material-symbols-outlined input-icon" name="lock" size="inherit" />
           </view>
           <input
             v-model="formData.password"
@@ -52,26 +52,28 @@
             placeholder-class="input-placeholder"
           />
           <view class="toggle-password" @click="togglePassword">
-            <text class="material-symbols-outlined toggle-icon">
-              {{ showPassword ? 'visibility' : 'visibility_off' }}
-            </text>
+            <Icon
+              class="material-symbols-outlined toggle-icon"
+              :name="showPassword ? 'visibility' : 'visibility_off'"
+              size="inherit"
+            />
           </view>
         </view>
 
         <view class="password-hint">
           <text class="hint-text" :class="{ valid: passwordStrength.length }">
-            <text class="material-symbols-outlined">{{ passwordStrength.length ? 'check_circle' : 'radio_button_unchecked' }}</text>
+            <Icon class="material-symbols-outlined" :name="passwordStrength.length ? 'check_circle' : 'radio_button_unchecked'" size="inherit" />
             至少8位
           </text>
           <text class="hint-text" :class="{ valid: passwordStrength.hasLetterAndNumber }">
-            <text class="material-symbols-outlined">{{ passwordStrength.hasLetterAndNumber ? 'check_circle' : 'radio_button_unchecked' }}</text>
+            <Icon class="material-symbols-outlined" :name="passwordStrength.hasLetterAndNumber ? 'check_circle' : 'radio_button_unchecked'" size="inherit" />
             字母+数字
           </text>
         </view>
 
         <button class="register-btn" @click="handleRegister">
           <text class="register-text">注册</text>
-          <text class="material-symbols-outlined arrow-icon">arrow_forward</text>
+          <Icon class="material-symbols-outlined arrow-icon" name="arrow_forward" size="inherit" />
         </button>
       </view>
 
@@ -85,6 +87,7 @@
 
 <script setup lang="ts">
 import { ref, reactive, computed } from 'vue'
+import Icon from '@/components/ui/Icon.vue'
 import { config } from '@/config'
 import { validatePhone, validatePassword, getPasswordStrength, handleApiError, handleSuccess } from '@/utils/auth-helpers'
 import { useAuthStore } from '@/utils/auth'
