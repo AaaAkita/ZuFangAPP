@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <view :class="cardClasses" :style="cardStyle">
     <view v-if="$slots.header || title" class="card-header">
       <slot name="header">

@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <view :class="listItemClasses" :style="listItemStyle" @click="handleClick">
     <!-- 左侧区域 -->
     <view v-if="$slots.left || icon" class="list-item-left">

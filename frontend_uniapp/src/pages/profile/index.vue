@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <view class="container">
     <!-- 顶部标题栏 -->
     <view class="header">

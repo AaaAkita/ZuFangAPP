@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <view class="container">
     <view class="login-wrapper">
       <view class="header-section">

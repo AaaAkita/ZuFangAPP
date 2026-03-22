@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <view class="container">
     <text class="title">安全指南 页面建设中...</text>
     <button @click="goBack">返回首页</button>

@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <text :class="iconClasses" :style="iconStyle" @click="handleClick">
     {{ iconContent }}
   </text>

@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <view class="container">
     <view class="hero-section">
       <image

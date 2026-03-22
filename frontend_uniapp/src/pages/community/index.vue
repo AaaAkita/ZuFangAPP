@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <view class="container">
     <view class="header">
       <text class="title">发现</text>
