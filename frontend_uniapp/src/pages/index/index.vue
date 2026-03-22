@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <view class="container">
     <!-- 顶部导航栏 -->
     <view class="header sticky-top">
@@ -395,9 +395,9 @@ const goToSearchWithFilter = () => {
   display: flex;
   align-items: center;
   height: 110rpx;
-  background-color: $color-bg-secondary;
-  border-radius: $border-radius-xl;
-  box-shadow: $shadow-sm;
+  background-color: #fff;
+  border-radius: 60rpx;
+  box-shadow: 0 4rpx 24rpx rgba(0, 0, 0, 0.04);
 }
 
 .search-icon-box {
@@ -437,7 +437,7 @@ const goToSearchWithFilter = () => {
 }
 
 .section-title {
-  font-size: $font-size-hero;
+  font-size: 40rpx;
   font-weight: bold;
   color: var(--text-main);
 }
@@ -539,33 +539,33 @@ const goToSearchWithFilter = () => {
 }
 
 .card-title {
-  font-size: $font-size-hero;
+  font-size: 40rpx;
   font-weight: bold;
   display: block;
-  margin-bottom: $spacing-xs;
+  margin-bottom: 8rpx;
 }
 
 .card-loc {
-  font-size: $font-size-body;
+  font-size: 28rpx;
   display: flex;
   align-items: center;
-  gap: $spacing-xs;
+  gap: 4rpx;
   opacity: 0.9;
-  margin-bottom: $spacing-lg;
+  margin-bottom: 20rpx;
 }
 
 .loc-small { font-size: 28rpx; }
 
 .badge-row {
   display: flex;
-  gap: $spacing-md;
+  gap: 16rpx;
 }
 
 .badge {
-  font-size: $font-size-tiny;
+  font-size: 20rpx;
   font-weight: bold;
-  padding: $spacing-xs $spacing-md;
-  border-radius: $border-radius-md;
+  padding: 6rpx 20rpx;
+  border-radius: 20rpx;
   background-color: rgba(255, 255, 255, 0.2);
   border: 1rpx solid rgba(255, 255, 255, 0.3);
 }
@@ -584,8 +584,8 @@ const goToSearchWithFilter = () => {
 
 .banner-box {
   background-color: #fcf3eb;
-  border-radius: $border-radius-xl;
-  padding: $spacing-lg;
+  border-radius: 48rpx;
+  padding: 40rpx;
   position: relative;
   display: flex;
   overflow: hidden;
@@ -611,14 +611,14 @@ const goToSearchWithFilter = () => {
 }
 
 .banner-title {
-  font-size: $font-size-h2;
+  font-size: 36rpx;
   font-weight: bold;
   color: #8a5d3b;
   display: block;
 }
 
 .banner-sub {
-  font-size: $font-size-body-sm;
+  font-size: 24rpx;
   color: #a6866f;
   margin: 10rpx 0 30rpx;
   display: block;
@@ -653,11 +653,11 @@ const goToSearchWithFilter = () => {
 
 .warning-item {
   display: flex;
-  gap: $spacing-lg;
-  background-color: $color-bg-secondary;
-  padding: $spacing-lg;
-  border-radius: $border-radius-lg;
-  border: 1rpx solid $color-border-light;
+  gap: 24rpx;
+  background-color: #fff;
+  padding: 30rpx;
+  border-radius: 40rpx;
+  border: 1rpx solid #f5e6d8;
 }
 
 .warning-icon-bg {
@@ -691,28 +691,28 @@ const goToSearchWithFilter = () => {
 }
 
 .warning-name {
-  font-size: $font-size-body;
+  font-size: 30rpx;
   font-weight: bold;
   color: var(--text-main);
 }
 
 .warning-time {
-  font-size: $font-size-tiny;
+  font-size: 20rpx;
   color: var(--text-muted);
 }
 
 .warning-sub {
-  font-size: $font-size-caption;
+  font-size: 24rpx;
   color: var(--text-muted);
   display: block;
-  margin-bottom: $spacing-sm;
+  margin-bottom: 12rpx;
 }
 
 .warning-desc {
-  font-size: $font-size-body;
+  font-size: 28rpx;
   color: #4b5563;
-  line-height: $line-height-normal;
-  margin-bottom: $spacing-lg;
+  line-height: 1.6;
+  margin-bottom: 20rpx;
   display: block;
 }
 
@@ -725,13 +725,13 @@ const goToSearchWithFilter = () => {
 .tag-warn {
   display: inline-flex;
   align-items: center;
-  gap: $spacing-xs;
-  font-size: $font-size-tiny;
+  gap: 8rpx;
+  font-size: 20rpx;
   font-weight: bold;
   color: #e67326;
   background-color: #fff0e6;
-  padding: $spacing-xs $spacing-md;
-  border-radius: $border-radius-lg;
+  padding: 8rpx 20rpx;
+  border-radius: 30rpx;
   border: 1rpx solid #fcd5ba;
 }
 
@@ -748,11 +748,11 @@ const goToSearchWithFilter = () => {
 
 .review-item {
   display: flex;
-  gap: $spacing-lg;
-  background-color: $color-bg-secondary;
-  padding: $spacing-lg;
-  border-radius: $border-radius-lg;
-  box-shadow: $shadow-sm;
+  gap: 24rpx;
+  background-color: #fff;
+  padding: 40rpx;
+  border-radius: 32rpx;
+  box-shadow: 0 4rpx 20rpx -5rpx rgba(0, 0, 0, 0.05);
 }
 
 .review-user {
@@ -800,15 +800,15 @@ const goToSearchWithFilter = () => {
 }
 
 .user-name {
-  font-size: $font-size-body;
+  font-size: 30rpx;
   font-weight: bold;
   color: var(--text-main);
 }
 
 .review-target {
-  font-size: $font-size-caption;
+  font-size: 24rpx;
   color: var(--text-muted);
-  margin-top: $spacing-xs;
+  margin-top: 4rpx;
 }
 
 .target-name {
@@ -817,18 +817,18 @@ const goToSearchWithFilter = () => {
 }
 
 .review-time {
-  font-size: $font-size-tiny;
+  font-size: 22rpx;
   color: var(--text-muted);
   background-color: #f9fafb;
-  padding: $spacing-xs $spacing-md;
-  border-radius: $border-radius-sm;
+  padding: 8rpx 16rpx;
+  border-radius: 16rpx;
 }
 
 .review-text {
-  font-size: $font-size-body;
+  font-size: 28rpx;
   color: #4b5563;
-  line-height: $line-height-normal;
-  margin-bottom: $spacing-lg;
+  line-height: 1.6;
+  margin-bottom: 24rpx;
   display: block;
 }
 
@@ -841,11 +841,11 @@ const goToSearchWithFilter = () => {
 .review-tag {
   display: inline-flex;
   align-items: center;
-  gap: $spacing-md;
-  font-size: $font-size-tiny;
+  gap: 12rpx;
+  font-size: 22rpx;
   font-weight: 600;
-  padding: $spacing-sm $spacing-md;
-  border-radius: $border-radius-lg;
+  padding: 12rpx 24rpx;
+  border-radius: 32rpx;
 }
 
 .review-tag.emerald {
@@ -890,13 +890,13 @@ const goToSearchWithFilter = () => {
   left: 0;
   right: 0;
   background-color: rgba(255, 255, 255, 0.95);
-  border-top: 1rpx solid $color-border-light;
+  border-top: 1rpx solid #f3f4f6;
   backdrop-filter: blur(20px);
   display: flex;
   justify-content: space-around;
   align-items: flex-end;
-  padding: $spacing-sm $spacing-md $spacing-lg;
-  z-index: $z-index-fixed;
+  padding: 16rpx 20rpx 40rpx;
+  z-index: 1000;
   max-width: 750rpx;
   margin: 0 auto;
 }
@@ -928,6 +928,10 @@ const goToSearchWithFilter = () => {
   color: var(--primary);
 }
 
+.tab-icon .material-symbols-outlined {
+  font-size: 48rpx;
+}
+
 .tab-center-btn {
   width: 112rpx;
   height: 112rpx;
@@ -937,11 +941,15 @@ const goToSearchWithFilter = () => {
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 16rpxrpx -12rpx rgba(238, 124, 43, 0.5);
+  box-shadow: 0 16rpx 40rpx -12rpx rgba(238, 124, 43, 0.5);
+}
+
+.tab-center-btn .material-symbols-outlined {
+  font-size: 56rpx;
 }
 
 .tab-text {
-  font-size: $font-size-tiny;
+  font-size: 20rpx;
   color: var(--text-muted);
 }
 

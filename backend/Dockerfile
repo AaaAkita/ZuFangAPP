@@ -1,61 +1,36 @@
-FROM node:20-slim AS builder
+FROM node:20-slim
 
 WORKDIR /usr/src/app
 
-# 安装 curl 用于镜像源测试
-RUN apt-get update -y && apt-get install -y curl && rm -rf /var/lib/apt/lists/*
+# 配置国内 apt 镜像源，安装必要依赖
+RUN sed -i 's/deb.debian.org/mirrors.aliyun.com/g' /etc/apt/sources.list.d/debian.sources \
+    && apt-get update -y \
+    && apt-get install -y curl openssl \
+    && rm -rf /var/lib/apt/lists/*
 
-# 复制并执行智能镜像源配置脚本
+# 复制智能镜像源配置脚本
 COPY docker-entrypoint.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 
 # 运行镜像源配置
 RUN /usr/local/bin/docker-entrypoint.sh true || true
 
-# 安装系统依赖
-RUN apt-get update -y && apt-get install -y openssl && rm -rf /var/lib/apt/lists/*
-
+# 复制 package.json 并安装依赖
 COPY package*.json ./
+RUN npm install
 
-# Install dependencies including Prisma
-RUN npm ci
-
+# 复制 prisma 配置并生成客户端
 COPY prisma ./prisma/
-COPY src ./src/
-COPY tsconfig.json ./
-COPY tsconfig.build.json ./
-COPY nest-cli.json ./
-COPY prisma.config.ts ./
-
-# Generate Prisma client and build NestJS
 RUN npx prisma generate
+
+# 复制源代码
+COPY . .
+
+# 构建 NestJS 应用
 RUN npm run build
 
-FROM node:20-slim AS production
-
-WORKDIR /usr/src/app
-
-# 安装 curl 用于镜像源测试
-RUN apt-get update -y && apt-get install -y curl && rm -rf /var/lib/apt/lists/*
-
-# 复制并执行智能镜像源配置脚本
-COPY docker-entrypoint.sh /usr/local/bin/
-RUN chmod +x /usr/local/bin/docker-entrypoint.sh
-RUN /usr/local/bin/docker-entrypoint.sh true || true
-
-# 安装系统依赖
-RUN apt-get update -y && apt-get install -y openssl && rm -rf /var/lib/apt/lists/*
-
-# Set this after dependencies install so devDependencies aren't skipped
-# but usually it's best practice to run production installs only
-COPY package*.json ./
-RUN npm ci --omit=dev && npm cache clean --force
-
-COPY --from=builder /usr/src/app/node_modules/.prisma ./node_modules/.prisma
-COPY --from=builder /usr/src/app/dist ./dist
-COPY --from=builder /usr/src/app/prisma ./prisma
-
+# 暴露端口
 EXPOSE 3000
 
-ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
+# 启动生产环境应用
 CMD ["npm", "run", "start:prod"]

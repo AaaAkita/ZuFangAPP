@@ -113,7 +113,7 @@ ZuFangAPP/
 │   ├── 11-广告模块.md
 │   ├── 12-管理后台.md
 │   └── PRD.md
-├── docker-compose.dev.yml   # 开发环境 Docker 编排
+├── docker-compose.yml       # 生产部署 Docker 编排
 └── README.md
 ```
 
@@ -216,17 +216,25 @@ ZuFangAPP/
 
 ## 🚀 快速启动
 
-### 方式一：Docker 开发环境（推荐）
+### 方式一：Docker 生产部署（使用已构建产物）
 
-适合快速搭建完整开发环境，无需本地安装 PostgreSQL 和 Redis。
+适合使用本地已构建文件进行部署，避免在 Docker 构建阶段下载 Node 依赖。
 
 ```bash
-# 启动所有服务（后端 + 前端 + 数据库 + Redis）
-docker-compose -f docker-compose.dev.yml up -d
+# 1) 先在本机构建后端产物
+cd backend
+npm install
+npm run build
+npx prisma generate
 
-# 首次启动需要初始化数据库
-docker-compose -f docker-compose.dev.yml exec backend npx prisma migrate dev
-docker-compose -f docker-compose.dev.yml exec backend npx prisma db seed
+# 2) 构建前端 H5 产物
+cd ../frontend_uniapp
+npm install
+npm run build:h5
+
+# 3) 回到项目根目录后启动 Docker（后端 + 前端 + 数据库 + Redis）
+cd ..
+docker-compose up -d --build
 ```
 
 服务地址：
@@ -282,16 +290,16 @@ npm run dev:mp-weixin
 ## 🐳 Docker 命令速查
 
 ```bash
-# 开发环境
-docker-compose -f docker-compose.dev.yml up -d        # 启动所有服务
-docker-compose -f docker-compose.dev.yml down         # 停止所有服务
-docker-compose -f docker-compose.dev.yml logs -f      # 查看日志
+# 生产部署（基于已构建产物）
+docker-compose up -d --build      # 启动所有服务
+docker-compose down               # 停止所有服务
+docker-compose logs -f            # 查看日志
 
 # 进入后端容器
-docker-compose -f docker-compose.dev.yml exec backend sh
+docker-compose exec backend sh
 
 # 数据库操作
-docker-compose -f docker-compose.dev.yml exec backend npx prisma studio  # 打开 Prisma Studio
+docker-compose exec backend npx prisma migrate deploy  # 执行生产迁移
 ```
 
 ---
