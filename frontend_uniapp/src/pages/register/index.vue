@@ -90,9 +90,8 @@
 <script setup lang="ts">
 import { ref, reactive, computed } from 'vue'
 import Icon from '@/components/ui/Icon.vue'
-import { config } from '@/config'
 import { validatePhone, validatePassword, getPasswordStrength, handleApiError, handleSuccess } from '@/utils/auth-helpers'
-import { useAuthStore } from '@/utils/auth'
+import { authApi, useAuthStore } from '@/utils/auth'
 
 const authStore = useAuthStore()
 const isLoading = ref(false)
@@ -157,22 +156,11 @@ const handleRegister = async () => {
     isLoading.value = true
     uni.showLoading({ title: '注册中...' })
 
-    const response = await fetch(`${config.apiBaseUrl}/auth/register`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        phone: formData.phone,
-        password: formData.password,
-        nickname: formData.nickname || undefined
-      })
-    })
-
-    uni.hideLoading()
-    isLoading.value = false
-
-    const data = await response.json()
+    const data = await authApi.register(
+      formData.phone,
+      formData.password,
+      formData.nickname || undefined
+    )
 
     if (data.success && data.data?.token) {
       // 保存 Token
@@ -180,11 +168,7 @@ const handleRegister = async () => {
 
       // 获取完整用户信息并保存
       try {
-        const userResponse = await fetch(`${config.apiBaseUrl}/users/profile`, {
-          headers: authStore.getRequestHeaders()
-        })
-
-        const userData = await userResponse.json()
+        const userData = await authApi.getProfile()
         if (userData.success && userData.data) {
           authStore.setUserInfo({
             id: userData.data.id,
@@ -211,12 +195,13 @@ const handleRegister = async () => {
 
       handleSuccess('注册成功')
     } else {
-      handleApiError(data.error?.message || data.message)
+      handleApiError(data.error?.message || data.message || '注册失败')
     }
   } catch (error) {
+    handleApiError(error, '网络错误，请重试')
+  } finally {
     isLoading.value = false
     uni.hideLoading()
-    handleApiError(error, '网络错误，请重试')
   }
 }
 
@@ -225,7 +210,8 @@ const goToLogin = () => {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+@import '../../styles/variables.scss';
 .container {
   min-height: 100vh;
   background-color: #FFFDF5;
@@ -284,14 +270,14 @@ const goToLogin = () => {
 }
 
 .welcome-title {
-  font-size: 56rpx;
+  font-size: $font-size-display-lg;
   font-weight: 800;
   color: #4A403A;
   letter-spacing: -1rpx;
 }
 
 .welcome-subtitle {
-  font-size: 30rpx;
+  font-size: $font-size-h3;
   font-weight: 500;
   color: #8C817D;
 }
@@ -343,7 +329,7 @@ const goToLogin = () => {
 .input-field {
   flex: 1;
   height: 100%;
-  font-size: 28rpx;
+  font-size: $font-size-h3;
   color: #4A403A;
 }
 
@@ -393,7 +379,7 @@ const goToLogin = () => {
   display: flex;
   align-items: center;
   gap: 8rpx;
-  font-size: 20rpx;
+  font-size: $font-size-tiny;
   color: rgba(140, 129, 125, 0.6);
   transition: color 0.3s ease;
 }
@@ -433,7 +419,7 @@ const goToLogin = () => {
 }
 
 .submit-text {
-  font-size: 34rpx;
+  font-size: $font-size-h2;
   font-weight: 700;
   color: #ffffff;
 }
@@ -457,12 +443,12 @@ const goToLogin = () => {
 }
 
 .register-text {
-  font-size: 28rpx;
+  font-size: $font-size-h3;
   color: #8C817D;
 }
 
 .register-link {
-  font-size: 28rpx;
+  font-size: $font-size-h3;
   font-weight: 700;
   color: #E07A5F;
   text-decoration: underline;

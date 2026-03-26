@@ -1,128 +1,165 @@
 /**
- * 登录状态管理
- * 提供 Token 和用户信息的存储、获取、验证功能
+ * Auth store and auth-related API helpers.
  */
 
 import { config } from '@/config'
+import { request as httpRequest } from './request'
 
-interface UserInfo {
+export interface UserInfo {
   id: number
   phone: string
   nickname?: string
   avatar?: string
+  createdAt?: string | number
 }
 
-// Store 单例
-let store: {
+interface AuthState {
   token: string
   userInfo: UserInfo | null
-} | null = null
+  initialized: boolean
+}
 
-// 初始化 Store
-function getStore() {
-  if (!store) {
-    // 从本地存储加载
-    const token = uni.getStorageSync(config.storageKeys.token) || ''
-    const userInfoStr = uni.getStorageSync(config.storageKeys.userInfo) || ''
+const state: AuthState = {
+  token: '',
+  userInfo: null,
+  initialized: false
+}
 
-    let userInfo: UserInfo | null = null
-    if (userInfoStr) {
-      try {
-        userInfo = JSON.parse(userInfoStr)
-      } catch (error) {
-        console.error('解析用户信息失败:', error)
-        userInfo = null
-      }
+function initStateFromStorage() {
+  if (state.initialized) return
+
+  const rawToken = uni.getStorageSync(config.storageKeys.token)
+  state.token = typeof rawToken === 'string' ? rawToken : ''
+
+  const rawUserInfo = uni.getStorageSync(config.storageKeys.userInfo)
+
+  if (typeof rawUserInfo === 'string' && rawUserInfo) {
+    try {
+      state.userInfo = JSON.parse(rawUserInfo) as UserInfo
+    } catch (error) {
+      console.error('解析用户信息失败:', error)
+      state.userInfo = null
+      uni.removeStorageSync(config.storageKeys.userInfo)
     }
-
-    store = {
-      token,
-      userInfo
-    }
+  } else if (rawUserInfo && typeof rawUserInfo === 'object') {
+    // Backward compatibility: old versions stored plain object directly.
+    state.userInfo = rawUserInfo as UserInfo
   }
-  return store
+
+  state.initialized = true
+}
+
+function setToken(token: string) {
+  initStateFromStorage()
+  state.token = token
+
+  if (token) {
+    uni.setStorageSync(config.storageKeys.token, token)
+  } else {
+    uni.removeStorageSync(config.storageKeys.token)
+  }
+}
+
+function setUserInfo(userInfo: UserInfo | null) {
+  initStateFromStorage()
+  state.userInfo = userInfo
+
+  if (userInfo) {
+    uni.setStorageSync(config.storageKeys.userInfo, JSON.stringify(userInfo))
+  } else {
+    uni.removeStorageSync(config.storageKeys.userInfo)
+  }
+}
+
+function hasToken(): boolean {
+  initStateFromStorage()
+  return !!state.token && state.token.length > 0
+}
+
+function isTokenExpired(): boolean {
+  // TODO: Add JWT exp parsing / refresh token strategy when backend finalizes token contract.
+  return false
+}
+
+function getRequestHeaders() {
+  initStateFromStorage()
+
+  const headers: Record<string, string> = {
+    'Content-Type': 'application/json'
+  }
+
+  if (state.token) {
+    headers.Authorization = `Bearer ${state.token}`
+  }
+
+  return headers
+}
+
+function login(token: string, userInfo: UserInfo) {
+  setToken(token)
+  setUserInfo(userInfo)
+}
+
+function logout() {
+  initStateFromStorage()
+  state.token = ''
+  state.userInfo = null
+
+  uni.removeStorageSync(config.storageKeys.token)
+  uni.removeStorageSync(config.storageKeys.userInfo)
+
+  uni.showToast({
+    title: '已退出登录',
+    icon: 'success'
+  })
+}
+
+const authStore = {
+  get token() {
+    initStateFromStorage()
+    return state.token
+  },
+
+  get userInfo() {
+    initStateFromStorage()
+    return state.userInfo
+  },
+
+  get isLoggedIn() {
+    return hasToken() && !isTokenExpired()
+  },
+
+  get userId() {
+    initStateFromStorage()
+    return state.userInfo?.id ?? null
+  },
+
+  get userNickname() {
+    initStateFromStorage()
+    return state.userInfo?.nickname ?? ''
+  },
+
+  get userPhone() {
+    initStateFromStorage()
+    return state.userInfo?.phone ?? ''
+  },
+
+  setToken,
+  setUserInfo,
+  login,
+  logout,
+  hasToken,
+  isTokenExpired,
+  getRequestHeaders
 }
 
 /**
- * 登录状态管理 Hook
+ * Auth state management composable.
  */
 export function useAuthStore() {
-  const state = getStore()
-
-  const setToken = (token: string) => {
-    state.token = token
-    uni.setStorageSync(config.storageKeys.token, token)
-  }
-
-  const setUserInfo = (userInfo: UserInfo) => {
-    state.userInfo = userInfo
-    uni.setStorageSync(config.storageKeys.userInfo, userInfo)
-  }
-
-  const login = (token: string, userInfo: UserInfo) => {
-    setToken(token)
-    setUserInfo(userInfo)
-  }
-
-  const logout = () => {
-    state.token = ''
-    state.userInfo = null
-    uni.removeStorageSync(config.storageKeys.token)
-    uni.removeStorageSync(config.storageKeys.userInfo)
-    uni.showToast({
-      title: '已退出登录',
-      icon: 'success'
-    })
-  }
-
-  const getRequestHeaders = () => {
-    const headers: Record<string, string> = {
-      'Content-Type': 'application/json'
-    }
-
-    if (state.token) {
-      headers['Authorization'] = `Bearer ${state.token}`
-    }
-
-    return headers
-  }
-
-  const hasToken = (): boolean => {
-    return !!state.token && state.token.length > 0
-  }
-
-  const isTokenExpired = (): boolean => {
-    // 简单实现：Token 存在即为有效
-    // 后续可以添加过期时间检查
-    return false
-  }
-
-  return {
-    // 状态
-    token: state.token,
-    userInfo: state.userInfo,
-    isLoggedIn: hasToken() && !isTokenExpired(),
-
-    // 用户信息快捷访问
-    userId: state.userInfo?.id || null,
-    userNickname: state.userInfo?.nickname || '',
-    userPhone: state.userInfo?.phone || '',
-
-    // 方法
-    setToken,
-    setUserInfo,
-    login,
-    logout,
-    hasToken,
-    isTokenExpired,
-    getRequestHeaders
-  }
+  initStateFromStorage()
+  return authStore
 }
-
-/**
- * API 请求封装
- */
-const API_BASE_URL = config.apiBaseUrl
 
 export interface ApiResponse<T = any> {
   success: boolean
@@ -136,57 +173,46 @@ export interface ApiResponse<T = any> {
   timestamp?: number
 }
 
-/**
- * 封装的 fetch 请求，自动处理 Token
- */
-export async function request<T = any>(
-  endpoint: string,
-  options: RequestInit = {}
-): Promise<ApiResponse<T>> {
-  const authStore = useAuthStore()
-
-  const defaultOptions: RequestInit = {
-    headers: authStore.getRequestHeaders()
-  }
-
-  // 合并选项，如果用户提供了 headers，会覆盖默认的
-  const mergedOptions: RequestInit = {
-    ...defaultOptions,
-    ...options,
-    headers: {
-      ...defaultOptions.headers as Record<string, string>,
-      ...(options.headers as Record<string, string>)
-    }
-  }
-
-  try {
-    const response = await fetch(`${API_BASE_URL}${endpoint}`, mergedOptions)
-    const data = await response.json()
-
-    return data as ApiResponse<T>
-  } catch (error) {
-    console.error('API 请求失败:', error)
-    throw error
-  }
+interface ApiRequestOptions {
+  method?: NonNullable<UniApp.RequestOptions['method']>
+  data?: any
+  header?: Record<string, any>
+  withAuth?: boolean
 }
 
 /**
- * API 方法快捷封装
+ * Unified API request helper for auth/business modules.
+ */
+export async function request<T = any>(
+  endpoint: string,
+  options: ApiRequestOptions = {}
+): Promise<ApiResponse<T>> {
+  return httpRequest<ApiResponse<T>>({
+    url: endpoint,
+    method: options.method || 'GET',
+    data: options.data,
+    header: options.header,
+    withAuth: options.withAuth
+  })
+}
+
+/**
+ * API quick helpers.
  */
 export const api = {
   get: <T = any>(endpoint: string) =>
     request<T>(endpoint, { method: 'GET' }),
 
-  post: <T = any>(endpoint: string, body?: any) =>
+  post: <T = any>(endpoint: string, data?: any) =>
     request<T>(endpoint, {
-    method: 'POST',
-      body: body ? JSON.stringify(body) : undefined
+      method: 'POST',
+      data
     }),
 
-  put: <T = any>(endpoint: string, body?: any) =>
+  put: <T = any>(endpoint: string, data?: any) =>
     request<T>(endpoint, {
       method: 'PUT',
-      body: body ? JSON.stringify(body) : undefined
+      data
     }),
 
   delete: <T = any>(endpoint: string) =>
@@ -194,28 +220,22 @@ export const api = {
 }
 
 /**
- * 认证相关 API
+ * Auth-related backend APIs.
  */
 export const authApi = {
-  // 注册
   register: (phone: string, password: string, nickname?: string) =>
     api.post('/auth/register', { phone, password, nickname }),
 
-  // 登录
   login: (phone: string, password: string) =>
     api.post('/auth/login', { phone, password }),
 
-  // 获取当前用户信息
   getProfile: () => api.get('/users/profile')
 }
 
-/**
- * 请求拦截器 - 检查登录状态
- */
 export function requireAuth() {
-  const authStore = useAuthStore()
+  const store = useAuthStore()
 
-  if (!authStore.isLoggedIn) {
+  if (!store.isLoggedIn) {
     uni.showToast({
       title: '请先登录',
       icon: 'none'
@@ -231,14 +251,11 @@ export function requireAuth() {
   return true
 }
 
-/**
- * 请求拦截器 - 检查 Token 是否过期
- */
 export function checkAuthBeforeRequest() {
-  const authStore = useAuthStore()
+  const store = useAuthStore()
 
-  if (authStore.isTokenExpired()) {
-    authStore.logout()
+  if (store.isTokenExpired()) {
+    store.logout()
 
     setTimeout(() => {
       uni.navigateTo({ url: '/pages/login/index' })

@@ -1,10 +1,9 @@
 /**
- * 微信登录工具
- * 处理微信小程序的登录、授权流程
+ * WeChat auth helpers for MP-WEIXIN.
  */
 
 import { useAuthStore } from './auth'
-import { config } from '@/config'
+import { request as httpRequest } from './request'
 
 interface WechatUserInfo {
   nickName: string
@@ -30,17 +29,32 @@ interface WechatUserInfoResponse {
   errMsg: string
 }
 
-/**
- * 微信登录主函数
- */
+interface WechatAuthData {
+  token: string
+  user?: {
+    id?: number
+    phone?: string
+    nickname?: string
+    avatar?: string
+  }
+}
+
+interface WechatAuthResponse {
+  success: boolean
+  data?: WechatAuthData
+  message?: string
+  error?: {
+    message?: string
+  }
+}
+
 export async function wechatLogin() {
   try {
-    // 1. 调用微信登录获取 code
     const loginRes: WechatLoginResponse = await uni.login({
       provider: 'weixin'
     }) as any
 
-    if (loginRes.errMsg !== 'login:ok') {
+    if (loginRes.errMsg !== 'login:ok' || !loginRes.code) {
       uni.showToast({
         title: '微信登录失败',
         icon: 'none'
@@ -49,8 +63,6 @@ export async function wechatLogin() {
     }
 
     const code = loginRes.code
-
-    // 2. 获取用户信息（头像、昵称等）
     let userInfo: WechatUserInfo | null = null
 
     try {
@@ -64,18 +76,15 @@ export async function wechatLogin() {
       }
     } catch (error) {
       console.error('获取用户信息失败:', error)
-      // 继续登录流程，使用默认信息
     }
 
     uni.showLoading({ title: '登录中...' })
 
-    // 3. 调用后端微信登录接口
-    const response = await fetch(`${config.apiBaseUrl}/auth/wechat`, {
+    const data = await httpRequest<WechatAuthResponse>({
+      url: '/auth/wechat',
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
+      withAuth: false,
+      data: {
         code,
         userInfo: userInfo ? {
           nickname: userInfo.nickName,
@@ -85,47 +94,39 @@ export async function wechatLogin() {
           province: userInfo.province,
           country: userInfo.country
         } : undefined
-      })
+      }
     })
 
     uni.hideLoading()
 
-    const data = await response.json()
-
     if (data.success && data.data?.token) {
       const authStore = useAuthStore()
-
-      // 保存 Token和用户信息
       authStore.setToken(data.data.token)
 
-      // 构建用户信息对象
-      const userObj = {
+      authStore.setUserInfo({
         id: data.data.user?.id || 0,
         phone: data.data.user?.phone || '',
         nickname: data.data.user?.nickname || userInfo?.nickName || '微信用户',
         avatar: data.data.user?.avatar || userInfo?.avatarUrl || ''
-      }
-
-      authStore.setUserInfo(userObj)
+      })
 
       uni.showToast({
         title: '登录成功',
         icon: 'success'
       })
 
-      // 跳转到首页
       setTimeout(() => {
         uni.switchTab({ url: '/pages/index/index' })
       }, 1500)
 
       return true
-    } else {
-      uni.showToast({
-        title: data.error?.message || data.message || '登录失败，请重试',
-        icon: 'none'
-      })
-      return false
     }
+
+    uni.showToast({
+      title: data.error?.message || data.message || '登录失败，请重试',
+      icon: 'none'
+    })
+    return false
   } catch (error) {
     uni.hideLoading()
     console.error('微信登录失败:', error)
@@ -139,9 +140,6 @@ export async function wechatLogin() {
   }
 }
 
-/**
- * 检查是否在微信环境中
- */
 export function isWechatEnv(): boolean {
   // #ifdef MP-WEIXIN
   return true
@@ -150,12 +148,7 @@ export function isWechatEnv(): boolean {
   return false
 }
 
-/**
- * 获取微信版本
- */
 export function getWechatVersion(): string {
-  // 微信基础库建议使用拆分后的信息接口，这里优先走新接口
-  // 仅在不可用时回退到 getSystemInfoSync，保证兼容旧版本。
   // #ifdef MP-WEIXIN
   const wxApi = (globalThis as any).wx
   if (wxApi && typeof wxApi.getAppBaseInfo === 'function') {
@@ -168,12 +161,8 @@ export function getWechatVersion(): string {
   return systemInfo.SDKVersion || ''
 }
 
-/**
- * 检查微信版本是否支持某功能
- */
 export function checkWechatVersion(version: string): boolean {
   const currentVersion = getWechatVersion()
-
   if (!currentVersion) return false
 
   const current = currentVersion.split('.').map(Number)
@@ -188,30 +177,24 @@ export function checkWechatVersion(version: string): boolean {
   return true
 }
 
-/**
- * 刷新 Token（使用微信静默刷新）
- */
 export async function refreshWechatToken() {
   try {
     const loginRes: WechatLoginResponse = await uni.login({
       provider: 'weixin'
     }) as any
 
-    if (loginRes.errMsg !== 'login:ok') {
+    if (loginRes.errMsg !== 'login:ok' || !loginRes.code) {
       return null
     }
 
-    const response = await fetch(`${config.apiBaseUrl}/auth/wechat/refresh`, {
+    const data = await httpRequest<WechatAuthResponse>({
+      url: '/auth/wechat/refresh',
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
+      withAuth: false,
+      data: {
         code: loginRes.code
-      })
+      }
     })
-
-    const data = await response.json()
 
     if (data.success && data.data?.token) {
       return data.data.token
@@ -224,9 +207,6 @@ export async function refreshWechatToken() {
   }
 }
 
-/**
- * 分享到微信
- */
 export function shareToWechat(options: {
   title: string
   path?: string

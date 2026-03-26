@@ -85,9 +85,8 @@
 import { ref, reactive } from 'vue'
 import Icon from '@/components/ui/Icon.vue'
 import { wechatLogin } from '@/utils/wechat'
-import { config } from '@/config'
 import { validatePhone, handleApiError, handleSuccess } from '@/utils/auth-helpers'
-import { useAuthStore } from '@/utils/auth'
+import { authApi, useAuthStore } from '@/utils/auth'
 
 const authStore = useAuthStore()
 const isLoading = ref(false)
@@ -139,21 +138,7 @@ const handleLogin = async () => {
     isLoading.value = true
     uni.showLoading({ title: '登录中...' })
 
-    const response = await fetch(`${config.apiBaseUrl}/auth/login`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        phone: formData.account,
-        password: formData.password
-      })
-    })
-
-    uni.hideLoading()
-    isLoading.value = false
-
-    const data = await response.json()
+    const data = await authApi.login(formData.account, formData.password)
 
     if (data.success && data.data?.token) {
       // 保存 Token
@@ -161,11 +146,7 @@ const handleLogin = async () => {
 
       // 获取用户信息并保存
       try {
-        const userResponse = await fetch(`${config.apiBaseUrl}/users/profile`, {
-          headers: authStore.getRequestHeaders()
-        })
-
-        const userData = await userResponse.json()
+        const userData = await authApi.getProfile()
         if (userData.success && userData.data) {
           authStore.setUserInfo({
             id: userData.data.id,
@@ -185,12 +166,13 @@ const handleLogin = async () => {
 
       handleSuccess('登录成功')
     } else {
-      handleApiError(data.error?.message || data.message)
+      handleApiError(data.error?.message || data.message || '登录失败')
     }
   } catch (error) {
+    handleApiError(error, '网络错误，请重试')
+  } finally {
     isLoading.value = false
     uni.hideLoading()
-    handleApiError(error, '网络错误，请重试')
   }
 }
 
@@ -210,7 +192,8 @@ const goToRegister = () => {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+@import '../../styles/variables.scss';
 .container {
   min-height: 100vh;
   background-color: #FFFDF5;
@@ -269,14 +252,14 @@ const goToRegister = () => {
 }
 
 .welcome-title {
-  font-size: 56rpx;
+  font-size: $font-size-display-lg;
   font-weight: 800;
   color: #4A403A;
   letter-spacing: -1rpx;
 }
 
 .welcome-subtitle {
-  font-size: 30rpx;
+  font-size: $font-size-h3;
   font-weight: 500;
   color: #8C817D;
 }
@@ -328,7 +311,7 @@ const goToRegister = () => {
 .input-field {
   flex: 1;
   height: 100%;
-  font-size: 30rpx;
+  font-size: $font-size-h3;
   color: #4A403A;
 }
 
@@ -362,7 +345,7 @@ const goToRegister = () => {
 }
 
 .forgot-link {
-  font-size: 28rpx;
+  font-size: $font-size-h3;
   font-weight: 500;
   color: #E07A5F;
 }
@@ -399,7 +382,7 @@ const goToRegister = () => {
 }
 
 .login-text {
-  font-size: 34rpx;
+  font-size: $font-size-h2;
   font-weight: 700;
   color: #ffffff;
 }
@@ -442,7 +425,7 @@ const goToRegister = () => {
 }
 
 .divider-text {
-  font-size: 24rpx;
+  font-size: $font-size-body-sm;
   color: rgba(140, 129, 125, 0.6);
   margin-bottom: 28rpx;
   position: relative;
@@ -505,12 +488,12 @@ const goToRegister = () => {
 }
 
 .register-text {
-  font-size: 28rpx;
+  font-size: $font-size-h3;
   color: #8C817D;
 }
 
 .register-link {
-  font-size: 28rpx;
+  font-size: $font-size-h3;
   font-weight: 700;
   color: #E07A5F;
   text-decoration: underline;

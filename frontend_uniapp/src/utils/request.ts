@@ -1,34 +1,82 @@
 /**
- * 基础 API 请求封装 (uni.request)
+ * Unified request wrapper for uni-app / mp-weixin.
+ * All business-side network calls should go through this file.
  */
-const BASE_URL = 'http://localhost:3000/api'; // 请根据实际后端地址修改
 
-export function request<T>(options: UniApp.RequestOptions): Promise<T> {
+import { config } from '@/config'
+
+type RequestMethod = NonNullable<UniApp.RequestOptions['method']>
+
+export interface RequestOptions {
+  url: string
+  method?: RequestMethod
+  data?: any
+  header?: Record<string, any>
+  timeout?: number
+  withAuth?: boolean
+}
+
+function normalizeUrl(url: string): string {
+  if (/^https?:\/\//.test(url)) return url
+  return `${config.apiBaseUrl}${url.startsWith('/') ? '' : '/'}${url}`
+}
+
+function getAuthHeader(): Record<string, string> {
+  const token = uni.getStorageSync(config.storageKeys.token) || ''
+  return token ? { Authorization: `Bearer ${token}` } : {}
+}
+
+export function request<T>(options: RequestOptions): Promise<T> {
+  const {
+    url,
+    method = 'GET',
+    data,
+    header = {},
+    timeout = config.requestTimeout,
+    withAuth = true
+  } = options
+
   return new Promise((resolve, reject) => {
     uni.request({
-      ...options,
-      url: options.url.startsWith('http') ? options.url : `${BASE_URL}${options.url}`,
+      url: normalizeUrl(url),
+      method,
+      data,
+      timeout,
       header: {
         'Content-Type': 'application/json',
-        ...options.header
+        ...(withAuth ? getAuthHeader() : {}),
+        ...header
       },
       success: (res) => {
         if (res.statusCode >= 200 && res.statusCode < 300) {
-          resolve(res.data as T);
-        } else {
-          reject(res);
+          resolve(res.data as T)
+          return
         }
+
+        reject({
+          statusCode: res.statusCode,
+          data: res.data,
+          message: `HTTP ${res.statusCode}`,
+          url
+        })
       },
-      fail: (err) => {
-        reject(err);
-      }
-    });
-  });
+      fail: (err) => reject(err)
+    })
+  })
 }
 
-export default {
-  get: <T>(url: string, data?: any) => request<T>({ url, method: 'GET', data }),
-  post: <T>(url: string, data?: any) => request<T>({ url, method: 'POST', data }),
-  put: <T>(url: string, data?: any) => request<T>({ url, method: 'PUT', data }),
-  delete: <T>(url: string, data?: any) => request<T>({ url, method: 'DELETE', data }),
-};
+const http = {
+  get: <T>(url: string, data?: any, options: Omit<RequestOptions, 'url' | 'method' | 'data'> = {}) =>
+    request<T>({ url, method: 'GET', data, ...options }),
+
+  post: <T>(url: string, data?: any, options: Omit<RequestOptions, 'url' | 'method' | 'data'> = {}) =>
+    request<T>({ url, method: 'POST', data, ...options }),
+
+  put: <T>(url: string, data?: any, options: Omit<RequestOptions, 'url' | 'method' | 'data'> = {}) =>
+    request<T>({ url, method: 'PUT', data, ...options }),
+
+  delete: <T>(url: string, data?: any, options: Omit<RequestOptions, 'url' | 'method' | 'data'> = {}) =>
+    request<T>({ url, method: 'DELETE', data, ...options })
+}
+
+export default http

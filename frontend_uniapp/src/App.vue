@@ -22,17 +22,8 @@ onHide(() => {
   --text-muted: #9a8c7c;
 }
 
-/* Local icon font to avoid runtime network dependency */
-@font-face {
-  font-family: "Material Symbols Outlined";
-  src: url("/static/fonts/MaterialSymbolsOutlined.woff2") format("woff2");
-  font-style: normal;
-  font-weight: 100 700;
-  font-display: swap;
-}
-
 .app-icon {
-  font-family: "Material Symbols Outlined";
+  font-family: "PingFang SC", "Helvetica Neue", Arial, sans-serif;
   font-weight: normal;
   font-style: normal;
   font-size: 24px;
@@ -45,7 +36,6 @@ onHide(() => {
   direction: ltr;
   -webkit-font-feature-settings: "liga";
   -webkit-font-smoothing: antialiased;
-  font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
 }
 
 /* 基础重置 */
