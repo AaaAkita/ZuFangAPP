@@ -3,7 +3,7 @@
     <view class="hero-section">
       <image
         class="hero-image"
-        src="/static/logo.png"
+        :src="heroImage"
         mode="aspectFill"
       />
       <view class="hero-overlay"></view>
@@ -269,71 +269,64 @@
 
 <script setup lang="ts">
 import { ref, reactive } from 'vue'
+import { onLoad } from '@dcloudio/uni-app'
 import Icon from '@/components/ui/Icon.vue'
+import {
+  getCommunityById,
+  type CommunityItem,
+  type CommunityReview
+} from '@/data/communities'
 
-interface ReviewTag {
-  text: string
-  type: string
-}
+type Review = CommunityReview
 
-interface Review {
-  name: string
-  avatar: string
-  time: string
-  content: string
-  verified: boolean
-  tags: ReviewTag[]
-}
+const fallbackCommunity = getCommunityById(1) as CommunityItem
 
 const isFavorite = ref(false)
 const showMapPopup = ref(false)
+const currentCommunityId = ref(fallbackCommunity.id)
+const heroImage = ref(fallbackCommunity.image)
 
 const communityInfo = reactive({
-  name: '阳光花园小区',
-  district: '朝阳区',
-  address: '建国路88号',
-  rating: 4.8,
-  tags: ['允许宠物', '近地铁', '封闭管理', '游泳池'],
-  description: '阳光花园坐落于繁华的朝阳区中心地带，为住户提供闹中取静的居住体验。小区绿化率高达40%，拥有现代化的园林设计。近期翻新的单元配备了全新的实木地板和智能家居系统，是年轻白领和家庭的理想居所。'
+  name: fallbackCommunity.name,
+  district: fallbackCommunity.district,
+  address: fallbackCommunity.address,
+  rating: fallbackCommunity.rating,
+  tags: [...fallbackCommunity.tags],
+  description: fallbackCommunity.description
 })
 
 const metrics = reactive({
-  safety: 9.0,
-  quietness: 8.0,
-  value: 7.0
+  safety: fallbackCommunity.metrics.safety,
+  quietness: fallbackCommunity.metrics.quietness,
+  value: fallbackCommunity.metrics.value
 })
 
 const circumference = 188.5
+const reviews = ref<Review[]>([...fallbackCommunity.reviews])
 
-const reviews = ref<Review[]>([
-  {
-    name: '张雨萱',
-    avatar: '/static/logo.png',
-    time: '2天前',
-    content: '超级喜欢这里的环境！物业管理非常负责，每天都能看到清洁人员在工作。唯一的缺点是周末访客停车位有点紧张。',
-    verified: true,
-    tags: [
-      { text: '环境好', type: 'green' },
-      { text: '物业负责', type: 'blue' }
-    ]
-  },
-  {
-    name: '李明',
-    avatar: '',
-    time: '1周前',
-    content: '地理位置绝佳，走路到地铁站只要5分钟。晚上很安静，非常适合需要早睡的上班族。',
-    verified: false,
-    tags: []
-  },
-  {
-    name: '王强',
-    avatar: '/static/logo.png',
-    time: '2周前',
-    content: '新的健身房设备很棒！虽然租金比周边稍微贵一点，但是考虑到这些配套设施，我觉得还是值得的。',
-    verified: false,
-    tags: []
-  }
-])
+const syncCommunityData = (community: CommunityItem) => {
+  currentCommunityId.value = community.id
+  heroImage.value = community.image
+
+  communityInfo.name = community.name
+  communityInfo.district = community.district
+  communityInfo.address = community.address
+  communityInfo.rating = community.rating
+  communityInfo.tags = [...community.tags]
+  communityInfo.description = community.description
+
+  metrics.safety = community.metrics.safety
+  metrics.quietness = community.metrics.quietness
+  metrics.value = community.metrics.value
+
+  reviews.value = [...community.reviews]
+}
+
+onLoad((query) => {
+  const communityId = Number((query as Record<string, string> | undefined)?.id || '1')
+  const targetCommunity = getCommunityById(communityId) || fallbackCommunity
+  syncCommunityData(targetCommunity)
+})
 
 const getStrokeDashoffset = (value: number): number => {
   const percentage = value / 10
@@ -347,8 +340,10 @@ const goBack = () => {
 const handleShare = () => {
   uni.showActionSheet({
     itemList: ['分享到微信', '分享到朋友圈', '复制链接'],
-    success: (res) => {
-      console.log('分享选项:', res.tapIndex)
+    success: () => {
+      uni.setClipboardData({
+        data: `/pages/community-detail/index?id=${currentCommunityId.value}`
+      })
     }
   })
 }
@@ -363,7 +358,7 @@ const toggleFavorite = () => {
 
 const handlePublishReview = () => {
   uni.navigateTo({
-    url: '/pages/review-publish/index'
+    url: `/pages/review-publish/index?communityId=${currentCommunityId.value}`
   })
 }
 
@@ -377,12 +372,12 @@ const selectMap = (mapType: string) => {
     baidu: '百度地图',
     tencent: '腾讯地图'
   }
-  
+
   uni.showToast({
     title: `正在打开${mapNames[mapType]}`,
     icon: 'none'
   })
-  
+
   closeMapPopup()
 }
 </script>

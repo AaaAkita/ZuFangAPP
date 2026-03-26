@@ -37,7 +37,7 @@
       <scroll-view class="recommend-scroll" scroll-x="true" show-scrollbar="false">
         <view class="card-list">
           <!-- 卡片 1: 阳光锦城 -->
-          <view class="card-item">
+          <view class="card-item" @click="goToCommunityDetail(1)">
             <image class="card-img" src="/static/logo.png" mode="aspectFill" />
             <view class="card-overlay"></view>
             <view class="card-tag">
@@ -57,7 +57,7 @@
             </view>
           </view>
           <!-- 卡片 2: 云尚国际 -->
-          <view class="card-item">
+          <view class="card-item" @click="goToCommunityDetail(2)">
             <image class="card-img" src="/static/logo.png" mode="aspectFill" />
             <view class="card-overlay"></view>
             <view class="card-tag">
@@ -77,7 +77,7 @@
             </view>
           </view>
           <!-- 卡片 3: 老弄堂公寓 -->
-          <view class="card-item">
+          <view class="card-item" @click="goToCommunityDetail(3)">
             <image class="card-img" src="/static/logo.png" mode="aspectFill" />
             <view class="card-overlay"></view>
             <view class="card-tag">
@@ -284,6 +284,12 @@ const navigateTo = (url: string) => {
 const goToSearchWithFilter = () => {
   uni.navigateTo({ 
     url: '/pages/search/index?showFilter=true'
+  })
+}
+
+const goToCommunityDetail = (id: number) => {
+  uni.navigateTo({
+    url: `/pages/community-detail/index?id=${id}`
   })
 }
 </script>
