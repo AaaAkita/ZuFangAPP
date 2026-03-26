@@ -3,10 +3,9 @@
  * 统一管理环境变量和 API 地址
  */
 
-// 根据环境自动选择配置
-// uni-app 在 H5 开发模式下，NODE_ENV 可能不是 development
-// 所以我们使用更多条件判断
-const isDev = process.env.NODE_ENV === 'development' || process.env.UNI_PLATFORM === 'h5'
+// 根据构建模式选择配置（避免依赖 Node.js process 类型）
+const mode = (import.meta as any).env?.MODE || ''
+const isDev = mode === 'development'
 
 export const config = {
   // API 基础地址

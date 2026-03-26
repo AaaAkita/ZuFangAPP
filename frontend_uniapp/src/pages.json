@@ -39,13 +39,13 @@
 		{
 			"path": "pages/about/index",
 			"style": {
-				"navigationBarTitleText": "鍏充簬鎴戜滑"
+				"navigationBarTitleText": "关于我们"
 			}
 		},
 		{
 			"path": "pages/safety/index",
 			"style": {
-				"navigationBarTitleText": "瀹夊叏鎸囧崡"
+				"navigationBarTitleText": "安全指南"
 			}
 		},
 		{
@@ -75,7 +75,7 @@
 	],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
-		"navigationBarTitleText": "绉熸埧閬块浄",
+		"navigationBarTitleText": "租房避雷",
 		"navigationBarBackgroundColor": "#faf9f8",
 		"backgroundColor": "#faf9f8"
 	},
@@ -87,19 +87,19 @@
 		"list": [
 			{
 				"pagePath": "pages/index/index",
-				"text": "棣栭〉"
+				"text": "首页"
 			},
 			{
 				"pagePath": "pages/community/index",
-				"text": "绀惧尯"
+				"text": "社区"
 			},
 			{
 				"pagePath": "pages/message/index",
-				"text": "娑堟伅"
+				"text": "消息"
 			},
 			{
 				"pagePath": "pages/profile/index",
-				"text": "鎴戠殑"
+				"text": "我的"
 			}
 		]
 	}

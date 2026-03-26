@@ -317,7 +317,7 @@ const propertyList = ref<Property[]>([
     id: 1,
     title: '阳光充足一居室',
     location: '朝阳区, 北京',
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuD2pfACwUisY02YWxP8IlxrGgx7N-fM1d32EYDiSlT6DKqVtmRwuTCFa9OUrP7s8NfdXJ1gHVBtpx3VqFfga2sAvJXtt114iQh58jxVZA6UEjrS_XFyftwsvyKOI5RITJ15VdcoSi2njkQBYpdvnXnzriVSIRynRFwE0bqaICYAmv2q4dbrMZGB707H_ME7cgj7fv4PzD3aKIRMHViU5bvvtRYdEGXZDLDtqOcMiBvVRYn4kj4lj8bBJ3UW4eLNLK6JMxjufGJKPQ',
+    image: '/static/logo.png',
     rating: '4.92',
     rooms: '1 室',
     bathrooms: '1 卫',
@@ -331,7 +331,7 @@ const propertyList = ref<Property[]>([
     id: 2,
     title: '运河旁宽敞Loft',
     location: '通州区, 北京',
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCTZbfKgCagWKmU6MxNo5V-fBPDRHjkcSSAKMmmR7vggrMAQXfaPy5xcx_SaEVf9a9CDC865cZuSC5n5LUn0hBfyjDcGCNHqJ9opI18dBcijmLByqFAP2d53xo16Tw1Ob5t7v0eewb6anKEO_rL9Q4o7H6cLA6jmCf4RTpixpme47gZY8DcuLLt9v1UJ9Bs85w9fBiRQlbEq8c8QHGcBa6B65f06cNrlfjl9Hc5z4HRGPI1dWQfua2bIy0Q3DNKSMLuinNQC_2fsQ',
+    image: '/static/logo.png',
     rating: '4.85',
     rooms: '2 室',
     bathrooms: '2 卫',
@@ -343,7 +343,7 @@ const propertyList = ref<Property[]>([
     id: 3,
     title: '温馨单身公寓',
     location: '海淀区, 北京',
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAB3hDnke3zurGhQLcvTN2N736N-q8L5HoTe-kQ0iUhFnpjQR5-mN7gxxOof8QBnt3__q20Emnhlm8jMtnW3FmHGKQhdT8TFgt8C4gcS0cjx99LFCaAXlOX3SOnBfsB3P9qPwfOmLtAnI-JqzVyFduyau2AIxRskqICxVgjBGbdUhNDGNgpk4YLCLwyLyz52K8xkENJKqlKyZdgbzBfkFR3dBFUkvxwI_v2HsAorwckl4HQFaraVpHBRjSu6Q4zfTZ-nVK8o5Wglg',
+    image: '/static/logo.png',
     rating: 'New',
     rooms: '开间',
     bathrooms: '1 卫',
@@ -420,7 +420,8 @@ const navigateToDetail = (item: Property) => {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+@import '../../styles/variables.scss';
 .container {
   min-height: 100vh;
   background-color: #fcfaf8;
@@ -466,7 +467,7 @@ const navigateToDetail = (item: Property) => {
 
 .search-input {
   flex: 1;
-  font-size: 28rpx;
+  font-size: $font-size-body;
   color: #1b130d;
   padding: 0 14rpx;
   min-width: 0;
@@ -518,7 +519,7 @@ const navigateToDetail = (item: Property) => {
 }
 
 .tag-text {
-  font-size: 24rpx;
+  font-size: $font-size-body-sm;
   font-weight: 500;
 }
 
@@ -537,7 +538,7 @@ const navigateToDetail = (item: Property) => {
 }
 
 .result-title {
-  font-size: 34rpx;
+  font-size: $font-size-h2;
   font-weight: bold;
   color: #1b130d;
 }
@@ -551,7 +552,7 @@ const navigateToDetail = (item: Property) => {
 }
 
 .sort-text {
-  font-size: 26rpx;
+  font-size: $font-size-body;
 }
 
 .sort-icon {
@@ -624,7 +625,7 @@ const navigateToDetail = (item: Property) => {
 }
 
 .badge-text {
-  font-size: 24rpx;
+  font-size: $font-size-body-sm;
   font-weight: bold;
   color: #1b130d;
 }
@@ -648,14 +649,14 @@ const navigateToDetail = (item: Property) => {
 }
 
 .card-title {
-  font-size: 33rpx;
+  font-size: $font-size-h2;
   font-weight: bold;
   color: #1b130d;
   line-height: 1.3;
 }
 
 .card-location {
-  font-size: 24rpx;
+  font-size: $font-size-body-sm;
   color: #9a6c4c;
   margin-top: 6rpx;
 }
@@ -676,7 +677,7 @@ const navigateToDetail = (item: Property) => {
 }
 
 .rating-text {
-  font-size: 24rpx;
+  font-size: $font-size-body-sm;
   font-weight: bold;
   color: #1b130d;
 }
@@ -700,7 +701,7 @@ const navigateToDetail = (item: Property) => {
 }
 
 .feature-text {
-  font-size: 22rpx;
+  font-size: $font-size-caption;
   font-weight: 500;
   color: #9a6c4c;
 }
@@ -720,18 +721,18 @@ const navigateToDetail = (item: Property) => {
 }
 
 .price {
-  font-size: 38rpx;
+  font-size: $font-size-h1;
   font-weight: bold;
   color: #ee7c2b;
 }
 
 .price-unit {
-  font-size: 24rpx;
+  font-size: $font-size-body-sm;
   color: #9a6c4c;
 }
 
 .detail-btn {
-  font-size: 24rpx;
+  font-size: $font-size-body-sm;
   font-weight: 600;
   color: #ee7c2b;
 }
@@ -817,7 +818,7 @@ const navigateToDetail = (item: Property) => {
 }
 
 .filter-title {
-  font-size: 40rpx;
+  font-size: $font-size-hero;
   font-weight: bold;
   color: #1b130d;
 }
@@ -850,7 +851,7 @@ const navigateToDetail = (item: Property) => {
 }
 
 .section-title {
-  font-size: 32rpx;
+  font-size: $font-size-h2;
   font-weight: bold;
   color: #1b130d;
   margin-bottom: 24rpx;
@@ -861,7 +862,7 @@ const navigateToDetail = (item: Property) => {
 }
 
 .price-range {
-  font-size: 36rpx;
+  font-size: $font-size-h1;
   font-weight: bold;
   color: #ee7c2b;
 }
@@ -889,7 +890,7 @@ const navigateToDetail = (item: Property) => {
 }
 
 .area-text {
-  font-size: 28rpx;
+  font-size: $font-size-h3;
   color: #9a6c4c;
 }
 
@@ -911,7 +912,7 @@ const navigateToDetail = (item: Property) => {
 }
 
 .street-text {
-  font-size: 28rpx;
+  font-size: $font-size-h3;
   color: #1b130d;
 }
 
@@ -981,12 +982,12 @@ const navigateToDetail = (item: Property) => {
 }
 
 .metro-num {
-  font-size: 32rpx;
+  font-size: $font-size-h2;
   font-weight: bold;
 }
 
 .metro-name {
-  font-size: 22rpx;
+  font-size: $font-size-caption;
   color: #9a6c4c;
   font-weight: 500;
 }
@@ -1011,7 +1012,7 @@ const navigateToDetail = (item: Property) => {
 }
 
 .rent-label {
-  font-size: 24rpx;
+  font-size: $font-size-body-sm;
   color: #9a6c4c;
   font-weight: 500;
 }
@@ -1042,7 +1043,7 @@ const navigateToDetail = (item: Property) => {
 }
 
 .rating-value {
-  font-size: 28rpx;
+  font-size: $font-size-h3;
   font-weight: bold;
   color: #9a6c4c;
 }
@@ -1078,7 +1079,7 @@ const navigateToDetail = (item: Property) => {
 }
 
 .reset-btn {
-  font-size: 28rpx;
+  font-size: $font-size-h3;
   color: #9a6c4c;
   font-weight: 500;
   padding: 0 16rpx;
@@ -1097,7 +1098,7 @@ const navigateToDetail = (item: Property) => {
 }
 
 .confirm-text {
-  font-size: 32rpx;
+  font-size: $font-size-h2;
   font-weight: bold;
   color: #ffffff;
 }
@@ -1109,7 +1110,8 @@ const navigateToDetail = (item: Property) => {
 }
 
 .badge-num {
-  font-size: 24rpx;
+  font-size: $font-size-body-sm;
   color: #ffffff;
 }
 </style>
+

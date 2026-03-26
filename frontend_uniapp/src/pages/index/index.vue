@@ -38,7 +38,7 @@
         <view class="card-list">
           <!-- 卡片 1: 阳光锦城 -->
           <view class="card-item">
-            <image class="card-img" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCYGS65YhEGX-VAmU5CqyDsgWyG8gaaZiuRfx-ekQzPIVLfxpzNq1djHcEn_13Y2gPwXAcpSFMjTsHmT4MGbi4WfKWLjQf0DtKHr9tNX6Pf4SohBiRPhuLJx870V_Am05iUBZo26_kmAtdd5ciku3xJA-cjgsuQYaGmr1g7Cd1wS3x9IjwLmrOwNOspzkjYUkqs3DdlU3ieyGSg7ycg0_unOdNX39XFQl0aqJ8S4Q__lfTOvih-8eZCo0sKlg8STlsvJZoxpaVnPQ" mode="aspectFill" />
+            <image class="card-img" src="/static/logo.png" mode="aspectFill" />
             <view class="card-overlay"></view>
             <view class="card-tag">
               <Icon name="star" :size="14" color="#facc15" class="star-icon" />
@@ -58,7 +58,7 @@
           </view>
           <!-- 卡片 2: 云尚国际 -->
           <view class="card-item">
-            <image class="card-img" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCYELfyEv7EK1UlHySb9Jpg-m9ses9RZ9ULQIVVVrABL76qXIokTpeSaFhOU6R8YyfWcpq2b1qPA5-r7xwhoAWIQPcTxvDektfOL0fgWGINGjJcjXzogA6koV8qBFTAfIBSBdDuvr-RhWaSWTNM8fW3Ao1VCSXbazPJ_Y9hwus34kys0VkAt3HFANJD2w06gXovGDY95Wlop7c_xexIdDv3I3WTcJ83bY7CrWcPker_MrF5fqEjtYiOmmgIRfJT-NEIPBL0ddkb3g" mode="aspectFill" />
+            <image class="card-img" src="/static/logo.png" mode="aspectFill" />
             <view class="card-overlay"></view>
             <view class="card-tag">
               <Icon name="star" :size="14" color="#facc15" class="star-icon" />
@@ -78,7 +78,7 @@
           </view>
           <!-- 卡片 3: 老弄堂公寓 -->
           <view class="card-item">
-            <image class="card-img" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCGwpkHsxHUfmBFlEWfrN4-8lomr1e0uzaBma8AYyYxGrB83_7sZydfW8zSq7mhy-HGuCMNh8p5YTjRfvZI-RgMqY6P3oQ3OaCqZ-dIMkJYV9zA2ckMKZtgevmnBGQcJm6jYGrvWY2C5DyhLSmL_VuJH5kIq5_NrBgWKONYG6kBXjtuX73Nt4hlEAJChFklISJ723mjtcbGYoz2PGz79XzLag9i3x4Rw0iXqCVvDuTiD6j7Sev7bWiYmUnIqzvMpzKhc4q9hRt9Ww" mode="aspectFill" />
+            <image class="card-img" src="/static/logo.png" mode="aspectFill" />
             <view class="card-overlay"></view>
             <view class="card-tag">
               <Icon name="star" :size="14" color="#facc15" class="star-icon" />
@@ -123,7 +123,7 @@
           </view>
           <Button type="primary" size="small" custom-class="banner-btn">立即预约</Button>
         </view>
-        <image class="banner-bg" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBJ-0S8s3_G7aKFKFWwm8wLEob_K3PVbXuqi3HKxKgmypBMVDdMTfoO3NEabxKb9vLXrXt1SpvMYyKsioqJ0CfBOZzM_pkRPMP4Hg6AmkMuvGNj7MuNfNrKlUcX29WtN8KpVUnCANpwWyZoFALStXxBezN00PMzCbYekUdHQDfjrUssfEY7fNQfuFfgxLig3TDagkXxMBKurT_AickewsyiXZCZKRITHaFK7oRdFEAwoxohxhkFk5LUOFEfoNrBYHnUOomm0vzUSw" mode="aspectFit" />
+        <image class="banner-bg" src="/static/logo.png" mode="aspectFit" />
       </view>
     </view>
 
@@ -192,7 +192,7 @@
         <!-- 评价 1 -->
         <view class="review-item">
           <view class="review-user">
-            <image class="user-avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDk3In2cF6gSAIk-JJ1HCm-k5SrDYH4uZGtAb0WOPyieHEMcYSrpr1CXJmod2P29SybVs-Va1F85zBHbCFeBt3kjlrMmJJCzwwM4IMafJ-ZfKuYMtTp0j78U67ZO5t1WQfHuB6hsSAAGeAc64xELohV02BN0EhWU1DzaPIsu44W7wqGACNf1WhYaZBT5qobukutSsxRwUHx3_r0mNoHPA32z3MQmSup622a53jCODo7P_V7Gqqdhj2JvzwuFAzhWvY8DUZjl3WIAA" mode="aspectFill" />
+            <image class="user-avatar" src="/static/logo.png" mode="aspectFill" />
             <view class="verified-badge">
               <Icon name="check" :size="20" color="#fff" />
             </view>
@@ -219,7 +219,7 @@
         <!-- 评价 2 -->
         <view class="review-item">
           <view class="review-user">
-            <image class="user-avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBrDjzVgSxz82q2EQLoJYnh8V85xTtfU_RNHn5KBpYUi78-avO49EGgrgATz2bDhiSgHsjzACktLXxDlo7BVYbykqGx83AEby51WhFpfC-DlTfc3mVYdW_IlGN0rja6hAksIgefooNHDEqmKXVpv-TJpMmKlR5tL2kP5cITwRgSVJqA9Sg4Omvs_NKe_Zc5r3AD7_W4HfnlVXtmhPbq74cLz9qbeN22eFnkOd3tXTpJVkiFJdZFoOK6MYhX8Rmi6ETnETSwFDZJVA" mode="aspectFill" />
+            <image class="user-avatar" src="/static/logo.png" mode="aspectFill" />
           </view>
           <view class="review-content">
             <view class="review-header">
@@ -243,7 +243,7 @@
         <!-- 评价 3 -->
         <view class="review-item">
           <view class="review-user">
-            <image class="user-avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD3tixikl416MXE1ZJO49Zg8E1tEYWZr9jkopQ7sHhGbaYOiyN2SQJIhnpPBAvDs9QJ0zfjj8fdpbFMIP-u_bfTqoBXGD3NIOzkA_GEF27w9DO3pYjxyJkMFRgYuiD9ik_Av_9bEjmvFy_WNvCmA-rkZFHJDY7TbHP8Wfx1l4OTw4XgPWISVtxvPTGyjsnjewBQofUPPZPwzuK27S8QZ8TIMij1mCgS3ouu4L-Cac0GcsATBLwwpmbJux5ci-N7GSWV3fXsCg9owQ" mode="aspectFill" />
+            <image class="user-avatar" src="/static/logo.png" mode="aspectFill" />
           </view>
           <view class="review-content">
             <view class="review-header">
@@ -327,7 +327,7 @@ const goToSearchWithFilter = () => {
 }
 
 .location-text {
-  font-size: 36rpx;
+  font-size: $font-size-h1;
   font-weight: bold;
   color: var(--text-main);
 }
@@ -339,7 +339,7 @@ const goToSearchWithFilter = () => {
 }
 
 .location-sub {
-  font-size: 24rpx;
+  font-size: $font-size-body-sm;
   color: var(--text-muted);
   margin-top: 4rpx;
 }
@@ -366,7 +366,7 @@ const goToSearchWithFilter = () => {
 
 .search-placeholder {
   flex: 1;
-  font-size: 30rpx;
+  font-size: $font-size-h3;
   color: var(--text-muted);
 }
 
@@ -395,13 +395,13 @@ const goToSearchWithFilter = () => {
 }
 
 .section-title {
-  font-size: 40rpx;
+  font-size: $font-size-hero;
   font-weight: bold;
   color: var(--text-main);
 }
 
 .more-link {
-  font-size: 28rpx;
+  font-size: $font-size-h3;
   color: var(--text-muted);
   display: flex;
   align-items: center;
@@ -483,7 +483,7 @@ const goToSearchWithFilter = () => {
 }
 
 .rating {
-  font-size: 12rpx;
+  font-size: $font-size-nano;
   font-weight: bold;
   color: #333;
 }
@@ -497,14 +497,14 @@ const goToSearchWithFilter = () => {
 }
 
 .card-title {
-  font-size: 20rpx;
+  font-size: $font-size-tiny;
   font-weight: bold;
   display: block;
   margin-bottom: 4rpx;
 }
 
 .card-loc {
-  font-size: 14rpx;
+  font-size: $font-size-micro;
   display: flex;
   align-items: center;
   gap: 4rpx;
@@ -512,7 +512,7 @@ const goToSearchWithFilter = () => {
   margin-bottom: 10rpx;
 }
 
-.loc-small { font-size: 14rpx; }
+.loc-small { font-size: $font-size-micro; }
 
 .badge-row {
   display: flex;
@@ -520,7 +520,7 @@ const goToSearchWithFilter = () => {
 }
 
 .badge {
-  font-size: 10rpx;
+  font-size: $font-size-nano;
   font-weight: bold;
   padding: 3rpx 10rpx;
   border-radius: 10rpx;
@@ -578,7 +578,7 @@ const goToSearchWithFilter = () => {
   gap: 6rpx;
   background-color: rgba(238, 124, 43, 0.2);
   color: var(--primary);
-  font-size: 20rpx;
+  font-size: $font-size-tiny;
   font-weight: bold;
   padding: 4rpx 16rpx;
   border-radius: 20rpx;
@@ -586,7 +586,7 @@ const goToSearchWithFilter = () => {
 }
 
 .banner-title {
-  font-size: 40rpx;
+  font-size: $font-size-hero;
   font-weight: bold;
   color: #8a5d3b;
   display: block;
@@ -594,7 +594,7 @@ const goToSearchWithFilter = () => {
 }
 
 .banner-sub {
-  font-size: 24rpx;
+  font-size: $font-size-body-sm;
   color: #a6866f;
   margin: 10rpx 0 20rpx;
   display: block;
@@ -612,7 +612,7 @@ const goToSearchWithFilter = () => {
   display: inline-flex;
   align-items: center;
   gap: 6rpx;
-  font-size: 20rpx;
+  font-size: $font-size-tiny;
   color: #8a5d3b;
   background-color: rgba(255, 255, 255, 0.62);
   border: 1rpx solid rgba(230, 159, 105, 0.3);
@@ -623,7 +623,7 @@ const goToSearchWithFilter = () => {
 .banner-btn {
   background-color: #d98f54;
   color: #fff;
-  font-size: 24rpx;
+  font-size: $font-size-body-sm;
   font-weight: bold;
   padding: 10rpx 36rpx;
   border-radius: 40rpx;
@@ -689,25 +689,25 @@ const goToSearchWithFilter = () => {
 }
 
 .warning-name {
-  font-size: 30rpx;
+  font-size: $font-size-h3;
   font-weight: bold;
   color: var(--text-main);
 }
 
 .warning-time {
-  font-size: 20rpx;
+  font-size: $font-size-tiny;
   color: var(--text-muted);
 }
 
 .warning-sub {
-  font-size: 24rpx;
+  font-size: $font-size-body-sm;
   color: var(--text-muted);
   display: block;
   margin-bottom: 12rpx;
 }
 
 .warning-desc {
-  font-size: 28rpx;
+  font-size: $font-size-h3;
   color: #4b5563;
   line-height: 1.6;
   margin-bottom: 20rpx;
@@ -724,7 +724,7 @@ const goToSearchWithFilter = () => {
   display: inline-flex;
   align-items: center;
   gap: 8rpx;
-  font-size: 20rpx;
+  font-size: $font-size-tiny;
   font-weight: bold;
   color: #e67326;
   background-color: #fff0e6;
@@ -806,13 +806,13 @@ const goToSearchWithFilter = () => {
 }
 
 .user-name {
-  font-size: 30rpx;
+  font-size: $font-size-h3;
   font-weight: bold;
   color: var(--text-main);
 }
 
 .review-target {
-  font-size: 24rpx;
+  font-size: $font-size-body-sm;
   color: var(--text-muted);
   margin-top: 4rpx;
 }
@@ -823,7 +823,7 @@ const goToSearchWithFilter = () => {
 }
 
 .review-time {
-  font-size: 22rpx;
+  font-size: $font-size-caption;
   color: var(--text-muted);
   background-color: #f9fafb;
   padding: 8rpx 16rpx;
@@ -831,7 +831,7 @@ const goToSearchWithFilter = () => {
 }
 
 .review-text {
-  font-size: 28rpx;
+  font-size: $font-size-h3;
   color: #4b5563;
   line-height: 1.6;
   margin-bottom: 24rpx;
@@ -848,7 +848,7 @@ const goToSearchWithFilter = () => {
   display: inline-flex;
   align-items: center;
   gap: 12rpx;
-  font-size: 22rpx;
+  font-size: $font-size-caption;
   font-weight: 600;
   padding: 12rpx 24rpx;
   border-radius: 32rpx;
@@ -885,3 +885,5 @@ const goToSearchWithFilter = () => {
 }
 
 </style>
+
+

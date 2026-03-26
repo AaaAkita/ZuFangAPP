@@ -3,7 +3,7 @@
     <view class="hero-section">
       <image
         class="hero-image"
-        src="https://lh3.googleusercontent.com/aida-public/AB6AXuAp_v7nyrkpQ0xdB127lc3BhGXDZiu76kESZr1QasI_8FNlikpNXzBSMpR_Q8cKzjEVRrzEXn99rkVKgBLqgCMZF8sJ0Qa2pCEzFBrvELXeZZVdDovCF3UF3H0JETavUFNEGc2ywkLtBZXglLSC2nlLLC53QfB7_kQvSnZ0uhfQXoLuidnr2kNxZKLugKMD6JAMaKHTjFqT4-IOA4q2ZmeURAo-NplsG0JisCLIGkkzslIPiTs3goTxu1IOpWt6nXqJWHSJUZ35WQ"
+        src="/static/logo.png"
         mode="aspectFill"
       />
       <view class="hero-overlay"></view>
@@ -308,7 +308,7 @@ const circumference = 188.5
 const reviews = ref<Review[]>([
   {
     name: '张雨萱',
-    avatar: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCvFQuaACVah8dC-gKIkD3uq5pFv1Oe7IyZ3BYx8lpi7UgDTUOKybHY-RHvOHW8hskEGa_GzLI1CCMgd2Mmh9oUzbXCEufVscbe6WS_QXJ9tDscBM0Fn8kyZwZg_7E7Zm1vJJVBw2beJBLaLqB5QibpFoqcp4BZAj3FnPcNm5LP38MiHb3QQ9QgtBJuS7ACncmwZwYsL7PJmyeEbH0ZZBmnMHFfVsdNgJ430G90b1azWAv6X9DZXR7fWDg45jeEeuWPYttzr7b90w',
+    avatar: '/static/logo.png',
     time: '2天前',
     content: '超级喜欢这里的环境！物业管理非常负责，每天都能看到清洁人员在工作。唯一的缺点是周末访客停车位有点紧张。',
     verified: true,
@@ -327,7 +327,7 @@ const reviews = ref<Review[]>([
   },
   {
     name: '王强',
-    avatar: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCwgr9AF_Q0BYUZ60cOMW8KaLm-8yUizn8aYvCaGNl3MtYqd8MJVK5OfXQUFkBrTpgZZ5521Mgs2sPTSD06WVxh6YmOE9XQTxJWCkdntdh7POf9o5-xrnT4dLIsSY2afuNYdfzs1mOeY-KDtvGmSWftHS1-UyCCPBkc2pcU9c52tL3kwF8XE0F3oIOiqvtkqfQJcpRkOe17OJTEOMUtbzY6PhQ50MMRfPghN85OdwzMBAPPo8Re9_3qTYaWdIInpt1NWIZJYhIbEQ',
+    avatar: '/static/logo.png',
     time: '2周前',
     content: '新的健身房设备很棒！虽然租金比周边稍微贵一点，但是考虑到这些配套设施，我觉得还是值得的。',
     verified: false,
@@ -387,7 +387,8 @@ const selectMap = (mapType: string) => {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+@import '../../styles/variables.scss';
 .container {
   min-height: 100vh;
   background-color: #fafafa;
@@ -463,7 +464,7 @@ const selectMap = (mapType: string) => {
 }
 
 .hero-title {
-  font-size: 60rpx;
+  font-size: $font-size-display-lg;
   font-weight: bold;
   color: #fff;
   display: block;
@@ -475,7 +476,7 @@ const selectMap = (mapType: string) => {
   align-items: center;
   gap: 8rpx;
   color: rgba(255, 255, 255, 0.95);
-  font-size: 28rpx;
+  font-size: $font-size-h3;
 }
 
 .hero-location .app-icon {
@@ -499,7 +500,7 @@ const selectMap = (mapType: string) => {
 }
 
 .rating-value {
-  font-size: 36rpx;
+  font-size: $font-size-h1;
   font-weight: bold;
   color: #FF8C42;
 }
@@ -525,7 +526,7 @@ const selectMap = (mapType: string) => {
 .tag-item {
   background-color: #FFF0E6;
   color: #FF8C42;
-  font-size: 24rpx;
+  font-size: $font-size-body-sm;
   font-weight: bold;
   padding: 16rpx 32rpx;
   border-radius: 40rpx;
@@ -553,7 +554,7 @@ const selectMap = (mapType: string) => {
 }
 
 .section-title {
-  font-size: 36rpx;
+  font-size: $font-size-h1;
   font-weight: bold;
   color: #333;
 }
@@ -602,13 +603,13 @@ const selectMap = (mapType: string) => {
 }
 
 .value-text {
-  font-size: 36rpx;
+  font-size: $font-size-h1;
   font-weight: bold;
   color: #333;
 }
 
 .metric-label {
-  font-size: 24rpx;
+  font-size: $font-size-body-sm;
   font-weight: 600;
   color: #888;
 }
@@ -620,7 +621,7 @@ const selectMap = (mapType: string) => {
 }
 
 .description-text {
-  font-size: 30rpx;
+  font-size: $font-size-h3;
   color: #888;
   line-height: 1.8;
   padding: 0 8rpx;
@@ -636,14 +637,14 @@ const selectMap = (mapType: string) => {
 }
 
 .review-count {
-  font-size: 24rpx;
+  font-size: $font-size-body-sm;
   font-weight: normal;
   color: #888;
   margin-left: 8rpx;
 }
 
 .view-all-link {
-  font-size: 28rpx;
+  font-size: $font-size-h3;
   color: #FF8C42;
   font-weight: bold;
   display: flex;
@@ -740,13 +741,13 @@ const selectMap = (mapType: string) => {
 }
 
 .reviewer-name {
-  font-size: 28rpx;
+  font-size: $font-size-h3;
   font-weight: bold;
   color: #333;
 }
 
 .review-time {
-  font-size: 20rpx;
+  font-size: $font-size-tiny;
   color: #888;
   background-color: #fff;
   padding: 8rpx 16rpx;
@@ -754,7 +755,7 @@ const selectMap = (mapType: string) => {
 }
 
 .review-content {
-  font-size: 28rpx;
+  font-size: $font-size-h3;
   color: #333;
   line-height: 1.6;
 }
@@ -767,7 +768,7 @@ const selectMap = (mapType: string) => {
 }
 
 .review-tag {
-  font-size: 20rpx;
+  font-size: $font-size-tiny;
   padding: 8rpx 16rpx;
   border-radius: 8rpx;
 }
@@ -818,7 +819,7 @@ const selectMap = (mapType: string) => {
 }
 
 .fab-text {
-  font-size: 28rpx;
+  font-size: $font-size-h3;
   font-weight: bold;
   color: #fff;
 }
@@ -862,7 +863,7 @@ const selectMap = (mapType: string) => {
 
 .popup-title {
   display: block;
-  font-size: 40rpx;
+  font-size: $font-size-hero;
   font-weight: bold;
   text-align: center;
   color: #333;
@@ -926,7 +927,7 @@ const selectMap = (mapType: string) => {
 }
 
 .map-name {
-  font-size: 24rpx;
+  font-size: $font-size-body-sm;
   font-weight: 500;
   color: #333;
 }
@@ -941,7 +942,7 @@ const selectMap = (mapType: string) => {
 }
 
 .cancel-btn text {
-  font-size: 30rpx;
+  font-size: $font-size-h3;
   font-weight: bold;
   color: #888;
 }
@@ -950,3 +951,4 @@ const selectMap = (mapType: string) => {
   background-color: #f9fafb;
 }
 </style>
+

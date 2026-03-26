@@ -95,7 +95,7 @@ const userDisplayName = computed(() => {
 
 const userAvatar = computed(() => {
   // 默认头像占位符
-  const defaultAvatar = 'https://lh3.googleusercontent.com/ida-public/AB6AXuD923g4BO4e90wR5iqWkTqhYtvCujz8IVhDHDnkNxjAjKet7YR_R1Mnhg_LDdN-OusEysohzB-RFXSCqjKoAF1V4xEe6c9t3kvBiKVpOgogd5UMmmf7U1KIkDBe2o8m3LL8IMxousnWZ4d8yH1JwFf-zEs4mUmghDmdPzZ7L4FX7hgWS4EfO5KIAd63KnnhSPDpb4J83ZLVkht56IFFnz8u4kadgBXuLADQdSmaZkpxlV0iXobSXBFr9hPhVUduoTtKndkjeNGCow'
+  const defaultAvatar = '/static/logo.png'
   return authStore.userInfo?.avatar || defaultAvatar
 })
 
@@ -359,3 +359,4 @@ const navigateTo = (url: string) => {
   color: $color-text-tertiary;
 }
 </style>
+
