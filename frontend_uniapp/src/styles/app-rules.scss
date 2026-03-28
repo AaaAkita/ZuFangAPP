@@ -1,4 +1,4 @@
-﻿@import './variables.scss';
+@import './variables.scss';
 
 :root {
   --primary: #ee7c2b;
@@ -14,6 +14,7 @@
   --card-shell-gap: 24rpx;
   --card-shell-shadow: 0 16rpx 48rpx rgba(0, 0, 0, 0.1);
   --card-shell-border: rgba(0, 0, 0, 0.05);
+  --capsule-safe-offset: 92rpx;
 }
 
 page {
@@ -60,6 +61,18 @@ label {
   min-height: 100vh;
   padding-left: 40rpx;
   padding-right: 40rpx;
+}
+
+.page-community > .global-back + *,
+.page-community-detail > .global-back + *,
+.page-search > .global-back + *,
+.page-profile > .global-back + *,
+.page-message > .global-back + *,
+.page-about > .global-back + *,
+.page-safety > .global-back + *,
+.page-review-publish > .global-back + *,
+.page-reviews > .global-back + * {
+  margin-top: var(--capsule-safe-offset);
 }
 
 .card-shell {
@@ -177,6 +190,8 @@ label {
 
 .home-banner {
   background: linear-gradient(135deg, #fff6ed 0%, #fbe8d8 55%, #f5d8be 100%);
+  border: none;
+  box-shadow: none;
 }
 
 .home-banner__tag {

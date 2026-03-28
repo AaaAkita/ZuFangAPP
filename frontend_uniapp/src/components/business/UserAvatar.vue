@@ -41,7 +41,7 @@ const iconSize = computed(() => Math.max(20, Math.round(props.size * 0.36)))
 .biz-user-avatar {
   position: relative;
   border-radius: 50%;
-  overflow: hidden;
+  overflow: visible;
   flex-shrink: 0;
 }
 
@@ -62,13 +62,14 @@ const iconSize = computed(() => Math.max(20, Math.round(props.size * 0.36)))
 
 .biz-user-avatar__verified {
   position: absolute;
-  left: -6rpx;
-  bottom: -6rpx;
+  left: -8rpx;
+  bottom: -8rpx;
   width: 34rpx;
   height: 34rpx;
   border-radius: 50%;
   background: #10b981;
   border: 3rpx solid #ffffff;
+  z-index: 2;
   display: flex;
   align-items: center;
   justify-content: center;
