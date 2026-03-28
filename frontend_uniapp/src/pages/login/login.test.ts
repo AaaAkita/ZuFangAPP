@@ -1,6 +1,6 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest'
+﻿import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { render, screen, fireEvent, waitFor } from '@testing-library/vue'
-import Login from './index.vue'
+import Login from './login.vue'
 
 // Mock uni API
 const mockUni = {
@@ -19,75 +19,75 @@ vi.stubGlobal('uni', mockUni)
 // Mock fetch for API calls
 global.fetch = vi.fn() as any
 
-describe('手机号登录功能', () => {
+describe('鎵嬫満鍙风櫥褰曞姛鑳?, () => {
   beforeEach(() => {
     vi.clearAllMocks()
   })
 
-  describe('表单验证', () => {
-    it('显示手机号和密码输入框', () => {
+  describe('琛ㄥ崟楠岃瘉', () => {
+    it('鏄剧ず鎵嬫満鍙峰拰瀵嗙爜杈撳叆妗?, () => {
       render(Login)
 
-      expect(screen.getByPlaceholderText(/手机号/)).toBeTruthy()
-      expect(screen.getByPlaceholderText(/密码/)).toBeTruthy()
+      expect(screen.getByPlaceholderText(/鎵嬫満鍙?)).toBeTruthy()
+      expect(screen.getByPlaceholderText(/瀵嗙爜/)).toBeTruthy()
     })
 
-    it('验证手机号不为空', async () => {
+    it('楠岃瘉鎵嬫満鍙蜂笉涓虹┖', async () => {
       render(Login)
 
-      const passwordInput = screen.getByPlaceholderText(/密码/)
-      const submitButton = screen.getByText(/登录/)
+      const passwordInput = screen.getByPlaceholderText(/瀵嗙爜/)
+      const submitButton = screen.getByText(/鐧诲綍/)
 
       await fireEvent.update(passwordInput, 'Test123456')
       await fireEvent.click(submitButton)
 
       expect(mockUni.showToast).toHaveBeenCalledWith(
-        expect.objectContaining({ title: '请输入手机号' })
+        expect.objectContaining({ title: '璇疯緭鍏ユ墜鏈哄彿' })
       )
     })
 
-    it('验证手机号格式', async () => {
+    it('楠岃瘉鎵嬫満鍙锋牸寮?, async () => {
       render(Login)
 
-      const phoneInput = screen.getByPlaceholderText(/手机号/)
-      const passwordInput = screen.getByPlaceholderText(/密码/)
-      const submitButton = screen.getByText(/登录/)
+      const phoneInput = screen.getByPlaceholderText(/鎵嬫満鍙?)
+      const passwordInput = screen.getByPlaceholderText(/瀵嗙爜/)
+      const submitButton = screen.getByText(/鐧诲綍/)
 
       await fireEvent.update(phoneInput, '123')
       await fireEvent.update(passwordInput, 'Test123456')
       await fireEvent.click(submitButton)
 
       expect(mockUni.showToast).toHaveBeenCalledWith(
-        expect.objectContaining({ title: '请输入有效的11位手机号' })
+        expect.objectContaining({ title: '璇疯緭鍏ユ湁鏁堢殑11浣嶆墜鏈哄彿' })
       )
     })
 
-    it('验证密码不为空', async () => {
+    it('楠岃瘉瀵嗙爜涓嶄负绌?, async () => {
       render(Login)
 
-      const phoneInput = screen.getByPlaceholderText(/手机号/)
-      const submitButton = screen.getByText(/登录/)
+      const phoneInput = screen.getByPlaceholderText(/鎵嬫満鍙?)
+      const submitButton = screen.getByText(/鐧诲綍/)
 
       await fireEvent.update(phoneInput, '13800138000')
       await fireEvent.click(submitButton)
 
       expect(mockUni.showToast).toHaveBeenCalledWith(
-        expect.objectContaining({ title: '请输入密码' })
+        expect.objectContaining({ title: '璇疯緭鍏ュ瘑鐮? })
       )
     })
   })
 
-  describe('登录 API 调用', () => {
-    it('登录成功时保存 Token 并跳转首页', async () => {
+  describe('鐧诲綍 API 璋冪敤', () => {
+    it('鐧诲綍鎴愬姛鏃朵繚瀛?Token 骞惰烦杞椤?, async () => {
       const mockResponse = {
         success: true,
         data: {
           id: 1,
           phone: '13800138000',
-          nickname: '测试用户',
+          nickname: '娴嬭瘯鐢ㄦ埛',
           token: 'mock-jwt-token'
         },
-        message: '登录成功'
+        message: '鐧诲綍鎴愬姛'
       }
 
       vi.mocked(fetch).mockResolvedValueOnce({
@@ -97,15 +97,15 @@ describe('手机号登录功能', () => {
 
       render(Login)
 
-      const phoneInput = screen.getByPlaceholderText(/手机号/)
-      const passwordInput = screen.getByPlaceholderText(/密码/)
-      const submitButton = screen.getByText(/登录/)
+      const phoneInput = screen.getByPlaceholderText(/鎵嬫満鍙?)
+      const passwordInput = screen.getByPlaceholderText(/瀵嗙爜/)
+      const submitButton = screen.getByText(/鐧诲綍/)
 
       await fireEvent.update(phoneInput, '13800138000')
       await fireEvent.update(passwordInput, 'Test123456')
       await fireEvent.click(submitButton)
 
-      expect(mockUni.showLoading).toHaveBeenCalledWith({ title: '登录中...' })
+      expect(mockUni.showLoading).toHaveBeenCalledWith({ title: '鐧诲綍涓?..' })
 
       await waitFor(() => {
         expect(fetch).toHaveBeenCalledWith(
@@ -121,20 +121,20 @@ describe('手机号登录功能', () => {
       })
 
       expect(mockUni.showToast).toHaveBeenCalledWith(
-        expect.objectContaining({ title: '登录成功', icon: 'success' })
+        expect.objectContaining({ title: '鐧诲綍鎴愬姛', icon: 'success' })
       )
 
       expect(mockUni.setStorageSync).toHaveBeenCalledWith('token', 'mock-jwt-token')
       expect(mockUni.setStorageSync).toHaveBeenCalledWith('userInfo', mockResponse.data)
 
-      expect(mockUni.switchTab).toHaveBeenCalledWith({ url: '/pages/index/index' })
+      expect(mockUni.switchTab).toHaveBeenCalledWith({ url: '/pages/home/home' })
     })
 
-    it('登录失败时显示错误信息', async () => {
+    it('鐧诲綍澶辫触鏃舵樉绀洪敊璇俊鎭?, async () => {
       const mockErrorResponse = {
         success: false,
         error: {
-          message: '用户名或密码错误'
+          message: '鐢ㄦ埛鍚嶆垨瀵嗙爜閿欒'
         }
       }
 
@@ -145,9 +145,9 @@ describe('手机号登录功能', () => {
 
       render(Login)
 
-      const phoneInput = screen.getByPlaceholderText(/手机号/)
-      const passwordInput = screen.getByPlaceholderText(/密码/)
-      const submitButton = screen.getByText(/登录/)
+      const phoneInput = screen.getByPlaceholderText(/鎵嬫満鍙?)
+      const passwordInput = screen.getByPlaceholderText(/瀵嗙爜/)
+      const submitButton = screen.getByText(/鐧诲綍/)
 
       await fireEvent.update(phoneInput, '13800138000')
       await fireEvent.update(passwordInput, 'wrongpassword')
@@ -155,19 +155,19 @@ describe('手机号登录功能', () => {
 
       await waitFor(() => {
         expect(mockUni.showToast).toHaveBeenCalledWith(
-          expect.objectContaining({ title: '用户名或密码错误', icon: 'none' })
+          expect.objectContaining({ title: '鐢ㄦ埛鍚嶆垨瀵嗙爜閿欒', icon: 'none' })
         )
       })
     })
 
-    it('网络错误时显示友好提示', async () => {
+    it('缃戠粶閿欒鏃舵樉绀哄弸濂芥彁绀?, async () => {
       vi.mocked(fetch).mockRejectedValueOnce(new Error('Network error'))
 
       render(Login)
 
-      const phoneInput = screen.getByPlaceholderText(/手机号/)
-      const passwordInput = screen.getByPlaceholderText(/密码/)
-      const submitButton = screen.getByText(/登录/)
+      const phoneInput = screen.getByPlaceholderText(/鎵嬫満鍙?)
+      const passwordInput = screen.getByPlaceholderText(/瀵嗙爜/)
+      const submitButton = screen.getByText(/鐧诲綍/)
 
       await fireEvent.update(phoneInput, '13800138000')
       await fireEvent.update(passwordInput, 'Test123456')
@@ -175,85 +175,86 @@ describe('手机号登录功能', () => {
 
       await waitFor(() => {
         expect(mockUni.showToast).toHaveBeenCalledWith(
-          expect.objectContaining({ title: '网络错误，请重试', icon: 'none' })
+          expect.objectContaining({ title: '缃戠粶閿欒锛岃閲嶈瘯', icon: 'none' })
         )
       })
     })
   })
 
-  describe('用户体验', () => {
-    it('密码可见性切换', async () => {
+  describe('鐢ㄦ埛浣撻獙', () => {
+    it('瀵嗙爜鍙鎬у垏鎹?, async () => {
       render(Login)
 
-      const toggleButton = screen.getByRole('button', { name: /切换密码可见性/ })
-      const passwordInput = screen.getByPlaceholderText(/密码/)
+      const toggleButton = screen.getByRole('button', { name: /鍒囨崲瀵嗙爜鍙鎬? })
+      const passwordInput = screen.getByPlaceholderText(/瀵嗙爜/)
 
-      // 默认隐藏密码
+      // 榛樿闅愯棌瀵嗙爜
       expect(passwordInput).toHaveAttribute('password', 'true')
 
-      // 切换显示
+      // 鍒囨崲鏄剧ず
       await fireEvent.click(toggleButton)
       expect(passwordInput).toHaveAttribute('password', 'false')
 
-      // 再次切换隐藏
+      // 鍐嶆鍒囨崲闅愯棌
       await fireEvent.click(toggleButton)
       expect(passwordInput).toHaveAttribute('password', 'true')
     })
 
-    it('点击忘记密码显示提示', () => {
+    it('鐐瑰嚮蹇樿瀵嗙爜鏄剧ず鎻愮ず', () => {
       render(Login)
 
-      const forgotLink = screen.getByText(/忘记密码/)
+      const forgotLink = screen.getByText(/蹇樿瀵嗙爜/)
       fireEvent.click(forgotLink)
 
       expect(mockUni.showToast).toHaveBeenCalledWith(
 
-        expect.objectContaining({ title: '忘记密码功能开发中' })
+        expect.objectContaining({ title: '蹇樿瀵嗙爜鍔熻兘寮€鍙戜腑' })
       )
     })
 
-    it('点击立即注册跳转注册页', () => {
+    it('鐐瑰嚮绔嬪嵆娉ㄥ唽璺宠浆娉ㄥ唽椤?, () => {
       render(Login)
 
-      const registerLink = screen.getByText(/立即注册/)
+      const registerLink = screen.getByText(/绔嬪嵆娉ㄥ唽/)
       fireEvent.click(registerLink)
 
-      expect(mockUni.navigateTo).toHaveBeenCalledWith({ url: '/pages/register/index' })
+      expect(mockUni.navigateTo).toHaveBeenCalledWith({ url: '/pages/register/register' })
     })
   })
 
-  describe('社交登录功能', () => {
-    it('微信登录显示开发中提示', () => {
+  describe('绀句氦鐧诲綍鍔熻兘', () => {
+    it('寰俊鐧诲綍鏄剧ず寮€鍙戜腑鎻愮ず', () => {
       render(Login)
 
-      const wechatButton = screen.getByRole('button', { name: /微信登录/ })
+      const wechatButton = screen.getByRole('button', { name: /寰俊鐧诲綍/ })
       fireEvent.click(wechatButton)
 
       expect(mockUni.showToast).toHaveBeenCalledWith(
-        expect.objectContaining({ title: '微信登录功能开发中' })
+        expect.objectContaining({ title: '寰俊鐧诲綍鍔熻兘寮€鍙戜腑' })
       )
     })
 
-    it('Apple登录显示开发中提示', () => {
+    it('Apple鐧诲綍鏄剧ず寮€鍙戜腑鎻愮ず', () => {
       render(Login)
 
-      const appleButton = screen.getByRole('button', { name: /Apple登录/ })
+      const appleButton = screen.getByRole('button', { name: /Apple鐧诲綍/ })
       fireEvent.click(appleButton)
 
       expect(mockUni.showToast).toHaveBeenCalledWith(
-        expect.objectContaining({ title: 'Apple登录功能开发中' })
+        expect.objectContaining({ title: 'Apple鐧诲綍鍔熻兘寮€鍙戜腑' })
       )
     })
 
-    it('更多登录方式显示开发中提示', () => {
+    it('鏇村鐧诲綍鏂瑰紡鏄剧ず寮€鍙戜腑鎻愮ず', () => {
       render(Login)
 
-      const moreButton = screen.getByRole('button', { name: /更多登录方式/ })
+      const moreButton = screen.getByRole('button', { name: /鏇村鐧诲綍鏂瑰紡/ })
       fireEvent.click(moreButton)
 
       expect(mockUni.showToast).toHaveBeenCalledWith(
-        expect.objectContaining({ title: '更多登录方式开发中' })
+        expect.objectContaining({ title: '鏇村鐧诲綍鏂瑰紡寮€鍙戜腑' })
       )
     })
   })
 })
+

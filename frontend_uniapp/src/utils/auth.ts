@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Auth store and auth-related API helpers.
  */
 
@@ -37,7 +37,7 @@ function initStateFromStorage() {
     try {
       state.userInfo = JSON.parse(rawUserInfo) as UserInfo
     } catch (error) {
-      console.error('解析用户信息失败:', error)
+      console.error('瑙ｆ瀽鐢ㄦ埛淇℃伅澶辫触:', error)
       state.userInfo = null
       uni.removeStorageSync(config.storageKeys.userInfo)
     }
@@ -237,12 +237,12 @@ export function requireAuth() {
 
   if (!store.isLoggedIn) {
     uni.showToast({
-      title: '请先登录',
+      title: '璇峰厛鐧诲綍',
       icon: 'none'
     })
 
     setTimeout(() => {
-      uni.navigateTo({ url: '/pages/login/index' })
+      uni.navigateTo({ url: '/pages/login/login' })
     }, 1000)
 
     return false
@@ -258,7 +258,7 @@ export function checkAuthBeforeRequest() {
     store.logout()
 
     setTimeout(() => {
-      uni.navigateTo({ url: '/pages/login/index' })
+      uni.navigateTo({ url: '/pages/login/login' })
     }, 1500)
 
     return false
@@ -266,3 +266,4 @@ export function checkAuthBeforeRequest() {
 
   return true
 }
+

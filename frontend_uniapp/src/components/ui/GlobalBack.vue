@@ -23,10 +23,10 @@ const props = withDefaults(defineProps<Props>(), {
 const theme = props.theme
 
 const tabBarPages = [
-  '/pages/index/index',
-  '/pages/community/index',
-  '/pages/message/index',
-  '/pages/profile/index'
+  '/pages/home/home',
+  '/pages/community/community',
+  '/pages/message/message',
+  '/pages/profile/profile'
 ]
 
 const handleBack = () => {
@@ -38,13 +38,13 @@ const handleBack = () => {
     return
   }
 
-  if (currentRoute && tabBarPages.includes(currentRoute) && currentRoute !== '/pages/index/index') {
-    uni.switchTab({ url: '/pages/index/index' })
+  if (currentRoute && tabBarPages.includes(currentRoute) && currentRoute !== '/pages/home/home') {
+    uni.switchTab({ url: '/pages/home/home' })
     return
   }
 
-  if (currentRoute !== '/pages/index/index') {
-    uni.reLaunch({ url: '/pages/index/index' })
+  if (currentRoute !== '/pages/home/home') {
+    uni.reLaunch({ url: '/pages/home/home' })
     return
   }
 
@@ -77,13 +77,13 @@ const handleBack = () => {
 }
 
 .global-back--light {
-  background-color: rgba(255, 255, 255, 0.92);
+  background-color: rgba(255, 255, 255, 0.62);
   box-shadow: 0 10rpx 28rpx rgba(0, 0, 0, 0.12);
   color: #1f2937;
 }
 
 .global-back--dark {
-  background-color: rgba(0, 0, 0, 0.35);
+  background-color: rgba(0, 0, 0, 0.28);
   box-shadow: 0 10rpx 28rpx rgba(0, 0, 0, 0.3);
   color: #ffffff;
 }

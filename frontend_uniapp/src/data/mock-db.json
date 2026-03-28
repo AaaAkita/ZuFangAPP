@@ -1,0 +1,380 @@
+﻿{
+  "app": {
+    "city": "北京市",
+    "locationSubtitle": "发现身边的美好社区",
+    "defaultImage": "/static/logo.png"
+  },
+  "featuredCommunityIds": [1, 2, 3],
+  "communities": [
+    {
+      "id": 1,
+      "name": "阳光锦城",
+      "district": "朝阳区",
+      "address": "建国路88号",
+      "rating": 4.9,
+      "tags": ["近地铁", "物业好", "绿化高"],
+      "description": "阳光锦城整体维护较好，通勤便利，物业响应速度快，适合上班族长期居住。",
+      "image": "/static/logo.png",
+      "qualityScore": 96,
+      "riskScore": 18,
+      "riskReason": "个别楼栋晚高峰电梯拥挤",
+      "highlights": ["通勤方便", "安保到位"],
+      "metrics": {
+        "safety": 9.3,
+        "quietness": 8.4,
+        "value": 8.6
+      },
+      "reviews": [
+        {
+          "name": "陈静",
+          "avatar": "/static/logo.png",
+          "time": "2小时前",
+          "content": "门禁和巡逻都比较规范，晚上回家很有安全感。",
+          "verified": true,
+          "tags": [
+            { "text": "安全系数高", "type": "green" },
+            { "text": "物业靠谱", "type": "blue" }
+          ]
+        },
+        {
+          "name": "李莎",
+          "avatar": "/static/logo.png",
+          "time": "1天前",
+          "content": "地铁步行十分钟左右，通勤可控。",
+          "verified": false,
+          "tags": [
+            { "text": "通勤友好", "type": "green" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "云尚国际",
+      "district": "海淀区",
+      "address": "中关村南路21号",
+      "rating": 4.7,
+      "tags": ["配套成熟", "教育资源", "安保严"],
+      "description": "云尚国际生活配套成熟，周边商超与医疗资源齐全，适合家庭用户。",
+      "image": "/static/logo.png",
+      "qualityScore": 91,
+      "riskScore": 26,
+      "riskReason": "停车位偏紧张",
+      "highlights": ["学区资源", "配套完整"],
+      "metrics": {
+        "safety": 9.0,
+        "quietness": 7.9,
+        "value": 8.0
+      },
+      "reviews": [
+        {
+          "name": "张伟",
+          "avatar": "/static/logo.png",
+          "time": "5小时前",
+          "content": "小区内配套丰富，日常生活很方便。",
+          "verified": true,
+          "tags": [
+            { "text": "生活便利", "type": "green" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "老弄堂公寓",
+      "district": "西城区",
+      "address": "鼓楼东大街7号",
+      "rating": 4.2,
+      "tags": ["烟火气", "老城区", "交通方便"],
+      "description": "老弄堂公寓周边生活氛围浓厚，商铺多，步行可达地铁站，但楼体较老。",
+      "image": "/static/logo.png",
+      "qualityScore": 82,
+      "riskScore": 42,
+      "riskReason": "楼体偏老，隔音一般",
+      "highlights": ["地段优越", "生活便利"],
+      "metrics": {
+        "safety": 7.8,
+        "quietness": 6.9,
+        "value": 8.4
+      },
+      "reviews": [
+        {
+          "name": "王强",
+          "avatar": "/static/logo.png",
+          "time": "2周前",
+          "content": "地段好但是隔音偏弱，适合对噪音不敏感的人。",
+          "verified": false,
+          "tags": [
+            { "text": "地段好", "type": "green" },
+            { "text": "隔音一般", "type": "orange" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "时代绿洲",
+      "district": "丰台区",
+      "address": "芳古路19号",
+      "rating": 3.8,
+      "tags": ["租金友好", "老小区", "交通尚可"],
+      "description": "时代绿洲租金相对友好，但隔音与公共区域维护表现一般，需实地确认楼栋差异。",
+      "image": "/static/logo.png",
+      "qualityScore": 71,
+      "riskScore": 78,
+      "riskReason": "多条租客反馈隔音差",
+      "highlights": ["预算友好", "通勤尚可"],
+      "metrics": {
+        "safety": 6.5,
+        "quietness": 5.4,
+        "value": 7.6
+      },
+      "reviews": [
+        {
+          "name": "匿名用户",
+          "avatar": "/static/logo.png",
+          "time": "刚刚",
+          "content": "夜间邻里噪音明显，建议看房时晚上来确认。",
+          "verified": true,
+          "tags": [
+            { "text": "隔音差", "type": "red" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "name": "天诚家园",
+      "district": "通州区",
+      "address": "九棵树西路66号",
+      "rating": 3.5,
+      "tags": ["房源多", "价格波动", "中介复杂"],
+      "description": "天诚家园房源量较多，但中介信息质量参差不齐，需重点核验合同与房源真实性。",
+      "image": "/static/logo.png",
+      "qualityScore": 68,
+      "riskScore": 84,
+      "riskReason": "历史反馈存在虚假房源",
+      "highlights": ["房源多", "议价空间"],
+      "metrics": {
+        "safety": 6.0,
+        "quietness": 6.3,
+        "value": 7.1
+      },
+      "reviews": [
+        {
+          "name": "匿名用户",
+          "avatar": "/static/logo.png",
+          "time": "3小时前",
+          "content": "看房前后图文不一致，签约前务必核验房本信息。",
+          "verified": true,
+          "tags": [
+            { "text": "虚假房源", "type": "red" },
+            { "text": "黑中介风险", "type": "orange" }
+          ]
+        }
+      ]
+    }
+  ],
+  "home": {
+    "searchPlaceholder": "搜索小区或避雷信息",
+    "recommendedCommunityIds": [1, 2, 3],
+    "banner": {
+      "tag": "搬家特惠",
+      "title": "省心搬家服务",
+      "subtitle": "专业团队，轻拿轻放，温馨送到家",
+      "points": ["全程打包", "准点上门", "损坏赔付"],
+      "buttonText": "立即预约",
+      "image": "/static/logo.png"
+    },
+    "warnings": [
+      {
+        "id": 1,
+        "name": "时代绿洲小区",
+        "time": "刚刚",
+        "subtitle": "3号楼",
+        "description": "墙壁薄得像纸一样，邻居晚上说话都能听得一清二楚，严重影响睡眠质量。看房时一定要注意隔音问题。",
+        "level": "orange",
+        "tags": ["隔音极差"]
+      },
+      {
+        "id": 2,
+        "name": "天诚家园附近",
+        "time": "3小时前",
+        "subtitle": "黑中介曝光",
+        "description": "照片看着精装修，实地看房完全是另一个破旧房子，还要求先交看房费。大家遇到这种直接拉黑。",
+        "level": "red",
+        "tags": ["虚假房源", "黑中介"]
+      }
+    ],
+    "latestReviews": [
+      {
+        "id": 1,
+        "name": "陈静",
+        "avatar": "/static/logo.png",
+        "verified": true,
+        "time": "2小时前",
+        "targetName": "香樟花园",
+        "content": "住这里最大的感受就是安全感满满。物业非常负责，进出都需要门禁卡，晚上保安巡逻也很勤快。",
+        "tags": ["安全系数高", "环境优美"]
+      },
+      {
+        "id": 2,
+        "name": "张伟",
+        "avatar": "/static/logo.png",
+        "verified": false,
+        "time": "5小时前",
+        "targetName": "高科大厦",
+        "content": "视野不错，但电梯是硬伤，早晚高峰等电梯时间很长。",
+        "tags": ["注意避雷", "电梯故障"]
+      },
+      {
+        "id": 3,
+        "name": "李莎",
+        "avatar": "/static/logo.png",
+        "verified": false,
+        "time": "1天前",
+        "targetName": "滨江公寓",
+        "content": "地铁很近，通勤很方便。周末晚间会有些噪音，需要权衡。",
+        "tags": ["交通便利", "略有噪音"]
+      }
+    ]
+  },
+  "search": {
+    "defaultKeyword": "朝阳区, 北京",
+    "filterTags": [
+      { "label": "全部", "bgColor": "#fff5e6" },
+      { "label": "近地铁", "bgColor": "#fff5e6" },
+      { "label": "租金低", "bgColor": "#e0f2f1" },
+      { "label": "精装修", "bgColor": "#e3f2fd" },
+      { "label": "押一付一", "bgColor": "#f3e5f5" }
+    ],
+    "areas": [
+      { "name": "朝阳区", "streets": ["不限", "三里屯", "望京", "国贸", "双井", "大悦城"] },
+      { "name": "海淀区", "streets": ["不限", "中关村", "五道口", "西二旗", "上地", "苏州街"] },
+      { "name": "通州区", "streets": ["不限", "梨园", "果园", "九棵树", "临河里"] },
+      { "name": "西城区", "streets": ["不限", "西单", "金融街", "什刹海", "阜成门"] },
+      { "name": "丰台区", "streets": ["不限", "方庄", "丽泽", "总部基地", "草桥"] },
+      { "name": "大兴区", "streets": ["不限", "亦庄", "黄村", "旧宫", "西红门"] }
+    ],
+    "metroLines": [
+      { "num": "全部", "name": "不限", "color": "#9a6c4c", "bgColor": "#f3ece7" },
+      { "num": "1", "name": "1号线", "color": "#E4002B", "bgColor": "rgba(228, 0, 43, 0.05)" },
+      { "num": "2", "name": "2号线", "color": "#0047BB", "bgColor": "rgba(0, 71, 187, 0.05)" },
+      { "num": "4", "name": "4号线", "color": "#007A33", "bgColor": "#007A33" },
+      { "num": "5", "name": "5号线", "color": "#AA0061", "bgColor": "rgba(170, 0, 97, 0.05)" },
+      { "num": "6", "name": "6号线", "color": "#D98628", "bgColor": "rgba(217, 134, 40, 0.05)" },
+      { "num": "8", "name": "8号线", "color": "#00966C", "bgColor": "rgba(0, 150, 108, 0.05)" }
+    ],
+    "ratingOptions": [
+      { "value": "3.5+", "stars": 1 },
+      { "value": "4.0+", "stars": 2 },
+      { "value": "4.5+", "stars": 3 },
+      { "value": "5.0", "stars": 4 }
+    ],
+    "rentRangeDefault": [2000, 8000],
+    "properties": [
+      {
+        "id": 1,
+        "title": "阳光充足一居室",
+        "location": "朝阳区, 北京",
+        "image": "/static/logo.png",
+        "rating": "4.92",
+        "rooms": "1室",
+        "bathrooms": "1卫",
+        "area": "45m²",
+        "price": "¥5,200",
+        "tag": "优选房源",
+        "tagColor": "rgba(255, 255, 255, 0.9)",
+        "isFavorite": true
+      },
+      {
+        "id": 2,
+        "title": "运河旁宽敞Loft",
+        "location": "通州区, 北京",
+        "image": "/static/logo.png",
+        "rating": "4.85",
+        "rooms": "2室",
+        "bathrooms": "2卫",
+        "area": "80m²",
+        "price": "¥8,450",
+        "isFavorite": false
+      },
+      {
+        "id": 3,
+        "title": "温馨单身公寓",
+        "location": "海淀区, 北京",
+        "image": "/static/logo.png",
+        "rating": "New",
+        "rooms": "开间",
+        "bathrooms": "1卫",
+        "area": "30m²",
+        "price": "¥3,950",
+        "tag": "新上房源",
+        "tagColor": "rgba(238, 124, 43, 0.9)",
+        "isFavorite": false
+      }
+    ]
+  },
+  "profile": {
+    "title": "个人中心",
+    "defaultDisplayName": "租客用户",
+    "defaultAvatar": "/static/logo.png",
+    "joinDateFallback": "欢迎加入租客社区",
+    "stats": [
+      { "id": 1, "value": "24", "label": "发布的评价", "icon": "star", "route": "/pages/community/community" },
+      { "id": 2, "value": "158", "label": "获赞", "icon": "heart" }
+    ],
+    "menus": [
+      { "id": 1, "label": "我的评价", "icon": "star", "theme": "orange", "route": "/pages/community/community" },
+      { "id": 2, "label": "收藏房源", "icon": "bookmark", "theme": "blue" },
+      { "id": 3, "label": "设置", "icon": "settings", "theme": "gray" },
+      { "id": 4, "label": "帮助与客服", "icon": "help", "theme": "green" }
+    ]
+  },
+  "message": {
+    "title": "消息",
+    "emptyTitle": "暂无消息",
+    "emptySubtitle": "当有新的消息时会在这里显示"
+  },
+  "about": {
+    "title": "关于我们",
+    "description": "页面建设中...",
+    "buttonText": "返回首页"
+  },
+  "safety": {
+    "title": "安全指南",
+    "description": "页面建设中...",
+    "buttonText": "返回首页"
+  },
+  "reviewsPage": {
+    "title": "全部评价",
+    "reviews": [
+      {
+        "name": "张雨落",
+        "avatar": "/static/logo.png",
+        "time": "2天前",
+        "content": "小区整体环境不错，物业响应速度快。",
+        "verified": false,
+        "tags": []
+      },
+      {
+        "name": "李明",
+        "avatar": "/static/logo.png",
+        "time": "1周前",
+        "content": "交通便利，周边配套齐全，居住体验良好。",
+        "verified": false,
+        "tags": []
+      }
+    ]
+  },
+  "reviewPublish": {
+    "title": "发布评价",
+    "scoreLabel": "评分",
+    "contentLabel": "评价内容",
+    "contentPlaceholder": "请输入真实入住体验，帮助其他租客避雷。",
+    "submitText": "提交评价",
+    "defaultScore": 4,
+    "minScore": 1,
+    "maxScore": 5
+  }
+}

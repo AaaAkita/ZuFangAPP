@@ -1,4 +1,4 @@
-/**
+﻿﻿/**
  * WeChat auth helpers for MP-WEIXIN.
  */
 
@@ -54,9 +54,9 @@ export async function wechatLogin() {
       provider: 'weixin'
     }) as any
 
-    if (loginRes.errMsg !== 'login:ok' || !loginRes.code) {
+    if (!loginRes || loginRes.errMsg !== 'login:ok' || !loginRes.code) {
       uni.showToast({
-        title: '微信登录失败',
+        title: '寰俊鐧诲綍澶辫触',
         icon: 'none'
       })
       return false
@@ -71,14 +71,14 @@ export async function wechatLogin() {
         lang: 'zh_CN'
       }) as any
 
-      if (userInfoRes.errMsg === 'getUserProfile:ok') {
+      if (userInfoRes && userInfoRes.errMsg === 'getUserProfile:ok') {
         userInfo = userInfoRes.userInfo
       }
     } catch (error) {
-      console.error('获取用户信息失败:', error)
+      console.error('鑾峰彇鐢ㄦ埛淇℃伅澶辫触:', error)
     }
 
-    uni.showLoading({ title: '登录中...' })
+    uni.showLoading({ title: '鐧诲綍涓?..' })
 
     const data = await httpRequest<WechatAuthResponse>({
       url: '/auth/wechat',
@@ -106,33 +106,33 @@ export async function wechatLogin() {
       authStore.setUserInfo({
         id: data.data.user?.id || 0,
         phone: data.data.user?.phone || '',
-        nickname: data.data.user?.nickname || userInfo?.nickName || '微信用户',
+        nickname: data.data.user?.nickname || userInfo?.nickName || '寰俊鐢ㄦ埛',
         avatar: data.data.user?.avatar || userInfo?.avatarUrl || ''
       })
 
       uni.showToast({
-        title: '登录成功',
+        title: '鐧诲綍鎴愬姛',
         icon: 'success'
       })
 
       setTimeout(() => {
-        uni.switchTab({ url: '/pages/index/index' })
+        uni.switchTab({ url: '/pages/home/home' })
       }, 1500)
 
       return true
     }
 
     uni.showToast({
-      title: data.error?.message || data.message || '登录失败，请重试',
+      title: data.error?.message || data.message || '鐧诲綍澶辫触锛岃閲嶈瘯',
       icon: 'none'
     })
     return false
   } catch (error) {
     uni.hideLoading()
-    console.error('微信登录失败:', error)
+    console.error('寰俊鐧诲綍澶辫触:', error)
 
     uni.showToast({
-      title: '网络错误，请重试',
+      title: '缃戠粶閿欒锛岃閲嶈瘯',
       icon: 'none'
     })
 
@@ -183,7 +183,7 @@ export async function refreshWechatToken() {
       provider: 'weixin'
     }) as any
 
-    if (loginRes.errMsg !== 'login:ok' || !loginRes.code) {
+    if (!loginRes || loginRes.errMsg !== 'login:ok' || !loginRes.code) {
       return null
     }
 
@@ -202,7 +202,7 @@ export async function refreshWechatToken() {
 
     return null
   } catch (error) {
-    console.error('刷新 Token 失败:', error)
+    console.error('鍒锋柊 Token 澶辫触:', error)
     return null
   }
 }
@@ -215,10 +215,11 @@ export function shareToWechat(options: {
   // #ifdef MP-WEIXIN
   return {
     title: options.title,
-    path: options.path || '/pages/index/index',
+    path: options.path || '/pages/home/home',
     imageUrl: options.imageUrl
   }
   // #endif
 
   return {}
 }
+

@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest'
+﻿import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { wechatLogin } from './wechat'
 
 // Mock uni API
@@ -25,13 +25,13 @@ vi.mock('./auth', () => ({
 // Mock fetch
 global.fetch = vi.fn() as any
 
-describe('微信登录功能', () => {
+describe('寰俊鐧诲綍鍔熻兘', () => {
   beforeEach(() => {
     vi.clearAllMocks()
   })
 
-  describe('微信登录流程', () => {
-    it('调用 uni.login 获取 code', async () => {
+  describe('寰俊鐧诲綍娴佺▼', () => {
+    it('璋冪敤 uni.login 鑾峰彇 code', async () => {
       mockUni.login.mockResolvedValueOnce({
         code: 'test-code',
         errMsg: 'login:ok'
@@ -39,7 +39,7 @@ describe('微信登录功能', () => {
 
       mockUni.getUserProfile.mockResolvedValueOnce({
         userInfo: {
-          nickName: '测试用户',
+          nickName: '娴嬭瘯鐢ㄦ埛',
           avatarUrl: 'https://example.com/avatar.png'
         },
         errMsg: 'getUserProfile:ok'
@@ -54,7 +54,7 @@ describe('微信登录功能', () => {
             user: {
               id: 1,
               phone: '13800138000',
-              nickname: '测试用户',
+              nickname: '娴嬭瘯鐢ㄦ埛',
               avatar: 'https://example.com/avatar.png'
             }
           }
@@ -66,7 +66,7 @@ describe('微信登录功能', () => {
       expect(mockUni.login).toHaveBeenCalledWith({ provider: 'weixin' })
     })
 
-    it('成功登录后保存 Token 和用户信息', async () => {
+    it('鎴愬姛鐧诲綍鍚庝繚瀛?Token 鍜岀敤鎴蜂俊鎭?, async () => {
       mockUni.login.mockResolvedValueOnce({
         code: 'test-code',
         errMsg: 'login:ok'
@@ -74,7 +74,7 @@ describe('微信登录功能', () => {
 
       mockUni.getUserProfile.mockResolvedValueOnce({
         userInfo: {
-          nickName: '微信用户',
+          nickName: '寰俊鐢ㄦ埛',
           avatarUrl: 'https://example.com/avatar.png'
         },
         errMsg: 'getUserProfile:ok'
@@ -87,7 +87,7 @@ describe('微信登录功能', () => {
           user: {
             id: 1,
             phone: '13800138000',
-            nickname: '微信用户',
+            nickname: '寰俊鐢ㄦ埛',
             avatar: 'https://example.com/avatar.png'
           }
         }
@@ -108,15 +108,15 @@ describe('微信登录功能', () => {
         })
       )
 
-      expect(mockUni.showLoading).toHaveBeenCalledWith({ title: '登录中...' })
+      expect(mockUni.showLoading).toHaveBeenCalledWith({ title: '鐧诲綍涓?..' })
       expect(mockUni.showToast).toHaveBeenCalledWith(
-        expect.objectContaining({ title: '登录成功', icon: 'success' })
+        expect.objectContaining({ title: '鐧诲綍鎴愬姛', icon: 'success' })
       )
 
-      expect(mockUni.switchTab).toHaveBeenCalledWith({ url: '/pages/index/index' })
+      expect(mockUni.switchTab).toHaveBeenCalledWith({ url: '/pages/home/home' })
     })
 
-    it('处理 uni.login 失败', async () => {
+    it('澶勭悊 uni.login 澶辫触', async () => {
       mockUni.login.mockResolvedValueOnce({
         errMsg: 'login:fail'
       })
@@ -124,11 +124,11 @@ describe('微信登录功能', () => {
       await wechatLogin()
 
       expect(mockUni.showToast).toHaveBeenCalledWith(
-        expect.objectContaining({ title: '微信登录失败', icon: 'none' })
+        expect.objectContaining({ title: '寰俊鐧诲綍澶辫触', icon: 'none' })
       )
     })
 
-    it('处理后端登录失败', async () => {
+    it('澶勭悊鍚庣鐧诲綍澶辫触', async () => {
       mockUni.login.mockResolvedValueOnce({
         code: 'test-code',
         errMsg: 'login:ok'
@@ -136,7 +136,7 @@ describe('微信登录功能', () => {
 
       mockUni.getUserProfile.mockResolvedValueOnce({
         userInfo: {
-          nickName: '测试用户',
+          nickName: '娴嬭瘯鐢ㄦ埛',
           avatarUrl: 'https://example.com/avatar.png'
         },
         errMsg: 'getUserProfile:ok'
@@ -147,7 +147,7 @@ describe('微信登录功能', () => {
         json: async () => ({
           success: false,
           error: {
-            message: '授权已过期'
+            message: '鎺堟潈宸茶繃鏈?
           }
         })
       } as any)
@@ -155,11 +155,11 @@ describe('微信登录功能', () => {
       await wechatLogin()
 
       expect(mockUni.showToast).toHaveBeenCalledWith(
-        expect.objectContaining({ title: '授权已过期', icon: 'none' })
+        expect.objectContaining({ title: '鎺堟潈宸茶繃鏈?, icon: 'none' })
       )
     })
 
-    it('处理网络错误', async () => {
+    it('澶勭悊缃戠粶閿欒', async () => {
       mockUni.login.mockResolvedValueOnce({
         code: 'test-code',
         errMsg: 'login:ok'
@@ -167,7 +167,7 @@ describe('微信登录功能', () => {
 
       mockUni.getUserProfile.mockResolvedValueOnce({
         userInfo: {
-          nickName: '测试用户',
+          nickName: '娴嬭瘯鐢ㄦ埛',
           avatarUrl: 'https://example.com/avatar.png'
         },
         errMsg: 'getUserProfile:ok'
@@ -178,13 +178,13 @@ describe('微信登录功能', () => {
       await wechatLogin()
 
       expect(mockUni.showToast).toHaveBeenCalledWith(
-        expect.objectContaining({ title: '网络错误，请重试', icon: 'none' })
+        expect.objectContaining({ title: '缃戠粶閿欒锛岃閲嶈瘯', icon: 'none' })
       )
     })
   })
 
-  describe('用户信息获取', () => {
-    it('获取用户头像和昵称', async () => {
+  describe('鐢ㄦ埛淇℃伅鑾峰彇', () => {
+    it('鑾峰彇鐢ㄦ埛澶村儚鍜屾樀绉?, async () => {
       mockUni.login.mockResolvedValueOnce({
         code: 'test-code',
         errMsg: 'login:ok'
@@ -192,7 +192,7 @@ describe('微信登录功能', () => {
 
       mockUni.getUserProfile.mockResolvedValueOnce({
         userInfo: {
-          nickName: '微信用户',
+          nickName: '寰俊鐢ㄦ埛',
           avatarUrl: 'https://example.com/avatar.png',
           gender: 1,
           language: 'zh_CN'
@@ -222,7 +222,7 @@ describe('微信登录功能', () => {
       })
     })
 
-    it('使用默认昵称和头像当获取失败', async () => {
+    it('浣跨敤榛樿鏄电О鍜屽ご鍍忓綋鑾峰彇澶辫触', async () => {
       mockUni.login.mockResolvedValueOnce({
         code: 'test-code',
         errMsg: 'login:ok'
@@ -248,13 +248,13 @@ describe('微信登录功能', () => {
 
       await wechatLogin()
 
-      // 依然应该发送请求，使用默认值
+      // 渚濈劧搴旇鍙戦€佽姹傦紝浣跨敤榛樿鍊?
       expect(fetch).toHaveBeenCalled()
     })
   })
 
-  describe('首次登录处理', () => {
-    it('首次登录提示用户授权', async () => {
+  describe('棣栨鐧诲綍澶勭悊', () => {
+    it('棣栨鐧诲綍鎻愮ず鐢ㄦ埛鎺堟潈', async () => {
       mockUni.login.mockResolvedValueOnce({
         code: 'test-code',
         errMsg: 'login:ok'
@@ -277,8 +277,9 @@ describe('微信登录功能', () => {
 
       await wechatLogin()
 
-      // 应该获取用户信息（昵称、头像）
+      // 搴旇鑾峰彇鐢ㄦ埛淇℃伅锛堟樀绉般€佸ご鍍忥級
       expect(mockUni.getUserProfile).toHaveBeenCalled()
     })
   })
 })
+
