@@ -1,11 +1,14 @@
 ﻿<template>
-  <view class="container">
+  <view class="container page-shell">
+    <GlobalBack />
     <text class="title">安全指南 页面建设中...</text>
     <button @click="goBack">返回首页</button>
   </view>
 </template>
 
 <script setup lang="ts">
+import GlobalBack from '@/components/ui/GlobalBack.vue'
+
 const goBack = () => {
   uni.navigateBack()
 }

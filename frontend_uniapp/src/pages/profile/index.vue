@@ -1,5 +1,6 @@
 ﻿<template>
-  <view class="container">
+  <view class="container page-shell">
+    <GlobalBack />
     <!-- 顶部标题栏 -->
     <view class="header">
       <text class="header-title">个人中心</text>
@@ -23,14 +24,14 @@
 
     <!-- 数据统计 -->
     <view class="stats-grid">
-      <view class="stat-item" @click="navigateTo('/pages/community/index')">
+      <view class="stat-item card-shell card-shell--flat" @click="navigateTo('/pages/community/index')">
         <text class="stat-num">24</text>
         <view class="stat-label">
           <Icon name="star" :size="36" color="var(--text-secondary)" class="stat-icon" />
           <text>发布的评价</text>
         </view>
       </view>
-      <view class="stat-item">
+      <view class="stat-item card-shell card-shell--flat">
         <text class="stat-num">158</text>
         <view class="stat-label">
           <Icon name="heart" :size="36" color="var(--text-secondary)" class="stat-icon" />
@@ -41,7 +42,7 @@
 
     <!-- 功能菜单 -->
     <view class="menu-list">
-      <view class="menu-item" @click="navigateTo('/pages/community/index')">
+      <view class="menu-item card-shell card-shell--flat" @click="navigateTo('/pages/community/index')">
         <view class="menu-left">
           <view class="menu-icon-bg orange">
             <Icon name="star" :size="48" color="var(--primary)" />
@@ -50,7 +51,7 @@
         </view>
         <Icon name="arrow-right" :size="40" color="var(--text-tertiary)" class="arrow" />
       </view>
-      <view class="menu-item">
+      <view class="menu-item card-shell card-shell--flat">
         <view class="menu-left">
           <view class="menu-icon-bg blue">
             <Icon name="bookmark" :size="48" color="var(--info)" />
@@ -59,7 +60,7 @@
         </view>
         <Icon name="arrow-right" :size="40" color="#94a3b8" class="arrow" />
       </view>
-      <view class="menu-item">
+      <view class="menu-item card-shell card-shell--flat">
         <view class="menu-left">
           <view class="menu-icon-bg gray">
             <Icon name="settings" :size="48" color="var(--text-secondary)" />
@@ -68,7 +69,7 @@
         </view>
         <Icon name="arrow-right" :size="40" color="#94a3b8" class="arrow" />
       </view>
-      <view class="menu-item">
+      <view class="menu-item card-shell card-shell--flat">
         <view class="menu-left">
           <view class="menu-icon-bg green">
             <Icon name="help" :size="48" color="var(--success)" />
@@ -85,6 +86,7 @@
 import { onMounted, computed } from 'vue'
 import { useAuthStore } from '@/utils/auth'
 import Icon from '@/components/ui/Icon.vue'
+import GlobalBack from '@/components/ui/GlobalBack.vue'
 
 const authStore = useAuthStore()
 
@@ -152,7 +154,7 @@ const navigateTo = (url: string) => {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: calc(var(--status-bar-height, 0px) + 24rpx) $spacing-xl $spacing-md $spacing-lg;
+  padding: calc(var(--status-bar-height, 0px) + 24rpx) 0 $spacing-md 0;
   position: relative;
 }
 
@@ -181,7 +183,7 @@ const navigateTo = (url: string) => {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: $spacing-lg;
+  padding: $spacing-lg 0;
   gap: $spacing-lg;
 }
 
@@ -242,7 +244,7 @@ const navigateTo = (url: string) => {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: $spacing-lg;
-  padding: 0 $spacing-xl $spacing-lg;
+  padding: 0 0 $spacing-lg 0;
 }
 
 .stat-item {
@@ -251,10 +253,6 @@ const navigateTo = (url: string) => {
   align-items: center;
   justify-content: center;
   padding: $spacing-xl $spacing-lg;
-  background-color: rgba(255, 255, 255, 0.6);
-  border-radius: $border-radius-lg;
-  border: 1rpx solid rgba(255, 255, 255, 0.5);
-  box-shadow: $shadow-sm;
   backdrop-filter: blur(10rpx);
   transition: transform $duration-normal $easing-default;
 }
@@ -287,7 +285,7 @@ const navigateTo = (url: string) => {
   display: flex;
   flex-direction: column;
   gap: $spacing-lg;
-  padding: 0 $spacing-xl;
+  padding: 0;
 }
 
 .menu-item {
@@ -295,10 +293,6 @@ const navigateTo = (url: string) => {
   align-items: center;
   justify-content: space-between;
   padding: $spacing-lg;
-  background-color: $color-bg-secondary;
-  border-radius: $border-radius-lg;
-  border: 1rpx solid rgba(241, 245, 249, 0.5);
-  box-shadow: $shadow-sm;
   transition: all $duration-normal $easing-default;
 }
 

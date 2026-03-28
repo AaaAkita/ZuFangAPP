@@ -1,5 +1,6 @@
 ﻿<template>
-  <view class="container">
+  <view class="container page-shell">
+    <GlobalBack />
     <view class="header">
       <text class="title">消息</text>
     </view>
@@ -15,6 +16,7 @@
 
 <script setup lang="ts">
 import Icon from '@/components/ui/Icon.vue'
+import GlobalBack from '@/components/ui/GlobalBack.vue'
 </script>
 
 <style lang="scss" scoped>
@@ -25,7 +27,7 @@ import Icon from '@/components/ui/Icon.vue'
 }
 
 .header {
-  padding: calc(var(--status-bar-height, 0px) + 24rpx) $spacing-xl $spacing-md $spacing-lg;
+  padding: calc(var(--status-bar-height, 0px) + 24rpx) 0 $spacing-md 0;
   background-color: $color-bg-secondary;
   border-bottom: 1rpx solid $color-border-light;
 }
@@ -37,7 +39,7 @@ import Icon from '@/components/ui/Icon.vue'
 }
 
 .content {
-  padding: $spacing-lg;
+  padding: $spacing-lg 0;
 }
 
 .empty-state {

@@ -1,5 +1,6 @@
 ﻿<template>
   <view class="container">
+    <GlobalBack />
     <view class="header page-shell">
       <text class="title">社区榜单</text>
       <text class="subtitle">优质小区排行榜 + 小区避雷榜</text>
@@ -16,7 +17,7 @@
           <view
             v-for="(item, index) in qualityRanking"
             :key="`q-${item.id}`"
-            class="rank-card rank-good"
+            class="rank-card card-shell rank-good"
             @click="goToDetail(item.id)"
           >
             <view class="rank-badge">{{ index + 1 }}</view>
@@ -52,7 +53,7 @@
           <view
             v-for="(item, index) in riskRanking"
             :key="`r-${item.id}`"
-            class="rank-card rank-risk"
+            class="rank-card card-shell rank-risk"
             @click="goToDetail(item.id)"
           >
             <view class="rank-badge rank-badge-risk">{{ index + 1 }}</view>
@@ -80,6 +81,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { getQualityRanking, getRiskRanking } from '@/data/communities'
+import GlobalBack from '@/components/ui/GlobalBack.vue'
 
 const qualityRanking = computed(() => getQualityRanking())
 const riskRanking = computed(() => getRiskRanking())
@@ -174,10 +176,6 @@ const formatNumber = (value: unknown) => {
   display: flex;
   gap: 14rpx;
   padding: 18rpx;
-  border-radius: 18rpx;
-  background: #fff;
-  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.05);
-  border: 1rpx solid #eef2f7;
   width: 100%;
   box-sizing: border-box;
 }

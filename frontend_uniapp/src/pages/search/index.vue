@@ -1,5 +1,6 @@
 ﻿<template>
-  <view class="container">
+  <view class="container page-shell">
+    <GlobalBack />
     <view class="header">
       <label class="search-wrapper">
         <view class="search-bar">
@@ -46,7 +47,7 @@
         <view
           v-for="(item, index) in propertyList"
           :key="index"
-          class="property-card"
+          class="property-card card-shell card-shell--flat"
           @click="navigateToDetail(item)"
         >
           <view class="card-image-wrapper">
@@ -243,6 +244,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import Icon from '@/components/ui/Icon.vue'
+import GlobalBack from '@/components/ui/GlobalBack.vue'
 
 interface Property {
   id: number
@@ -431,7 +433,7 @@ const navigateToDetail = (item: Property) => {
 }
 
 .header {
-  padding: calc(var(--status-bar-height, 0px) + 30rpx) 24rpx 16rpx;
+  padding: calc(var(--status-bar-height, 0px) + 30rpx) 0 16rpx 0;
   background-color: #fcfaf8;
   z-index: 10;
   box-sizing: border-box;
@@ -494,7 +496,7 @@ const navigateToDetail = (item: Property) => {
 
 .filter-scroll {
   white-space: nowrap;
-  padding: 8rpx 24rpx 18rpx;
+  padding: 8rpx 0 18rpx;
   background-color: #fcfaf8;
   box-sizing: border-box;
 }
@@ -525,7 +527,7 @@ const navigateToDetail = (item: Property) => {
 
 .content-scroll {
   flex: 1;
-  padding: 0 24rpx;
+  padding: 0;
   box-sizing: border-box;
 }
 
@@ -568,11 +570,9 @@ const navigateToDetail = (item: Property) => {
 }
 
 .property-card {
-  background-color: #ffffff;
   border-radius: 30rpx;
-  border: 1rpx solid #f3ece7;
   overflow: hidden;
-  box-shadow: 0 8rpx 40rpx rgba(0, 0, 0, 0.04);
+  min-width: 0;
 }
 
 .card-image-wrapper {

@@ -1,15 +1,12 @@
 <template>
-  <view class="container">
+  <view class="container page-shell">
+    <GlobalBack />
     <view class="header">
-      <view class="back-btn" @click="goBack">
-        <Icon name="arrow_back" :size="36" />
-      </view>
       <text class="title">全部评价</text>
-      <view class="placeholder"></view>
     </view>
 
     <scroll-view class="content" scroll-y>
-      <view v-for="(item, index) in reviews" :key="index" class="review-card">
+      <view v-for="(item, index) in reviews" :key="index" class="review-card card-shell card-shell--flat">
         <view class="review-head">
           <text class="name">{{ item.name }}</text>
           <text class="time">{{ item.time }}</text>
@@ -22,7 +19,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import Icon from '@/components/ui/Icon.vue'
+import GlobalBack from '@/components/ui/GlobalBack.vue'
 
 const reviews = ref([
   {
@@ -37,9 +34,6 @@ const reviews = ref([
   }
 ])
 
-const goBack = () => {
-  uni.navigateBack()
-}
 </script>
 
 <style lang="scss" scoped>
@@ -53,19 +47,10 @@ const goBack = () => {
 .header {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: calc(var(--status-bar-height, 0px) + 20rpx) 32rpx 20rpx;
+  justify-content: center;
+  padding: calc(var(--status-bar-height, 0px) + 20rpx) 0 20rpx;
   background-color: #fff;
   border-bottom: 1rpx solid #f1f1f1;
-}
-
-.back-btn,
-.placeholder {
-  width: 56rpx;
-  height: 56rpx;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .title {
@@ -76,16 +61,12 @@ const goBack = () => {
 
 .content {
   height: calc(100vh - 120rpx);
-  padding: 24rpx;
+  padding: 0;
   box-sizing: border-box;
 }
 
 .review-card {
-  background-color: #fff;
-  border-radius: 20rpx;
-  padding: 24rpx;
   margin-bottom: 20rpx;
-  box-shadow: 0 4rpx 14rpx rgba(0, 0, 0, 0.04);
 }
 
 .review-head {

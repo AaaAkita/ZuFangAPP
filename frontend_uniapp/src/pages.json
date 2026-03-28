@@ -39,13 +39,13 @@
 		{
 			"path": "pages/about/index",
 			"style": {
-				"navigationBarTitleText": "关于我们"
+				"navigationStyle": "custom"
 			}
 		},
 		{
 			"path": "pages/safety/index",
 			"style": {
-				"navigationBarTitleText": "安全指南"
+				"navigationStyle": "custom"
 			}
 		},
 		{

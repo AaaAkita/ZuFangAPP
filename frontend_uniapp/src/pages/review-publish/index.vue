@@ -1,15 +1,12 @@
 <template>
-  <view class="container">
+  <view class="container page-shell">
+    <GlobalBack />
     <view class="header">
-      <view class="back-btn" @click="goBack">
-        <Icon name="arrow_back" :size="36" />
-      </view>
       <text class="title">发布评价</text>
-      <view class="placeholder"></view>
     </view>
 
     <view class="form">
-      <view class="field">
+      <view class="field card-shell card-shell--flat">
         <text class="label">评分</text>
         <slider
           :min="1"
@@ -24,7 +21,7 @@
         <text class="hint">当前评分：{{ score }} 星</text>
       </view>
 
-      <view class="field">
+      <view class="field card-shell card-shell--flat">
         <text class="label">评价内容</text>
         <textarea
           v-model="content"
@@ -41,17 +38,13 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import Icon from '@/components/ui/Icon.vue'
+import GlobalBack from '@/components/ui/GlobalBack.vue'
 
 const score = ref(4)
 const content = ref('')
 
 const onScoreChange = (event: any) => {
   score.value = Number(event?.detail?.value || 1)
-}
-
-const goBack = () => {
-  uni.navigateBack()
 }
 
 const submitReview = () => {
@@ -85,19 +78,10 @@ const submitReview = () => {
 .header {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: calc(var(--status-bar-height, 0px) + 20rpx) 32rpx 20rpx;
+  justify-content: center;
+  padding: calc(var(--status-bar-height, 0px) + 20rpx) 0 20rpx;
   background-color: #fff;
   border-bottom: 1rpx solid #f1f1f1;
-}
-
-.back-btn,
-.placeholder {
-  width: 56rpx;
-  height: 56rpx;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .title {
@@ -107,13 +91,10 @@ const submitReview = () => {
 }
 
 .form {
-  padding: 32rpx;
+  padding: 32rpx 0 0;
 }
 
 .field {
-  background-color: #fff;
-  border-radius: 20rpx;
-  padding: 24rpx;
   margin-bottom: 24rpx;
 }
 

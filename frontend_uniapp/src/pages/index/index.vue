@@ -1,5 +1,6 @@
 ﻿<template>
   <view class="container">
+    <GlobalBack />
     <!-- 顶部导航栏 -->
     <view class="header sticky-top page-shell-wide">
       <view class="location-box">
@@ -137,7 +138,7 @@
       </view>
       <view class="warning-list">
         <!-- 避雷信息 1 -->
-        <view class="warning-item">
+        <view class="warning-item card-shell card-shell--flat">
           <view class="warning-icon-bg orange">
             <Icon name="warning" :size="40" color="#f97316" />
           </view>
@@ -156,7 +157,7 @@
           </view>
         </view>
         <!-- 避雷信息 2 -->
-        <view class="warning-item">
+        <view class="warning-item card-shell card-shell--flat">
           <view class="warning-icon-bg red">
             <Icon name="error" :size="40" color="#ef4444" />
           </view>
@@ -190,7 +191,7 @@
       </view>
       <view class="review-list">
         <!-- 评价 1 -->
-        <view class="review-item">
+        <view class="review-item card-shell card-shell--compact">
           <view class="review-user">
             <image class="user-avatar" src="/static/logo.png" mode="aspectFill" />
             <view class="verified-badge">
@@ -217,7 +218,7 @@
           </view>
         </view>
         <!-- 评价 2 -->
-        <view class="review-item">
+        <view class="review-item card-shell card-shell--compact">
           <view class="review-user">
             <image class="user-avatar" src="/static/logo.png" mode="aspectFill" />
           </view>
@@ -241,7 +242,7 @@
           </view>
         </view>
         <!-- 评价 3 -->
-        <view class="review-item">
+        <view class="review-item card-shell card-shell--compact">
           <view class="review-user">
             <image class="user-avatar" src="/static/logo.png" mode="aspectFill" />
           </view>
@@ -274,6 +275,7 @@
 import { ref } from 'vue'
 import Icon from '@/components/ui/Icon.vue'
 import Button from '@/components/ui/Button.vue'
+import GlobalBack from '@/components/ui/GlobalBack.vue'
 
 // 跳转到新页面
 const navigateTo = (url: string) => {
@@ -395,16 +397,23 @@ const goToCommunityDetail = (id: number) => {
   width: 100%;
   box-sizing: border-box;
   padding-bottom: 40rpx;
+  margin-top: 40rpx;
+}
+
+.section:first-of-type {
+  margin-top: 0;
 }
 
 .section-header {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
+  gap: 16rpx;
   margin-bottom: 24rpx;
 }
 
 .section-title {
+  min-width: 0;
   font-size: $font-size-hero;
   font-weight: bold;
   color: var(--text-main);
@@ -415,6 +424,7 @@ const goToCommunityDetail = (id: number) => {
   color: var(--text-muted);
   display: flex;
   align-items: center;
+  flex-shrink: 0;
 }
 
 .icon-next {
@@ -665,10 +675,6 @@ const goToCommunityDetail = (id: number) => {
 .warning-item {
   display: flex;
   gap: 24rpx;
-  background-color: #fff;
-  padding: 30rpx;
-  border-radius: 40rpx;
-  border: 1rpx solid #f5e6d8;
   width: 100%;
   box-sizing: border-box;
 }
@@ -768,12 +774,6 @@ const goToCommunityDetail = (id: number) => {
 .review-item {
   display: flex;
   gap: 24rpx;
-  background-color: #fff;
-  padding: 40rpx;
-  border-radius: 32rpx;
-  box-shadow: 0 4rpx 20rpx -5rpx rgba(0, 0, 0, 0.05);
-  width: 100%;
-  box-sizing: border-box;
   min-width: 0;
 }
 

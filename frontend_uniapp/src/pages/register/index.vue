@@ -1,5 +1,6 @@
 ﻿<template>
-  <view class="container">
+  <view class="container page-shell">
+    <GlobalBack />
     <view class="register-wrapper">
       <view class="header-section">
         <view class="logo-box">
@@ -90,6 +91,7 @@
 <script setup lang="ts">
 import { ref, reactive, computed } from 'vue'
 import Icon from '@/components/ui/Icon.vue'
+import GlobalBack from '@/components/ui/GlobalBack.vue'
 import { validatePhone, validatePassword, getPasswordStrength, handleApiError, handleSuccess } from '@/utils/auth-helpers'
 import { authApi, useAuthStore } from '@/utils/auth'
 
@@ -218,7 +220,7 @@ const goToLogin = () => {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0 44rpx;
+  padding: 0;
   box-sizing: border-box;
 }
 

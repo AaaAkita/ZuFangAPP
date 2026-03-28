@@ -1,5 +1,6 @@
 ﻿<template>
   <view class="container">
+    <GlobalBack theme="dark" />
     <view class="hero-section">
       <image
         class="hero-image"
@@ -9,9 +10,6 @@
       <view class="hero-overlay"></view>
       
       <view class="hero-header">
-        <view class="header-btn" @click="goBack">
-          <Icon class="app-icon" name="arrow_back" size="inherit" />
-        </view>
         <view class="header-actions">
           <view class="header-btn" @click="handleShare">
             <Icon class="app-icon" name="share" size="inherit" />
@@ -56,7 +54,7 @@
             <view class="section-indicator"></view>
             <text class="section-title">核心指标</text>
           </view>
-          <view class="metrics-card">
+          <view class="metrics-card card-shell card-shell--flat">
             <view class="metric-item">
               <view class="progress-ring">
                 <svg width="120" height="120" viewBox="0 0 72 72">
@@ -195,7 +193,7 @@
                   <Icon class="app-icon" name="star" size="inherit" />
                 </view>
               </view>
-              <view class="review-bubble">
+              <view class="review-bubble card-shell card-shell--flat">
                 <view class="bubble-triangle"></view>
                 <view class="bubble-header">
                   <text class="reviewer-name">{{ review.name }}</text>
@@ -271,6 +269,7 @@
 import { ref, reactive } from 'vue'
 import { onLoad } from '@dcloudio/uni-app'
 import Icon from '@/components/ui/Icon.vue'
+import GlobalBack from '@/components/ui/GlobalBack.vue'
 import {
   getCommunityById,
   type CommunityItem,
@@ -331,10 +330,6 @@ onLoad((query) => {
 const getStrokeDashoffset = (value: number): number => {
   const percentage = value / 10
   return circumference * (1 - percentage)
-}
-
-const goBack = () => {
-  uni.navigateBack()
 }
 
 const handleShare = () => {
@@ -417,7 +412,7 @@ const selectMap = (mapType: string) => {
   right: 0;
   padding: calc(var(--status-bar-height, 0px) + 20rpx) 32rpx 32rpx;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
   z-index: 10;
 }
@@ -558,17 +553,10 @@ const selectMap = (mapType: string) => {
 }
 
 .metrics-card {
-  background-color: #fff;
-  width: 100%;
-  box-sizing: border-box;
-  padding: 28rpx 24rpx;
-  border-radius: 48rpx;
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 12rpx;
-  box-shadow: 0 8rpx 40rpx -8rpx rgba(0, 0, 0, 0.05);
-  border: 1rpx solid #f5f5f5;
 }
 
 .metric-item {
@@ -725,13 +713,8 @@ const selectMap = (mapType: string) => {
 .review-bubble {
   flex: 1;
   min-width: 0;
-  box-sizing: border-box;
   position: relative;
-  background-color: #f3f4f6;
-  padding: 32rpx;
-  border-radius: 32rpx;
   border-top-left-radius: 0;
-  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.03);
 }
 
 .bubble-triangle {
@@ -741,7 +724,7 @@ const selectMap = (mapType: string) => {
   width: 0;
   height: 0;
   border-top: 0 solid transparent;
-  border-right: 24rpx solid #f3f4f6;
+  border-right: 24rpx solid var(--surface-light);
   border-bottom: 24rpx solid transparent;
 }
 

@@ -23,6 +23,9 @@ onHide(() => {
   --page-gutter: 28rpx;
   --page-gutter-wide: 40rpx;
   --page-card-radius: 32rpx;
+  --card-shell-gap: 24rpx;
+  --card-shell-shadow: 0 16rpx 48rpx rgba(0, 0, 0, 0.1);
+  --card-shell-border: rgba(0, 0, 0, 0.05);
 }
 
 .app-icon {
@@ -43,6 +46,19 @@ onHide(() => {
 
 /* 基础重置 */
 page {
+  --primary: #ee7c2b;
+  --background-light: #faf9f8;
+  --background-dark: #221810;
+  --surface-light: #ffffff;
+  --surface-dark: #2d2118;
+  --text-main: #332c26;
+  --text-muted: #9a8c7c;
+  --page-gutter: 28rpx;
+  --page-gutter-wide: 40rpx;
+  --page-card-radius: 32rpx;
+  --card-shell-gap: 24rpx;
+  --card-shell-shadow: 0 16rpx 48rpx rgba(0, 0, 0, 0.1);
+  --card-shell-border: rgba(0, 0, 0, 0.05);
   background-color: var(--background-light);
   color: var(--text-main);
   font-family: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
@@ -50,9 +66,19 @@ page {
   overflow-x: hidden;
 }
 
-*,
-*::before,
-*::after {
+page,
+view,
+scroll-view,
+text,
+image,
+input,
+textarea,
+button,
+icon,
+swiper,
+swiper-item,
+navigator,
+label {
   box-sizing: border-box;
 }
 
@@ -64,21 +90,37 @@ page {
 .page-shell {
   width: 100%;
   box-sizing: border-box;
-  padding-left: var(--page-gutter);
-  padding-right: var(--page-gutter);
+  padding-left: 28rpx;
+  padding-right: 28rpx;
+  overflow-x: hidden;
 }
 
 .page-shell-wide {
   width: 100%;
   box-sizing: border-box;
-  padding-left: var(--page-gutter-wide);
-  padding-right: var(--page-gutter-wide);
+  padding-left: 40rpx;
+  padding-right: 40rpx;
+  overflow-x: hidden;
 }
 
 .card-shell {
   width: 100%;
   box-sizing: border-box;
-  border-radius: var(--page-card-radius);
+  border-radius: 32rpx;
+  background-color: #ffffff;
+  border: 1rpx solid rgba(0, 0, 0, 0.05);
+  box-shadow: 0 16rpx 48rpx rgba(0, 0, 0, 0.1);
+  padding: 24rpx;
+  min-width: 0;
+}
+
+.card-shell--compact {
+  padding: 18rpx;
+}
+
+.card-shell--flat {
+  box-shadow: none;
+  border: 1rpx solid rgba(0, 0, 0, 0.035);
 }
 
 /* 隐藏滚动条 */

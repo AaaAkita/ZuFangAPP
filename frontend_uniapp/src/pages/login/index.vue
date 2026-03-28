@@ -1,5 +1,6 @@
 ﻿<template>
-  <view class="container">
+  <view class="container page-shell">
+    <GlobalBack />
     <view class="login-wrapper">
       <view class="header-section">
         <view class="logo-box">
@@ -84,6 +85,7 @@
 <script setup lang="ts">
 import { ref, reactive } from 'vue'
 import Icon from '@/components/ui/Icon.vue'
+import GlobalBack from '@/components/ui/GlobalBack.vue'
 import { wechatLogin } from '@/utils/wechat'
 import { validatePhone, handleApiError, handleSuccess } from '@/utils/auth-helpers'
 import { authApi, useAuthStore } from '@/utils/auth'
@@ -201,7 +203,7 @@ const goToRegister = () => {
   flex-direction: column;
   align-items: center;
   box-sizing: border-box;
-  padding: 0 44rpx;
+  padding: 0;
 }
 
 .login-wrapper {
