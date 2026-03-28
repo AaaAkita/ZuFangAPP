@@ -1,7 +1,7 @@
 ﻿<template>
   <view class="container">
     <!-- 顶部导航栏 -->
-    <view class="header sticky-top">
+    <view class="header sticky-top page-shell-wide">
       <view class="location-box">
         <view class="location-main">
           <Icon name="location" :size="40" color="var(--primary)" class="icon-location" />
@@ -14,7 +14,7 @@
     </view>
 
     <!-- 搜索栏 -->
-    <view class="search-container">
+    <view class="search-container page-shell-wide">
       <view class="search-bar" @click="navigateTo('/pages/search/index')">
         <view class="search-icon-box">
           <Icon name="search" :size="32" color="var(--text-muted)" />
@@ -27,7 +27,7 @@
     </view>
 
     <!-- 推荐小区 -->
-    <view class="section">
+    <view class="section page-shell-wide">
       <view class="section-header">
         <text class="section-title">推荐小区</text>
         <navigator url="/pages/community/index" class="more-link">
@@ -101,7 +101,7 @@
     </view>
 
     <!-- 搬家特惠 -->
-    <view class="banner-section">
+    <view class="banner-section page-shell-wide">
       <view class="banner-box">
         <view class="banner-glow"></view>
         <view class="banner-content">
@@ -128,7 +128,7 @@
     </view>
 
     <!-- 租房避雷 -->
-    <view class="section warning-section">
+    <view class="section warning-section page-shell-wide">
       <view class="section-header">
         <view class="title-with-icon">
           <text class="section-title">租房避雷信息</text>
@@ -181,7 +181,7 @@
     </view>
 
     <!-- 最新评价 -->
-    <view class="section review-section">
+    <view class="section review-section page-shell-wide">
       <view class="section-header">
         <view class="title-with-icon">
           <text class="section-title">最新评价</text>
@@ -313,7 +313,8 @@ const goToCommunityDetail = (id: number) => {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: calc(var(--status-bar-height, 0px) + 20rpx) 40rpx 20rpx;
+  padding-top: calc(var(--status-bar-height, 0px) + 20rpx);
+  padding-bottom: 20rpx;
 }
 
 .location-box {
@@ -352,7 +353,8 @@ const goToCommunityDetail = (id: number) => {
 
 /* 搜索 */
 .search-container {
-  padding: 10rpx 40rpx 40rpx;
+  padding-top: 10rpx;
+  padding-bottom: 40rpx;
 }
 
 .search-bar {
@@ -390,7 +392,9 @@ const goToCommunityDetail = (id: number) => {
 
 /* 区块通用 */
 .section {
-  padding: 0 40rpx 40rpx;
+  width: 100%;
+  box-sizing: border-box;
+  padding-bottom: 40rpx;
 }
 
 .section-header {
@@ -443,6 +447,7 @@ const goToCommunityDetail = (id: number) => {
 
 /* 卡片 */
 .recommend-scroll {
+  width: 100%;
   white-space: nowrap;
 }
 
@@ -543,7 +548,9 @@ const goToCommunityDetail = (id: number) => {
 
 /* Banner */
 .banner-section {
-  padding: 0 40rpx 60rpx;
+  width: 100%;
+  box-sizing: border-box;
+  padding-bottom: 60rpx;
 }
 
 .banner-box {
@@ -662,6 +669,8 @@ const goToCommunityDetail = (id: number) => {
   padding: 30rpx;
   border-radius: 40rpx;
   border: 1rpx solid #f5e6d8;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .warning-icon-bg {
@@ -686,6 +695,7 @@ const goToCommunityDetail = (id: number) => {
 
 .warning-body {
   flex: 1;
+  min-width: 0;
 }
 
 .warning-header {
@@ -695,9 +705,13 @@ const goToCommunityDetail = (id: number) => {
 }
 
 .warning-name {
+  min-width: 0;
   font-size: $font-size-h3;
   font-weight: bold;
   color: var(--text-main);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .warning-time {
@@ -718,6 +732,7 @@ const goToCommunityDetail = (id: number) => {
   line-height: 1.6;
   margin-bottom: 20rpx;
   display: block;
+  word-break: break-all;
 }
 
 .tag-row {
@@ -757,6 +772,9 @@ const goToCommunityDetail = (id: number) => {
   padding: 40rpx;
   border-radius: 32rpx;
   box-shadow: 0 4rpx 20rpx -5rpx rgba(0, 0, 0, 0.05);
+  width: 100%;
+  box-sizing: border-box;
+  min-width: 0;
 }
 
 .review-user {
@@ -803,12 +821,15 @@ const goToCommunityDetail = (id: number) => {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
+  gap: 12rpx;
   margin-bottom: 12rpx;
 }
 
 .user-info {
   display: flex;
   flex-direction: column;
+  flex: 1;
+  min-width: 0;
 }
 
 .user-name {
@@ -834,6 +855,7 @@ const goToCommunityDetail = (id: number) => {
   background-color: #f9fafb;
   padding: 8rpx 16rpx;
   border-radius: 16rpx;
+  flex-shrink: 0;
 }
 
 .review-text {
@@ -842,6 +864,7 @@ const goToCommunityDetail = (id: number) => {
   line-height: 1.6;
   margin-bottom: 24rpx;
   display: block;
+  word-break: break-all;
 }
 
 .review-tags {

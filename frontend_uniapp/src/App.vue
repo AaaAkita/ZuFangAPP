@@ -20,6 +20,9 @@ onHide(() => {
   --surface-dark: #2d2118;
   --text-main: #332c26;
   --text-muted: #9a8c7c;
+  --page-gutter: 28rpx;
+  --page-gutter-wide: 40rpx;
+  --page-card-radius: 32rpx;
 }
 
 .app-icon {
@@ -44,11 +47,38 @@ page {
   color: var(--text-main);
   font-family: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   line-height: 1.5;
+  overflow-x: hidden;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
 .dark {
   background-color: var(--background-dark);
   color: #fff;
+}
+
+.page-shell {
+  width: 100%;
+  box-sizing: border-box;
+  padding-left: var(--page-gutter);
+  padding-right: var(--page-gutter);
+}
+
+.page-shell-wide {
+  width: 100%;
+  box-sizing: border-box;
+  padding-left: var(--page-gutter-wide);
+  padding-right: var(--page-gutter-wide);
+}
+
+.card-shell {
+  width: 100%;
+  box-sizing: border-box;
+  border-radius: var(--page-card-radius);
 }
 
 /* 隐藏滚动条 */

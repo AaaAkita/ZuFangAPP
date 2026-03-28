@@ -57,17 +57,23 @@ $color-border-dark: #D0CCC9;
 // ============================================
 
 // 字体大小
-$font-size-h1: 36rpx;
-$font-size-h2: 32rpx;
+$font-size-h1: 34rpx;
+$font-size-h2: 30rpx;
 $font-size-h3: 28rpx;
-$font-size-body: 28rpx;
-$font-size-body-sm: 26rpx;
-$font-size-caption: 24rpx;
-$font-size-tiny: 22rpx;
+$font-size-body: 26rpx;
+$font-size-body-sm: 24rpx;
+$font-size-caption: 22rpx;
+$font-size-tiny: 20rpx;
+$font-size-mini: 18rpx;
+$font-size-micro: 14rpx;
+$font-size-nano: 12rpx;
 
 // 字体大小（大标题，用于特殊场景）
-$font-size-display: 48rpx;
-$font-size-hero: 40rpx;
+$font-size-display: 46rpx;
+$font-size-display-xxl: 112rpx;
+$font-size-display-xl: 80rpx;
+$font-size-display-lg: 54rpx;
+$font-size-hero: 38rpx;
 
 // 字重
 $font-weight-regular: 400;

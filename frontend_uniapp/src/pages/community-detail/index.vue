@@ -59,7 +59,7 @@
           <view class="metrics-card">
             <view class="metric-item">
               <view class="progress-ring">
-                <svg width="144" height="144" viewBox="0 0 72 72">
+                <svg width="120" height="120" viewBox="0 0 72 72">
                   <circle
                     cx="36"
                     cy="36"
@@ -93,7 +93,7 @@
             
             <view class="metric-item">
               <view class="progress-ring">
-                <svg width="144" height="144" viewBox="0 0 72 72">
+                <svg width="120" height="120" viewBox="0 0 72 72">
                   <circle
                     cx="36"
                     cy="36"
@@ -127,7 +127,7 @@
             
             <view class="metric-item">
               <view class="progress-ring">
-                <svg width="144" height="144" viewBox="0 0 72 72">
+                <svg width="120" height="120" viewBox="0 0 72 72">
                   <circle
                     cx="36"
                     cy="36"
@@ -507,7 +507,9 @@ const selectMap = (mapType: string) => {
 
 .scroll-content {
   height: 100%;
-  padding: 0 40rpx;
+  box-sizing: border-box;
+  padding: 0 var(--page-gutter) calc(constant(safe-area-inset-bottom) + 260rpx);
+  padding: 0 var(--page-gutter) calc(env(safe-area-inset-bottom) + 260rpx);
 }
 
 .tags-row {
@@ -531,6 +533,7 @@ const selectMap = (mapType: string) => {
 
 .section {
   margin-top: 48rpx;
+  width: 100%;
 }
 
 .section-header {
@@ -556,17 +559,21 @@ const selectMap = (mapType: string) => {
 
 .metrics-card {
   background-color: #fff;
-  padding: 48rpx;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 28rpx 24rpx;
   border-radius: 48rpx;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 12rpx;
   box-shadow: 0 8rpx 40rpx -8rpx rgba(0, 0, 0, 0.05);
   border: 1rpx solid #f5f5f5;
 }
 
 .metric-item {
   flex: 1;
+  min-width: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -575,8 +582,8 @@ const selectMap = (mapType: string) => {
 
 .progress-ring {
   position: relative;
-  width: 144rpx;
-  height: 144rpx;
+  width: 120rpx;
+  height: 120rpx;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -611,7 +618,7 @@ const selectMap = (mapType: string) => {
 
 .metric-divider {
   width: 2rpx;
-  height: 96rpx;
+  height: 84rpx;
   background-color: #f3f4f6;
 }
 
@@ -627,8 +634,14 @@ const selectMap = (mapType: string) => {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 16rpx;
   margin-bottom: 32rpx;
   padding: 0 8rpx;
+}
+
+.section-header-row .section-header {
+  margin-bottom: 0;
+  min-width: 0;
 }
 
 .review-count {
@@ -644,6 +657,7 @@ const selectMap = (mapType: string) => {
   font-weight: bold;
   display: flex;
   align-items: center;
+  flex-shrink: 0;
 }
 
 .view-all-link .app-icon {
@@ -660,6 +674,7 @@ const selectMap = (mapType: string) => {
 .review-item {
   display: flex;
   gap: 32rpx;
+  min-width: 0;
 }
 
 .review-avatar-wrapper {
@@ -709,6 +724,8 @@ const selectMap = (mapType: string) => {
 
 .review-bubble {
   flex: 1;
+  min-width: 0;
+  box-sizing: border-box;
   position: relative;
   background-color: #f3f4f6;
   padding: 32rpx;
@@ -732,13 +749,19 @@ const selectMap = (mapType: string) => {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 16rpx;
   margin-bottom: 16rpx;
 }
 
 .reviewer-name {
+  flex: 1;
+  min-width: 0;
   font-size: $font-size-h3;
   font-weight: bold;
   color: #333;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .review-time {
@@ -753,6 +776,7 @@ const selectMap = (mapType: string) => {
   font-size: $font-size-h3;
   color: #333;
   line-height: 1.6;
+  word-break: break-all;
 }
 
 .review-tags {
