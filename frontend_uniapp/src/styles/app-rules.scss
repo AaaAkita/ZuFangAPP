@@ -71,7 +71,11 @@ label {
 .page-about > .global-back + *,
 .page-safety > .global-back + *,
 .page-review-publish > .global-back + *,
-.page-reviews > .global-back + * {
+.page-reviews > .global-back + *,
+.page-my-reviews > .global-back + *,
+.page-favorites > .global-back + *,
+.page-settings > .global-back + *,
+.page-support > .global-back + * {
   margin-top: var(--capsule-safe-offset);
 }
 

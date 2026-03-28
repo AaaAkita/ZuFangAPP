@@ -4,7 +4,7 @@
 
     <view class="profile-header">
       <text class="page-title">{{ profileData.title }}</text>
-      <view class="profile-header__edit" @click="navigateTo('/pages/about/about')">
+      <view class="profile-header__edit" @click="navigateTo('/pages/settings/settings')">
         <Icon name="edit" :size="34" />
       </view>
     </view>

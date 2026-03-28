@@ -147,10 +147,101 @@ export interface ProfileData {
   menus: ProfileMenuItem[]
 }
 
+export type AppActionMode = 'navigateTo' | 'switchTab' | 'toast'
+
+export interface AppAction {
+  mode: AppActionMode
+  url?: string
+  toastText?: string
+}
+
+export interface ProfileReviewItem {
+  id: number
+  communityName: string
+  time: string
+  content: string
+  likes: number
+  verified: boolean
+  tags: string[]
+}
+
+export interface ProfileReviewsData {
+  title: string
+  subtitle: string
+  reviews: ProfileReviewItem[]
+}
+
+export interface FavoritesData {
+  title: string
+  subtitle: string
+  properties: PropertyItem[]
+}
+
+export interface SettingsItem {
+  id: number
+  label: string
+  description: string
+  icon: string
+  type: 'switch' | 'action'
+  value?: boolean
+  action?: AppAction
+}
+
+export interface SettingsSection {
+  id: number
+  title: string
+  items: SettingsItem[]
+}
+
+export interface SettingsData {
+  title: string
+  sections: SettingsSection[]
+}
+
+export interface SupportChannel {
+  id: number
+  name: string
+  description: string
+  icon: string
+  action: AppAction
+}
+
+export interface FaqItem {
+  id: number
+  question: string
+  answer: string
+}
+
+export interface SupportData {
+  title: string
+  channels: SupportChannel[]
+  faqs: FaqItem[]
+}
+
 export interface MessageData {
   title: string
-  emptyTitle: string
-  emptySubtitle: string
+  items: MessageItem[]
+}
+
+export type MessageCategory = 'system' | 'interaction'
+
+export type MessageActionMode = AppActionMode
+
+export type MessageTabKey = 'all' | MessageCategory
+
+export type MessageAction = AppAction
+
+export interface MessageItem {
+  id: number
+  title: string
+  content: string
+  time: string
+  category: MessageCategory
+  unread: boolean
+  avatar?: string
+  sender?: string
+  tag?: string
+  action: MessageAction
 }
 
 export interface PlaceholderData {
@@ -188,6 +279,10 @@ export interface MockDbSchema {
   home: HomeData
   search: SearchData
   profile: ProfileData
+  profileReviews: ProfileReviewsData
+  favorites: FavoritesData
+  settings: SettingsData
+  support: SupportData
   message: MessageData
   about: PlaceholderData
   safety: PlaceholderData

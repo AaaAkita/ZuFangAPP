@@ -321,20 +321,381 @@
     "defaultAvatar": "/static/logo.png",
     "joinDateFallback": "欢迎加入租客社区",
     "stats": [
-      { "id": 1, "value": "24", "label": "发布的评价", "icon": "star", "route": "/pages/community/community" },
-      { "id": 2, "value": "158", "label": "获赞", "icon": "heart" }
+      { "id": 1, "value": "24", "label": "发布的评价", "icon": "star", "route": "/pages/my-reviews/my-reviews" },
+      { "id": 2, "value": "158", "label": "获赞", "icon": "heart", "route": "/pages/my-reviews/my-reviews" }
     ],
     "menus": [
-      { "id": 1, "label": "我的评价", "icon": "star", "theme": "orange", "route": "/pages/community/community" },
-      { "id": 2, "label": "收藏房源", "icon": "bookmark", "theme": "blue" },
-      { "id": 3, "label": "设置", "icon": "settings", "theme": "gray" },
-      { "id": 4, "label": "帮助与客服", "icon": "help", "theme": "green" }
+      { "id": 1, "label": "我的评价", "icon": "star", "theme": "orange", "route": "/pages/my-reviews/my-reviews" },
+      { "id": 2, "label": "收藏房源", "icon": "bookmark", "theme": "blue", "route": "/pages/favorites/favorites" },
+      { "id": 3, "label": "设置", "icon": "settings", "theme": "gray", "route": "/pages/settings/settings" },
+      { "id": 4, "label": "帮助与客服", "icon": "help", "theme": "green", "route": "/pages/support/support" }
+    ]
+  },
+  "profileReviews": {
+    "title": "我的评价",
+    "subtitle": "24条评价 · 获赞158次",
+    "reviews": [
+      {
+        "id": 1,
+        "communityName": "阳光锦城",
+        "time": "2小时前",
+        "content": "门禁与巡逻非常规范，夜间回家安全感很好，物业响应也及时。",
+        "likes": 36,
+        "verified": true,
+        "tags": ["安全系数高", "物业靠谱"]
+      },
+      {
+        "id": 2,
+        "communityName": "云尚国际",
+        "time": "昨天",
+        "content": "周边商超和医疗资源齐全，适合长期居住，唯一不足是停车紧张。",
+        "likes": 21,
+        "verified": true,
+        "tags": ["生活便利", "配套完整"]
+      },
+      {
+        "id": 3,
+        "communityName": "老弄堂公寓",
+        "time": "3天前",
+        "content": "地段和烟火气都不错，但隔音一般，建议看房时重点体验晚间噪音。",
+        "likes": 13,
+        "verified": false,
+        "tags": ["地段优越", "隔音一般"]
+      }
+    ]
+  },
+  "favorites": {
+    "title": "收藏房源",
+    "subtitle": "已收藏3套，建议尽快安排实地看房",
+    "properties": [
+      {
+        "id": 101,
+        "title": "阳光充足一居室",
+        "location": "朝阳区, 北京",
+        "image": "/static/logo.png",
+        "rating": "4.92",
+        "rooms": "1室",
+        "bathrooms": "1卫",
+        "area": "45m²",
+        "price": "¥5,200",
+        "tag": "优选房源",
+        "tagColor": "rgba(255, 255, 255, 0.9)",
+        "isFavorite": true
+      },
+      {
+        "id": 102,
+        "title": "运河旁宽敞Loft",
+        "location": "通州区, 北京",
+        "image": "/static/logo.png",
+        "rating": "4.85",
+        "rooms": "2室",
+        "bathrooms": "2卫",
+        "area": "80m²",
+        "price": "¥8,450",
+        "tag": "近地铁",
+        "tagColor": "rgba(255, 245, 230, 0.95)",
+        "isFavorite": true
+      },
+      {
+        "id": 103,
+        "title": "温馨单身公寓",
+        "location": "海淀区, 北京",
+        "image": "/static/logo.png",
+        "rating": "4.73",
+        "rooms": "开间",
+        "bathrooms": "1卫",
+        "area": "30m²",
+        "price": "¥3,950",
+        "tag": "新上房源",
+        "tagColor": "rgba(238, 124, 43, 0.9)",
+        "isFavorite": true
+      }
+    ]
+  },
+  "settings": {
+    "title": "设置",
+    "sections": [
+      {
+        "id": 1,
+        "title": "账号与安全",
+        "items": [
+          {
+            "id": 1,
+            "label": "账号管理",
+            "description": "手机号与资料维护",
+            "icon": "person",
+            "type": "action",
+            "action": { "mode": "navigateTo", "url": "/pages/about/about" }
+          },
+          {
+            "id": 2,
+            "label": "登录保护",
+            "description": "异地登录提醒",
+            "icon": "safety",
+            "type": "switch",
+            "value": true
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "title": "消息与隐私",
+        "items": [
+          {
+            "id": 3,
+            "label": "消息通知",
+            "description": "互动、审核与活动提醒",
+            "icon": "message",
+            "type": "switch",
+            "value": true
+          },
+          {
+            "id": 4,
+            "label": "隐私设置",
+            "description": "内容公开范围",
+            "icon": "settings",
+            "type": "action",
+            "action": { "mode": "toast", "toastText": "功能开发中" }
+          }
+        ]
+      },
+      {
+        "id": 3,
+        "title": "其他",
+        "items": [
+          {
+            "id": 5,
+            "label": "关于我们",
+            "description": "版本信息与服务说明",
+            "icon": "about",
+            "type": "action",
+            "action": { "mode": "navigateTo", "url": "/pages/about/about" }
+          }
+        ]
+      }
+    ]
+  },
+  "support": {
+    "title": "帮助与客服",
+    "channels": [
+      {
+        "id": 1,
+        "name": "在线客服",
+        "description": "工作日 09:00 - 21:00",
+        "icon": "chat_bubble",
+        "action": { "mode": "toast", "toastText": "客服会话功能开发中" }
+      },
+      {
+        "id": 2,
+        "name": "客服电话",
+        "description": "400-800-1234",
+        "icon": "phone",
+        "action": { "mode": "toast", "toastText": "请拨打 400-800-1234" }
+      },
+      {
+        "id": 3,
+        "name": "安全指南",
+        "description": "看房与签约避坑手册",
+        "icon": "safety",
+        "action": { "mode": "navigateTo", "url": "/pages/safety/safety" }
+      }
+    ],
+    "faqs": [
+      {
+        "id": 1,
+        "question": "如何判断房源是否真实？",
+        "answer": "建议实地看房并核验房本信息，警惕先交押金再看房的流程。"
+      },
+      {
+        "id": 2,
+        "question": "遇到黑中介怎么办？",
+        "answer": "保留聊天和转账证据，第一时间在平台反馈并向监管部门投诉。"
+      },
+      {
+        "id": 3,
+        "question": "评价发布后可以修改吗？",
+        "answer": "当前支持补充说明，完整编辑能力正在开发中。"
+      }
     ]
   },
   "message": {
     "title": "消息",
-    "emptyTitle": "暂无消息",
-    "emptySubtitle": "当有新的消息时会在这里显示"
+    "items": [
+      {
+        "id": 1,
+        "title": "你的评价已通过审核",
+        "content": "《阳光锦城夜间噪音观察》已发布，正在帮助更多租客决策。",
+        "time": "刚刚",
+        "category": "system",
+        "unread": true,
+        "sender": "系统通知",
+        "tag": "审核结果",
+        "action": {
+          "mode": "navigateTo",
+          "url": "/pages/reviews/reviews"
+        }
+      },
+      {
+        "id": 2,
+        "title": "陈静赞了你的避雷内容",
+        "content": "她觉得你的信息很有参考价值，建议继续更新。",
+        "time": "5分钟前",
+        "category": "interaction",
+        "unread": true,
+        "avatar": "/static/logo.png",
+        "sender": "陈静",
+        "tag": "互动",
+        "action": {
+          "mode": "navigateTo",
+          "url": "/pages/reviews/reviews"
+        }
+      },
+      {
+        "id": 3,
+        "title": "发现高风险小区提醒",
+        "content": "天诚家园风险分已升至84，建议优先核验房源真实性。",
+        "time": "20分钟前",
+        "category": "system",
+        "unread": true,
+        "sender": "系统通知",
+        "tag": "风险提醒",
+        "action": {
+          "mode": "navigateTo",
+          "url": "/pages/community-detail/community-detail?id=5"
+        }
+      },
+      {
+        "id": 4,
+        "title": "王强回复了你的评论",
+        "content": "“谢谢提醒，我会重点看晚间噪音情况。”",
+        "time": "1小时前",
+        "category": "interaction",
+        "unread": false,
+        "avatar": "/static/logo.png",
+        "sender": "王强",
+        "tag": "回复",
+        "action": {
+          "mode": "navigateTo",
+          "url": "/pages/reviews/reviews"
+        }
+      },
+      {
+        "id": 5,
+        "title": "功能更新：筛选支持更多地铁线",
+        "content": "搜索页新增地铁线路筛选，找房效率更高。",
+        "time": "昨天",
+        "category": "system",
+        "unread": false,
+        "sender": "系统通知",
+        "tag": "功能更新",
+        "action": {
+          "mode": "toast",
+          "toastText": "功能开发中"
+        }
+      },
+      {
+        "id": 6,
+        "title": "3位租客收藏了你的避雷帖",
+        "content": "你的内容正在帮助更多人避开潜在风险。",
+        "time": "昨天",
+        "category": "interaction",
+        "unread": true,
+        "avatar": "/static/logo.png",
+        "sender": "社区互动",
+        "tag": "收藏",
+        "action": {
+          "mode": "switchTab",
+          "url": "/pages/community/community"
+        }
+      },
+      {
+        "id": 7,
+        "title": "本周社区榜单已更新",
+        "content": "优质榜与避雷榜均有变化，点击查看最新排名。",
+        "time": "2天前",
+        "category": "system",
+        "unread": false,
+        "sender": "系统通知",
+        "tag": "榜单更新",
+        "action": {
+          "mode": "switchTab",
+          "url": "/pages/community/community"
+        }
+      },
+      {
+        "id": 8,
+        "title": "你的评论收到新回复",
+        "content": "“已按你说的核验合同，确实避开了坑。”",
+        "time": "2天前",
+        "category": "interaction",
+        "unread": false,
+        "avatar": "/static/logo.png",
+        "sender": "李莎",
+        "tag": "回复",
+        "action": {
+          "mode": "navigateTo",
+          "url": "/pages/reviews/reviews"
+        }
+      },
+      {
+        "id": 9,
+        "title": "账号安全提醒",
+        "content": "建议绑定邮箱并开启登录保护，提高账号安全性。",
+        "time": "3天前",
+        "category": "system",
+        "unread": true,
+        "sender": "系统通知",
+        "tag": "安全",
+        "action": {
+          "mode": "toast",
+          "toastText": "功能开发中"
+        }
+      },
+      {
+        "id": 10,
+        "title": "有人关注了你",
+        "content": "新关注者可第一时间看到你发布的评价内容。",
+        "time": "4天前",
+        "category": "interaction",
+        "unread": true,
+        "avatar": "/static/logo.png",
+        "sender": "租客用户",
+        "tag": "关注",
+        "action": {
+          "mode": "switchTab",
+          "url": "/pages/profile/profile"
+        }
+      },
+      {
+        "id": 11,
+        "title": "限时活动：发布评价赢好礼",
+        "content": "本周内发布真实评价可获得积分奖励，快来参与。",
+        "time": "5天前",
+        "category": "system",
+        "unread": false,
+        "sender": "系统通知",
+        "tag": "活动",
+        "action": {
+          "mode": "navigateTo",
+          "url": "/pages/review-publish/review-publish?communityId=1"
+        }
+      },
+      {
+        "id": 12,
+        "title": "小区讨论提到了你",
+        "content": "你在阳光锦城的评价被引用到最新讨论中。",
+        "time": "1周前",
+        "category": "interaction",
+        "unread": false,
+        "avatar": "/static/logo.png",
+        "sender": "社区互动",
+        "tag": "提及",
+        "action": {
+          "mode": "navigateTo",
+          "url": "/pages/community-detail/community-detail?id=1"
+        }
+      }
+    ]
   },
   "about": {
     "title": "关于我们",

@@ -24,23 +24,30 @@
 
     <template v-else>
       <view v-if="rank !== null" :class="['biz-community-card__rank', mode === 'risk' ? 'is-risk' : '']">
-        {{ rank }}
+        <text class="biz-community-card__rank-index">{{ rank }}</text>
+        <text class="biz-community-card__rank-label">{{ mode === 'risk' ? '风险' : 'TOP' }}</text>
       </view>
       <image class="biz-community-card__cover" :src="community.image" mode="aspectFill" />
       <view class="biz-community-card__main">
         <view class="biz-community-card__row">
           <text class="biz-community-card__title">{{ community.name }}</text>
-          <text :class="['biz-community-card__score', mode === 'risk' ? 'is-risk' : 'is-quality']">
-            {{ mode === 'risk' ? `风险 ${Math.round(community.riskScore)}` : `${Math.round(community.qualityScore)} 分` }}
-          </text>
+          <view :class="['biz-community-card__score-pill', mode === 'risk' ? 'is-risk' : 'is-quality']">
+            <text class="biz-community-card__score-label">{{ mode === 'risk' ? '风险' : '评分' }}</text>
+            <text class="biz-community-card__score-value">
+              {{ mode === 'risk' ? Math.round(community.riskScore) : Math.round(community.qualityScore) }}
+            </text>
+          </view>
         </view>
         <text class="biz-community-card__desc">{{ community.district }} · {{ community.address }}</text>
         <view v-if="mode === 'quality'" class="biz-community-card__chips">
-          <text v-for="tag in community.highlights" :key="tag" class="biz-community-card__chip">
+          <text v-for="tag in community.highlights.slice(0, 3)" :key="tag" class="biz-community-card__chip">
             {{ tag }}
           </text>
         </view>
-        <text v-else class="biz-community-card__risk-tip">{{ community.riskReason }}</text>
+        <view v-else class="biz-community-card__risk-tip">
+          <Icon name="warning" :size="18" color="#dc2626" />
+          <text class="biz-community-card__risk-text">{{ community.riskReason }}</text>
+        </view>
       </view>
     </template>
   </view>
@@ -69,7 +76,7 @@ defineEmits<{
 const cardClasses = computed(() => [
   'biz-community-card',
   `mode-${props.mode}`,
-  props.mode === 'quality' || props.mode === 'risk' ? 'card-shell card-shell--flat' : ''
+  props.mode === 'quality' || props.mode === 'risk' ? 'biz-community-card--ranked' : ''
 ])
 
 const toFixed = (value: number) => value.toFixed(1)
@@ -88,11 +95,20 @@ const toFixed = (value: number) => value.toFixed(1)
   flex-shrink: 0;
 }
 
-.biz-community-card.mode-quality,
-.biz-community-card.mode-risk {
-  display: flex;
+.biz-community-card--ranked {
+  display: grid;
+  grid-template-columns: 62rpx 126rpx 1fr;
+  align-items: center;
   gap: 14rpx;
   padding: 18rpx;
+  border-radius: 26rpx;
+  border: 1rpx solid rgba(15, 23, 42, 0.06);
+  box-shadow: 0 10rpx 24rpx rgba(15, 23, 42, 0.05);
+  background: #ffffff;
+}
+
+.biz-community-card.mode-risk.biz-community-card--ranked {
+  background: linear-gradient(135deg, #ffffff 0%, #fff7f7 100%);
 }
 
 .biz-community-card__bg {
@@ -156,27 +172,40 @@ const toFixed = (value: number) => value.toFixed(1)
 }
 
 .biz-community-card__rank {
-  width: 48rpx;
-  height: 48rpx;
-  border-radius: 50%;
-  background: #22c55e;
+  width: 62rpx;
+  height: 126rpx;
+  border-radius: 999rpx;
+  background: linear-gradient(180deg, #34d399 0%, #16a34a 100%);
   color: #ffffff;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: 24rpx;
-  font-weight: 700;
-  flex-shrink: 0;
+  gap: 2rpx;
+  box-shadow: 0 8rpx 18rpx rgba(22, 163, 74, 0.24);
 }
 
 .biz-community-card__rank.is-risk {
-  background: #ef4444;
+  background: linear-gradient(180deg, #fb7185 0%, #ef4444 100%);
+  box-shadow: 0 8rpx 18rpx rgba(239, 68, 68, 0.24);
+}
+
+.biz-community-card__rank-index {
+  font-size: 28rpx;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.biz-community-card__rank-label {
+  font-size: 17rpx;
+  opacity: 0.9;
+  line-height: 1;
 }
 
 .biz-community-card__cover {
-  width: 120rpx;
-  height: 120rpx;
-  border-radius: 14rpx;
+  width: 126rpx;
+  height: 126rpx;
+  border-radius: 18rpx;
   flex-shrink: 0;
 }
 
@@ -188,11 +217,12 @@ const toFixed = (value: number) => value.toFixed(1)
 .biz-community-card__row {
   display: flex;
   justify-content: space-between;
+  align-items: flex-start;
   gap: 10rpx;
 }
 
 .biz-community-card__title {
-  font-size: 28rpx;
+  font-size: 30rpx;
   font-weight: 700;
   color: #0f172a;
   min-width: 0;
@@ -201,18 +231,37 @@ const toFixed = (value: number) => value.toFixed(1)
   white-space: nowrap;
 }
 
-.biz-community-card__score {
+.biz-community-card__score-pill {
   flex-shrink: 0;
+  border-radius: 16rpx;
+  padding: 6rpx 10rpx 4rpx;
+  min-width: 88rpx;
+  text-align: center;
+}
+
+.biz-community-card__score-pill.is-quality {
+  background: rgba(34, 197, 94, 0.14);
+  color: #15803d;
+}
+
+.biz-community-card__score-pill.is-risk {
+  background: rgba(239, 68, 68, 0.12);
+  color: #dc2626;
+}
+
+.biz-community-card__score-label {
+  display: block;
+  font-size: 16rpx;
+  line-height: 1;
+  opacity: 0.8;
+}
+
+.biz-community-card__score-value {
+  display: block;
+  margin-top: 3rpx;
   font-size: 24rpx;
   font-weight: 700;
-}
-
-.biz-community-card__score.is-quality {
-  color: #16a34a;
-}
-
-.biz-community-card__score.is-risk {
-  color: #ef4444;
+  line-height: 1;
 }
 
 .biz-community-card__desc {
@@ -220,10 +269,13 @@ const toFixed = (value: number) => value.toFixed(1)
   margin-top: 8rpx;
   font-size: 22rpx;
   color: #64748b;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .biz-community-card__chips {
-  margin-top: 8rpx;
+  margin-top: 10rpx;
   display: flex;
   gap: 8rpx;
   flex-wrap: wrap;
@@ -231,16 +283,31 @@ const toFixed = (value: number) => value.toFixed(1)
 
 .biz-community-card__chip {
   background: #ecfdf3;
-  color: #16a34a;
+  color: #15803d;
   border-radius: 999rpx;
-  padding: 4rpx 10rpx;
+  padding: 5rpx 12rpx;
   font-size: 20rpx;
 }
 
 .biz-community-card__risk-tip {
-  display: block;
-  margin-top: 8rpx;
+  margin-top: 10rpx;
+  display: flex;
+  align-items: flex-start;
+  gap: 6rpx;
+  padding: 6rpx 10rpx;
+  border-radius: 12rpx;
+  background: rgba(254, 226, 226, 0.55);
+}
+
+.biz-community-card__risk-text {
+  flex: 1;
+  min-width: 0;
   font-size: 20rpx;
   color: #b91c1c;
+  line-height: 1.45;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
 }
 </style>
