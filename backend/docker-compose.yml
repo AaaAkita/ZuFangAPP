@@ -1,6 +1,27 @@
 version: '3.8'
 
 services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: zufang_backend
+    restart: always
+    environment:
+      PORT: 3026
+      DATABASE_URL: postgresql://postgres:postgres@postgres:5432/zufang_dev?schema=public
+      JWT_SECRET: your-super-secret-jwt-key-change-in-production
+      JWT_EXPIRES_IN: 7d
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      WECHAT_APP_ID: ${WECHAT_APP_ID:-}
+      WECHAT_APP_SECRET: ${WECHAT_APP_SECRET:-}
+    ports:
+      - "3026:3026"
+    depends_on:
+      - postgres
+      - redis
+
   postgres:
     image: postgres:15-alpine
     container_name: zufang_postgres

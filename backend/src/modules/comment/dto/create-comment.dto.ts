@@ -1,33 +1,55 @@
-import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
-import { IsNumber, IsOptional, IsString, Max, Min, IsArray } from 'class-validator';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import {
+  IsArray,
+  IsBoolean,
+  IsNumber,
+  IsOptional,
+  IsString,
+  Max,
+  MaxLength,
+  Min,
+} from 'class-validator';
 
 export class CreateCommentDto {
-    @ApiProperty({ description: '所属小区 ID', example: 1 })
-    @Type(() => Number)
-    @IsNumber()
-    communityId: number;
+  @ApiProperty({ description: '所属社区 ID', example: 1 })
+  @Type(() => Number)
+  @IsNumber()
+  communityId: number;
 
-    @ApiProperty({ description: '评价内容', example: '这房子隔音太差了！' })
-    @IsString()
-    content: string;
+  @ApiProperty({ description: '评论内容' })
+  @IsString()
+  @MaxLength(1000)
+  content: string;
 
-    @ApiProperty({ description: '图片链接数组', required: false, type: [String] })
-    @IsOptional()
-    @IsArray()
-    @IsString({ each: true })
-    images?: string[];
+  @ApiProperty({ description: '评分 1-5', example: 4 })
+  @Type(() => Number)
+  @IsNumber()
+  @Min(1)
+  @Max(5)
+  rating: number;
 
-    @ApiProperty({ description: '视频链接数组', required: false, type: [String] })
-    @IsOptional()
-    @IsArray()
-    @IsString({ each: true })
-    videos?: string[];
+  @ApiPropertyOptional({ description: '标签列表', type: [String] })
+  @IsOptional()
+  @IsArray()
+  @IsString({ each: true })
+  tags?: string[];
 
-    @ApiProperty({ description: '评分 (1-5)', example: 1 })
-    @Type(() => Number)
-    @IsNumber()
-    @Min(1)
-    @Max(5)
-    rating: number;
+  @ApiPropertyOptional({ description: '图片地址数组', type: [String] })
+  @IsOptional()
+  @IsArray()
+  @IsString({ each: true })
+  images?: string[];
+
+  @ApiPropertyOptional({ description: '视频地址数组', type: [String] })
+  @IsOptional()
+  @IsArray()
+  @IsString({ each: true })
+  videos?: string[];
+
+  @ApiPropertyOptional({ description: '是否匿名', default: false })
+  @IsOptional()
+  @Type(() => Boolean)
+  @IsBoolean()
+  isAnonymous?: boolean;
 }

@@ -59,7 +59,8 @@ import Icon from '@/components/ui/Icon.vue'
 import GlobalBack from '@/components/ui/GlobalBack.vue'
 import AuthInputField from '@/components/business/AuthInputField.vue'
 import { validatePhone, validatePassword, getPasswordStrength, handleApiError, handleSuccess } from '@/utils/auth-helpers'
-import { authApi, useAuthStore } from '@/utils/auth'
+import { useAuthStore } from '@/utils/auth'
+import { authApi } from '@/api/auth'
 
 const authStore = useAuthStore()
 const isLoading = ref(false)
@@ -105,42 +106,30 @@ const handleRegister = async () => {
     isLoading.value = true
     uni.showLoading({ title: '注册中...' })
 
-    const data = await authApi.register(
-      formData.phone,
-      formData.password,
-      formData.nickname || undefined
-    )
+    const data = await authApi.register({
+      phone: formData.phone,
+      password: formData.password,
+      nickname: formData.nickname || undefined
+    })
 
-    if (data.success && data.data?.token) {
-      authStore.setToken(data.data.token)
+    authStore.setToken(data.token)
 
-      try {
-        const userData = await authApi.getProfile()
-        if (userData.success && userData.data) {
-          authStore.setUserInfo({
-            id: userData.data.id,
-            phone: userData.data.phone,
-            nickname: userData.data.nickname || ''
-          })
-        } else {
-          authStore.setUserInfo({
-            id: data.data.userId || 0,
-            phone: formData.phone,
-            nickname: data.data.nickname || formData.nickname || ''
-          })
-        }
-      } catch {
-        authStore.setUserInfo({
-          id: data.data.userId || 0,
-          phone: formData.phone,
-          nickname: data.data.nickname || formData.nickname || ''
-        })
-      }
-
-      handleSuccess('注册成功')
-    } else {
-      handleApiError(data.error?.message || data.message || '注册失败')
+    try {
+      const userData = await authApi.getProfile()
+      authStore.setUserInfo({
+        id: userData.id,
+        phone: userData.phone || formData.phone,
+        nickname: userData.nickname || formData.nickname || ''
+      })
+    } catch {
+      authStore.setUserInfo({
+        id: data.userId || 0,
+        phone: formData.phone,
+        nickname: data.nickname || formData.nickname || ''
+      })
     }
+
+    handleSuccess('注册成功')
   } catch (error) {
     handleApiError(error, '网络错误，请重试')
   } finally {

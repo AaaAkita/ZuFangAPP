@@ -9,6 +9,7 @@ import { CommunityModule } from './modules/community/community.module';
 import { CommentModule } from './modules/comment/comment.module';
 import { SearchModule } from './modules/search/search.module';
 import { AuthModule } from './modules/auth/auth.module';
+import { HomeModule } from './modules/home/home.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { AuthModule } from './modules/auth/auth.module';
     CommentModule,
     SearchModule,
     AuthModule,
+    HomeModule,
   ],
   controllers: [AppController],
   providers: [AppService],

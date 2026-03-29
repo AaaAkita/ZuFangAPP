@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <view class="page-community-detail page-shell">
     <GlobalBack />
 
@@ -43,11 +43,11 @@
     </view>
 
     <view class="home-section">
-      <SectionHeader title="住户评价" link-text="查看全部" link-url="/pages/reviews/reviews" />
+      <SectionHeader title="住户评价" link-text="查看全部" :link-url="`/pages/reviews/reviews?communityId=${currentCommunityId}`" />
       <view class="detail-review-list">
         <ReviewCard
-          v-for="(review, index) in community.reviews"
-          :key="`${review.name}-${index}`"
+          v-for="review in reviewList"
+          :key="review.id"
           :review="review"
           mode="detail"
         />
@@ -73,25 +73,95 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { ref } from 'vue'
 import { onLoad } from '@dcloudio/uni-app'
 import GlobalBack from '@/components/ui/GlobalBack.vue'
 import ReviewCard from '@/components/business/ReviewCard.vue'
 import SectionHeader from '@/components/business/SectionHeader.vue'
-import { getCommunityById, type CommunityItem } from '@/data/communities'
+import { communityApi } from '@/api/community'
+import { commentApi } from '@/api/comment'
+import { getErrorMessage } from '@/api/client'
 
-const fallback = getCommunityById(1) as CommunityItem
-const currentCommunityId = ref(fallback.id)
+const currentCommunityId = ref(0)
 const isFavorite = ref(false)
 const showMapPopup = ref(false)
-const community = ref<CommunityItem>(fallback)
+const reviewList = ref<any[]>([])
 
-onLoad((query) => {
-  const id = Number((query as Record<string, string> | undefined)?.id || '1')
-  const target = getCommunityById(id)
-  if (target) {
-    currentCommunityId.value = target.id
-    community.value = target
+const community = ref({
+  id: 0,
+  name: '',
+  district: '',
+  address: '',
+  tags: [] as string[],
+  image: '',
+  description: '',
+  metrics: {
+    safety: 0,
+    quietness: 0,
+    value: 0
+  }
+})
+
+function formatTime(iso: string) {
+  const date = new Date(iso)
+  if (Number.isNaN(date.getTime())) return '刚刚'
+  const diffHour = Math.floor((Date.now() - date.getTime()) / (1000 * 60 * 60))
+  if (diffHour < 1) return '刚刚'
+  if (diffHour < 24) return `${diffHour} 小时前`
+  return `${Math.floor(diffHour / 24)} 天前`
+}
+
+async function loadCommunityDetail(id: number) {
+  const [detail, comments] = await Promise.all([
+    communityApi.detail(id),
+    commentApi.list({
+      communityId: id,
+      page: 1,
+      limit: 3
+    })
+  ])
+
+  community.value = {
+    id: detail.id,
+    name: detail.name,
+    district: detail.district,
+    address: detail.address,
+    tags: Array.isArray(detail.tags) ? detail.tags : [],
+    image: detail.coverImage || '',
+    description: detail.description || '暂无简介',
+    metrics: {
+      safety: Number(detail.safetyScore || 0),
+      quietness: Number(detail.quietnessScore || 0),
+      value: Number(detail.valueScore || 0)
+    }
+  }
+
+  reviewList.value = comments.items.map((item) => ({
+    id: item.id,
+    name: item.isAnonymous ? '匿名用户' : item.user?.nickname || '匿名用户',
+    avatar: item.isAnonymous ? '' : item.user?.avatar || '',
+    verified: item.isVerified,
+    time: formatTime(item.createdAt),
+    content: item.content,
+    tags: item.tags || []
+  }))
+}
+
+onLoad(async (query) => {
+  const id = Number((query as Record<string, string> | undefined)?.id || '0')
+  if (!id) {
+    uni.showToast({ title: '参数错误', icon: 'none' })
+    return
+  }
+
+  currentCommunityId.value = id
+  try {
+    await loadCommunityDetail(id)
+  } catch (error) {
+    uni.showToast({
+      title: getErrorMessage(error, '小区详情加载失败'),
+      icon: 'none'
+    })
   }
 })
 

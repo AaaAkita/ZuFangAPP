@@ -1,25 +1,28 @@
-import { Controller, Get, Param, Query, UseGuards } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
+import { Controller, Get, Param, Query } from '@nestjs/common';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { CommunityService } from './community.service';
 import { QueryCommunityDto } from './dto/query-community.dto';
-import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard';
 
-@ApiTags('小区管理')
+@ApiTags('社区模块')
 @Controller('communities')
-@UseGuards(JwtAuthGuard)
-@ApiBearerAuth()
 export class CommunityController {
-    constructor(private readonly communityService: CommunityService) { }
+  constructor(private readonly communityService: CommunityService) {}
 
-    @Get()
-    @ApiOperation({ summary: '分页查询小区列表 (支持坐标、关键字、城市、排序)' })
-    async findAll(@Query() query: QueryCommunityDto) {
-        return this.communityService.findAll(query);
-    }
+  @Get()
+  @ApiOperation({ summary: '分页查询社区列表（支持关键词/城市/区域/排序）' })
+  async findAll(@Query() query: QueryCommunityDto) {
+    return this.communityService.findAll(query);
+  }
 
-    @Get(':id')
-    @ApiOperation({ summary: '获取小区详情' })
-    async findOne(@Param('id') id: string) {
-        return this.communityService.findOne(Number(id));
-    }
+  @Get('rankings/summary')
+  @ApiOperation({ summary: '社区质量榜与风险榜摘要' })
+  async getRankingSummary() {
+    return this.communityService.getRankingSummary();
+  }
+
+  @Get(':id')
+  @ApiOperation({ summary: '查询社区详情' })
+  async findOne(@Param('id') id: string) {
+    return this.communityService.findOne(Number(id));
+  }
 }

@@ -7,6 +7,10 @@ export default registerAs('app', () => ({
     secret: process.env.JWT_SECRET || 'your-super-secret-jwt-key',
     expiresIn: process.env.JWT_EXPIRES_IN || '7d',
   },
+  wechat: {
+    appId: process.env.WECHAT_APP_ID || '',
+    appSecret: process.env.WECHAT_APP_SECRET || '',
+  },
   database: {
     url: process.env.DATABASE_URL,
   },

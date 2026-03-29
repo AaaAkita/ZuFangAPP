@@ -7,9 +7,9 @@
         <view class="community-hero__head">
           <view>
             <text class="community-hero__title">社区榜单</text>
-            <text class="community-hero__subtitle">优质小区排行榜 + 小区避雷榜</text>
+            <text class="community-hero__subtitle">优质小区排行 + 风险小区提醒</text>
           </view>
-          <text class="community-hero__badge">每周更新</text>
+          <text class="community-hero__badge">实时更新</text>
         </view>
         <view class="community-hero__stats">
           <view class="community-stat community-stat--quality">
@@ -20,7 +20,7 @@
           <view class="community-stat community-stat--risk">
             <text class="community-stat__label">高风险小区</text>
             <text class="community-stat__value">{{ highRiskCount }}</text>
-            <text class="community-stat__meta">风险分 ≥ 70</text>
+            <text class="community-stat__meta">风险分 >= 70</text>
           </view>
         </view>
       </view>
@@ -57,16 +57,59 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import GlobalBack from '@/components/ui/GlobalBack.vue'
 import CommunityCard from '@/components/business/CommunityCard.vue'
 import SectionHeader from '@/components/business/SectionHeader.vue'
-import { getQualityRanking, getRiskRanking } from '@/data/communities'
+import { communityApi } from '@/api/community'
+import { getErrorMessage } from '@/api/client'
+import type { CommunityItem } from '@/data'
 
-const qualityRanking = computed(() => getQualityRanking())
-const riskRanking = computed(() => getRiskRanking())
+const qualityRanking = ref<CommunityItem[]>([])
+const riskRanking = ref<CommunityItem[]>([])
+
 const topQuality = computed(() => qualityRanking.value[0])
 const highRiskCount = computed(() => riskRanking.value.filter((item) => item.riskScore >= 70).length)
+
+function toViewCommunity(item: any): CommunityItem {
+  return {
+    id: item.id,
+    name: item.name,
+    district: item.district,
+    address: item.address,
+    rating: Number(item.ratingAvg || 0),
+    tags: Array.isArray(item.tags) ? item.tags : [],
+    description: item.description || '',
+    image: item.coverImage || '',
+    qualityScore: Number(item.qualityScore || 0),
+    riskScore: Number(item.riskScore || 0),
+    riskReason: item.riskReason || '暂无说明',
+    highlights: Array.isArray(item.highlights) ? item.highlights : [],
+    metrics: {
+      safety: Number(item.safetyScore || 0),
+      quietness: Number(item.quietnessScore || 0),
+      value: Number(item.valueScore || 0)
+    },
+    reviews: []
+  }
+}
+
+async function loadRankings() {
+  try {
+    const data = await communityApi.rankings()
+    qualityRanking.value = data.qualityRanking.map(toViewCommunity)
+    riskRanking.value = data.riskRanking.map(toViewCommunity)
+  } catch (error) {
+    uni.showToast({
+      title: getErrorMessage(error, '榜单加载失败'),
+      icon: 'none'
+    })
+  }
+}
+
+onMounted(() => {
+  void loadRankings()
+})
 
 const goToDetail = (id: number) => {
   uni.navigateTo({

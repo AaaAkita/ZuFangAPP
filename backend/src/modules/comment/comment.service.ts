@@ -1,109 +1,151 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
+import { Prisma } from '@prisma/client';
 import { PrismaService } from '../../common/prisma/prisma.service';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { QueryCommentDto } from './dto/query-comment.dto';
-import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class CommentService {
-    constructor(private readonly prisma: PrismaService) { }
+  constructor(private readonly prisma: PrismaService) {}
 
-    async create(userId: number, dto: CreateCommentDto) {
-        const community = await this.prisma.community.findUnique({
-            where: { id: BigInt(dto.communityId) },
-        });
+  async create(userId: number, dto: CreateCommentDto) {
+    const community = await this.prisma.community.findUnique({
+      where: { id: BigInt(dto.communityId) },
+    });
 
-        if (!community) {
-            throw new NotFoundException('找不到指定的小区信息');
-        }
-
-        return await this.prisma.$transaction(async (tx) => {
-            // 插入评论
-            const comment = await tx.comment.create({
-                data: {
-                    userId: BigInt(userId),
-                    communityId: BigInt(dto.communityId),
-                    content: dto.content,
-                    images: dto.images ?? [],
-                    videos: dto.videos ?? [],
-                    rating: dto.rating,
-                    status: 1, // 默认发布成功
-                },
-            });
-
-            // 更新小区维度的统计：commentCount+1, ratingAvg重新算一遍或按照加权平均更合理
-            const oldRatingAvg = Number(community.ratingAvg);
-            const oldCommentCount = community.commentCount;
-            const newCommentCount = oldCommentCount + 1;
-
-            const newRatingAvg =
-                (oldRatingAvg * oldCommentCount + dto.rating) / newCommentCount;
-
-            await tx.community.update({
-                where: { id: BigInt(dto.communityId) },
-                data: {
-                    commentCount: newCommentCount,
-                    ratingAvg: newRatingAvg,
-                },
-            });
-
-            return {
-                ...comment,
-                id: Number(comment.id),
-                userId: Number(comment.userId),
-                communityId: Number(comment.communityId),
-            };
-        });
+    if (!community || community.status !== 1 || community.deletedAt) {
+      throw new NotFoundException('社区不存在');
     }
 
-    async findAll(query: QueryCommentDto) {
-        const { page = 1, limit = 20, communityId } = query;
-        const skip = (page - 1) * limit;
+    return this.prisma.$transaction(async (tx) => {
+      const comment = await tx.comment.create({
+        data: {
+          userId: BigInt(userId),
+          communityId: BigInt(dto.communityId),
+          content: dto.content,
+          tags: dto.tags ?? [],
+          images: dto.images ?? [],
+          videos: dto.videos ?? [],
+          rating: dto.rating,
+          isAnonymous: dto.isAnonymous ?? false,
+          status: 1,
+        },
+        include: {
+          user: {
+            select: {
+              id: true,
+              nickname: true,
+              avatar: true,
+            },
+          },
+        },
+      });
 
-        const where: Prisma.CommentWhereInput = {
-            status: 1, // 正常显示的
-            parentId: null, // 我们目前只查根评论
-        };
+      const oldRatingAvg = Number(community.ratingAvg);
+      const oldCommentCount = community.commentCount;
+      const newCommentCount = oldCommentCount + 1;
+      const newRatingAvg =
+        (oldRatingAvg * oldCommentCount + dto.rating) / newCommentCount;
 
-        if (communityId) {
-            where.communityId = BigInt(communityId);
-        }
+      await tx.community.update({
+        where: { id: BigInt(dto.communityId) },
+        data: {
+          commentCount: newCommentCount,
+          ratingCount: community.ratingCount + 1,
+          ratingAvg: newRatingAvg,
+        },
+      });
 
-        const [items, total] = await this.prisma.$transaction([
-            this.prisma.comment.findMany({
-                where,
-                skip,
-                take: limit,
-                orderBy: { createdAt: 'desc' },
-                include: {
-                    user: {
-                        select: {
-                            id: true,
-                            nickname: true,
-                            avatar: true,
-                        },
-                    },
-                },
-            }),
-            this.prisma.comment.count({ where }),
-        ]);
+      return this.serializeComment(comment);
+    });
+  }
 
-        const formattedItems = items.map((item) => ({
-            ...item,
-            id: Number(item.id),
-            userId: Number(item.userId),
-            communityId: Number(item.communityId),
-            user: item.user
-                ? { ...item.user, id: Number(item.user.id) }
-                : null,
-        }));
+  async findAll(query: QueryCommentDto) {
+    const { page = 1, limit = 20, communityId, sortBy = 'createdAt', order = 'desc' } =
+      query;
+    const skip = (page - 1) * limit;
 
-        return {
-            items: formattedItems,
-            total,
-            page,
-            limit,
-            totalPages: Math.ceil(total / limit),
-        };
+    const where: Prisma.CommentWhereInput = {
+      status: 1,
+      parentId: null,
+      deletedAt: null,
+    };
+
+    if (communityId) {
+      where.communityId = BigInt(communityId);
     }
+
+    const orderBy: Prisma.CommentOrderByWithRelationInput = {
+      [sortBy]: order,
+    };
+
+    const [items, total] = await this.prisma.$transaction([
+      this.prisma.comment.findMany({
+        where,
+        skip,
+        take: limit,
+        orderBy,
+        include: {
+          user: {
+            select: {
+              id: true,
+              nickname: true,
+              avatar: true,
+            },
+          },
+          community: {
+            select: {
+              id: true,
+              name: true,
+              district: true,
+            },
+          },
+        },
+      }),
+      this.prisma.comment.count({ where }),
+    ]);
+
+    return {
+      items: items.map((item) => this.serializeComment(item)),
+      total,
+      page,
+      limit,
+      totalPages: Math.ceil(total / limit),
+    };
+  }
+
+  private serializeComment(item: any) {
+    return {
+      id: Number(item.id),
+      userId: Number(item.userId),
+      communityId: Number(item.communityId),
+      content: item.content,
+      tags: item.tags ?? [],
+      images: item.images ?? [],
+      videos: item.videos ?? [],
+      rating: item.rating,
+      likeCount: item.likeCount,
+      replyCount: item.replyCount,
+      reportCount: item.reportCount,
+      status: item.status,
+      isAnonymous: item.isAnonymous,
+      isVerified: item.isVerified,
+      createdAt: item.createdAt,
+      updatedAt: item.updatedAt,
+      user: item.user
+        ? {
+            id: Number(item.user.id),
+            nickname: item.user.nickname,
+            avatar: item.user.avatar,
+          }
+        : null,
+      community: item.community
+        ? {
+            id: Number(item.community.id),
+            name: item.community.name,
+            district: item.community.district,
+          }
+        : null,
+    };
+  }
 }

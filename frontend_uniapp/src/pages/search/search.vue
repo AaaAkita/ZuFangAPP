@@ -1,222 +1,242 @@
-﻿<template>
+<template>
   <view class="page-search page-shell">
     <GlobalBack />
 
-    <view class="search-header">
+    <view class="search-header card-shell card-shell--flat">
       <view class="search-input-wrap">
         <Icon name="search" :size="30" color="var(--text-muted)" />
-        <input v-model="searchKeyword" class="search-input" placeholder="搜索地点或房源" type="text" />
-        <view class="search-filter-btn" @click="openFilter">
-          <Icon name="tune" :size="26" color="var(--primary)" />
-        </view>
+        <input
+          v-model="searchKeyword"
+          class="search-input"
+          placeholder="搜索小区、区域或关键词"
+          type="text"
+          @confirm="runSearch"
+        />
+        <button class="search-btn" @click="runSearch">搜索</button>
+      </view>
+      <view v-if="hotKeywords.length" class="search-hot-list">
+        <text class="search-hot-label">热门</text>
+        <text
+          v-for="item in hotKeywords"
+          :key="item.keyword"
+          class="search-hot-item"
+          @click="applyHotKeyword(item.keyword)"
+        >
+          {{ item.keyword }}
+        </text>
       </view>
     </view>
 
-    <scroll-view class="search-tag-scroll" scroll-x :show-scrollbar="false">
-      <view class="search-tag-list">
-        <view
-          v-for="(tag, index) in filterTags"
-          :key="tag.label"
-          :class="['search-tag', { active: activeFilter === index }]"
-          :style="{ backgroundColor: activeFilter === index ? '#ee7c2b' : tag.bgColor }"
-          @click="activeFilter = index"
-        >
-          <text :style="{ color: activeFilter === index ? '#fff' : '#1b130d' }">{{ tag.label }}</text>
-        </view>
-      </view>
-    </scroll-view>
+    <view class="search-sort card-shell card-shell--flat">
+      <text
+        v-for="option in sortOptions"
+        :key="option.value"
+        :class="['search-sort-item', { active: sort === option.value }]"
+        @click="changeSort(option.value)"
+      >
+        {{ option.label }}
+      </text>
+    </view>
 
     <view class="search-result-head">
-      <text>找到 {{ propertyList.length }} 套房源</text>
-      <view class="search-result-actions">
-        <text @click="handleSort">排序</text>
-        <text @click="handleMap">地图</text>
-      </view>
+      <text>找到 {{ total }} 个小区</text>
     </view>
 
     <scroll-view class="search-content" scroll-y>
-      <view class="search-property-list">
-        <PropertyCard
-          v-for="(item, index) in propertyList"
+      <view class="search-community-list">
+        <CommunityCard
+          v-for="item in communities"
           :key="item.id"
-          :property="item"
-          @toggle-favorite="toggleFavorite(index)"
-          @select="navigateToDetail(item)"
+          mode="quality"
+          :community="item"
+          @click="navigateToDetail(item.id)"
         />
       </view>
+      <view v-if="!communities.length && !loading" class="search-empty">暂无结果，换个关键词试试</view>
     </scroll-view>
-
-    <view class="search-modal" :class="{ show: showFilterModal }" @click="closeFilterModal">
-      <view class="search-modal__panel" @click.stop>
-        <SectionHeader title="筛选" />
-
-        <view class="search-filter-section">
-          <text class="search-filter-section__title">区域</text>
-          <view class="search-area-row">
-            <scroll-view class="search-area-list" scroll-y :show-scrollbar="false">
-              <view
-                v-for="(area, index) in areaList"
-                :key="area.name"
-                :class="['search-area-item', { active: selectedArea === index }]"
-                @click="selectArea(index)"
-              >
-                {{ area.name }}
-              </view>
-            </scroll-view>
-            <scroll-view class="search-street-list" scroll-y :show-scrollbar="false">
-              <view
-                v-for="(street, index) in currentStreets"
-                :key="street"
-                :class="['search-street-item', { active: selectedStreet === index }]"
-                @click="selectedStreet = index"
-              >
-                {{ street }}
-              </view>
-            </scroll-view>
-          </view>
-        </view>
-
-        <view class="search-filter-section">
-          <text class="search-filter-section__title">地铁线</text>
-          <scroll-view scroll-x :show-scrollbar="false">
-            <view class="search-metro-list">
-              <view
-                v-for="(line, index) in metroLines"
-                :key="`${line.name}-${line.num}`"
-                :class="['search-metro-item', { active: selectedMetro === index }]"
-                @click="selectedMetro = index"
-              >
-                <view class="search-metro-dot" :style="{ backgroundColor: selectedMetro === index ? line.color : line.bgColor }">
-                  <text :style="{ color: selectedMetro === index ? '#fff' : line.color }">{{ line.num }}</text>
-                </view>
-                <text>{{ line.name }}</text>
-              </view>
-            </view>
-          </scroll-view>
-        </view>
-
-        <view class="search-filter-section">
-          <view class="search-rent-head">
-            <text class="search-filter-section__title">租金范围</text>
-            <text>¥{{ rentRange[0] }} - ¥{{ rentRange[1] }}</text>
-          </view>
-          <slider
-            :min="0"
-            :max="15000"
-            :step="100"
-            :value="rentRange[1]"
-            block-color="#ee7c2b"
-            backgroundColor="#ffeacc"
-            activeColor="#ee7c2b"
-            @changing="onRentChange"
-            @change="onRentChange"
-          />
-        </view>
-
-        <view class="search-filter-section">
-          <text class="search-filter-section__title">评分要求</text>
-          <view class="search-rating-list">
-            <view
-              v-for="(rating, index) in ratingOptions"
-              :key="rating.value"
-              :class="['search-rating-item', { active: selectedRating === index }]"
-              @click="selectedRating = index"
-            >
-              <text>{{ rating.value }}</text>
-            </view>
-          </view>
-        </view>
-
-        <view class="search-filter-footer">
-          <text @click="resetFilters">重置</text>
-          <button class="search-filter-confirm" @click="confirmFilters">查看房源</button>
-        </view>
-      </view>
-    </view>
   </view>
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import Icon from '@/components/ui/Icon.vue'
 import GlobalBack from '@/components/ui/GlobalBack.vue'
-import PropertyCard from '@/components/business/PropertyCard.vue'
-import SectionHeader from '@/components/business/SectionHeader.vue'
-import { getSearchData, type PropertyItem } from '@/data'
+import CommunityCard from '@/components/business/CommunityCard.vue'
+import { searchApi, type HotSearchItem } from '@/api/search'
+import { getErrorMessage } from '@/api/client'
+import type { CommunityItem } from '@/data'
 
-const searchData = computed(() => getSearchData())
+const searchKeyword = ref('')
+const loading = ref(false)
+const sort = ref<'default' | 'hot' | 'new' | 'risk'>('default')
+const communities = ref<CommunityItem[]>([])
+const total = ref(0)
+const hotKeywords = ref<HotSearchItem[]>([])
 
-const searchKeyword = ref(searchData.value.defaultKeyword)
-const activeFilter = ref(0)
-const showFilterModal = ref(false)
-const selectedArea = ref(0)
-const selectedStreet = ref(1)
-const selectedMetro = ref(3)
-const selectedRating = ref(2)
-const rentRange = ref<[number, number]>([...searchData.value.rentRangeDefault] as [number, number])
+const sortOptions = [
+  { label: '默认', value: 'default' },
+  { label: '热度', value: 'hot' },
+  { label: '最新', value: 'new' },
+  { label: '风险', value: 'risk' }
+] as const
 
-const filterTags = computed(() => searchData.value.filterTags)
-const areaList = computed(() => searchData.value.areas)
-const metroLines = computed(() => searchData.value.metroLines)
-const ratingOptions = computed(() => searchData.value.ratingOptions)
-const propertyList = ref<PropertyItem[]>(searchData.value.properties)
-const currentStreets = ref(areaList.value[0]?.streets || [])
+function toViewCommunity(item: any): CommunityItem {
+  return {
+    id: item.id,
+    name: item.name,
+    district: item.district,
+    address: item.address,
+    rating: Number(item.ratingAvg || 0),
+    tags: Array.isArray(item.tags) ? item.tags : [],
+    description: item.riskReason || '',
+    image: item.coverImage || '',
+    qualityScore: Number(item.qualityScore || 0),
+    riskScore: Number(item.riskScore || 0),
+    riskReason: item.riskReason || '暂无说明',
+    highlights: Array.isArray(item.highlights) ? item.highlights : [],
+    metrics: {
+      safety: 0,
+      quietness: 0,
+      value: 0
+    },
+    reviews: []
+  }
+}
 
-onMounted(() => {
-  const pages = getCurrentPages()
-  const currentPage = pages[pages.length - 1] as Record<string, any>
-  if (currentPage?.options?.showFilter === 'true') {
-    showFilterModal.value = true
+async function fetchHotKeywords() {
+  try {
+    hotKeywords.value = await searchApi.hot()
+  } catch {
+    hotKeywords.value = []
+  }
+}
+
+async function runSearch() {
+  if (!searchKeyword.value.trim()) {
+    communities.value = []
+    total.value = 0
+    return
+  }
+
+  try {
+    loading.value = true
+    const result = await searchApi.global({
+      keyword: searchKeyword.value.trim(),
+      sort: sort.value,
+      page: 1,
+      limit: 20
+    })
+    communities.value = result.items.map(toViewCommunity)
+    total.value = result.total
+  } catch (error) {
+    uni.showToast({
+      title: getErrorMessage(error, '搜索失败'),
+      icon: 'none'
+    })
+  } finally {
+    loading.value = false
+  }
+}
+
+function changeSort(nextSort: 'default' | 'hot' | 'new' | 'risk') {
+  sort.value = nextSort
+  void runSearch()
+}
+
+function applyHotKeyword(keyword: string) {
+  searchKeyword.value = keyword
+  void runSearch()
+}
+
+function navigateToDetail(id: number) {
+  uni.navigateTo({
+    url: `/pages/community-detail/community-detail?id=${id}`
+  })
+}
+
+onMounted(async () => {
+  await fetchHotKeywords()
+  if (hotKeywords.value.length > 0) {
+    searchKeyword.value = hotKeywords.value[0].keyword
+    await runSearch()
   }
 })
-
-const toggleFavorite = (index: number) => {
-  const target = propertyList.value[index]
-  if (!target) return
-  target.isFavorite = !target.isFavorite
-}
-
-const openFilter = () => {
-  showFilterModal.value = true
-}
-
-const closeFilterModal = () => {
-  showFilterModal.value = false
-}
-
-const selectArea = (index: number) => {
-  selectedArea.value = index
-  currentStreets.value = areaList.value[index]?.streets || []
-  selectedStreet.value = 0
-}
-
-const onRentChange = (event: Record<string, any>) => {
-  rentRange.value = [rentRange.value[0], Number(event?.detail?.value || 0)]
-}
-
-const resetFilters = () => {
-  selectedArea.value = 0
-  selectedStreet.value = 0
-  selectedMetro.value = 0
-  selectedRating.value = 0
-  rentRange.value = [0, 15000]
-  currentStreets.value = areaList.value[0]?.streets || []
-}
-
-const confirmFilters = () => {
-  showFilterModal.value = false
-  uni.showToast({ title: '筛选已应用', icon: 'success' })
-}
-
-const handleSort = () => {
-  uni.showToast({ title: '排序选项', icon: 'none' })
-}
-
-const handleMap = () => {
-  uni.showToast({ title: '地图查看', icon: 'none' })
-}
-
-const navigateToDetail = (item: PropertyItem) => {
-  uni.showToast({ title: `查看: ${item.title}`, icon: 'none' })
-}
 </script>
+
+<style scoped lang="scss">
+.search-header {
+  margin-bottom: 16rpx;
+}
+
+.search-input-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10rpx;
+}
+
+.search-input {
+  flex: 1;
+}
+
+.search-btn {
+  padding: 8rpx 20rpx;
+  font-size: 22rpx;
+}
+
+.search-hot-list {
+  margin-top: 10rpx;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8rpx;
+}
+
+.search-hot-label {
+  font-size: 22rpx;
+  color: #94a3b8;
+}
+
+.search-hot-item {
+  font-size: 22rpx;
+  color: #ee7c2b;
+}
+
+.search-sort {
+  display: flex;
+  gap: 16rpx;
+  margin-bottom: 14rpx;
+}
+
+.search-sort-item {
+  font-size: 24rpx;
+  color: #64748b;
+}
+
+.search-sort-item.active {
+  color: #ee7c2b;
+  font-weight: 600;
+}
+
+.search-result-head {
+  margin-bottom: 10rpx;
+  font-size: 23rpx;
+  color: #64748b;
+}
+
+.search-content {
+  height: calc(100vh - 280rpx);
+}
+
+.search-community-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14rpx;
+  padding-bottom: calc(env(safe-area-inset-bottom) + 80rpx);
+}
+
+.search-empty {
+  padding: 32rpx 0;
+  text-align: center;
+  font-size: 24rpx;
+  color: #94a3b8;
+}
+</style>

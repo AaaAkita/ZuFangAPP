@@ -58,7 +58,8 @@ import GlobalBack from '@/components/ui/GlobalBack.vue'
 import AuthInputField from '@/components/business/AuthInputField.vue'
 import { wechatLogin } from '@/utils/wechat'
 import { validatePhone, handleApiError, handleSuccess } from '@/utils/auth-helpers'
-import { authApi, useAuthStore } from '@/utils/auth'
+import { useAuthStore } from '@/utils/auth'
+import { authApi } from '@/api/auth'
 
 const authStore = useAuthStore()
 const isLoading = ref(false)
@@ -96,31 +97,25 @@ const handleLogin = async () => {
     isLoading.value = true
     uni.showLoading({ title: '登录中...' })
 
-    const data = await authApi.login(formData.account, formData.password)
-    if (data.success && data.data?.token) {
-      authStore.setToken(data.data.token)
+    const data = await authApi.login({ phone: formData.account, password: formData.password })
+    authStore.setToken(data.token)
 
-      try {
-        const userData = await authApi.getProfile()
-        if (userData.success && userData.data) {
-          authStore.setUserInfo({
-            id: userData.data.id,
-            phone: userData.data.phone,
-            nickname: userData.data.nickname || ''
-          })
-        }
-      } catch {
-        authStore.setUserInfo({
-          id: 0,
-          phone: formData.account,
-          nickname: ''
-        })
-      }
-
-      handleSuccess('登录成功')
-    } else {
-      handleApiError(data.error?.message || data.message || '登录失败')
+    try {
+      const userData = await authApi.getProfile()
+      authStore.setUserInfo({
+        id: userData.id,
+        phone: userData.phone || formData.account,
+        nickname: userData.nickname || ''
+      })
+    } catch {
+      authStore.setUserInfo({
+        id: data.userId || 0,
+        phone: formData.account,
+        nickname: data.nickname || ''
+      })
     }
+
+    handleSuccess('登录成功')
   } catch (error) {
     handleApiError(error, '网络错误，请重试')
   } finally {

@@ -1,43 +1,48 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { IsNumber, IsOptional, IsString } from 'class-validator';
-import { PaginationDto } from '../../../common/dto/pagination.dto';
 import { Type } from 'class-transformer';
+import { ApiPropertyOptional } from '@nestjs/swagger';
+import { IsIn, IsNumber, IsOptional, IsString } from 'class-validator';
+import { PaginationDto } from '../../../common/dto/pagination.dto';
 
 export class QueryCommunityDto extends PaginationDto {
-    @ApiProperty({ description: '关键字搜索（名称、地址等）', required: false })
-    @IsString()
-    @IsOptional()
-    keyword?: string;
+  @ApiPropertyOptional({ description: '关键词（名称/地址）' })
+  @IsOptional()
+  @IsString()
+  keyword?: string;
 
-    @ApiProperty({ description: '城市', required: false })
-    @IsString()
-    @IsOptional()
-    city?: string;
+  @ApiPropertyOptional({ description: '城市' })
+  @IsOptional()
+  @IsString()
+  city?: string;
 
-    @ApiProperty({ description: '区县', required: false })
-    @IsString()
-    @IsOptional()
-    district?: string;
+  @ApiPropertyOptional({ description: '区域' })
+  @IsOptional()
+  @IsString()
+  district?: string;
 
-    @ApiProperty({ description: '经度', required: false })
-    @Type(() => Number)
-    @IsNumber()
-    @IsOptional()
-    longitude?: number;
+  @ApiPropertyOptional({ description: '经度' })
+  @IsOptional()
+  @Type(() => Number)
+  @IsNumber()
+  longitude?: number;
 
-    @ApiProperty({ description: '纬度', required: false })
-    @Type(() => Number)
-    @IsNumber()
-    @IsOptional()
-    latitude?: number;
+  @ApiPropertyOptional({ description: '纬度' })
+  @IsOptional()
+  @Type(() => Number)
+  @IsNumber()
+  latitude?: number;
 
-    @ApiProperty({ description: '排序字段: ratingAvg, commentCount 等', required: false })
-    @IsString()
-    @IsOptional()
-    sortBy?: string;
+  @ApiPropertyOptional({
+    description:
+      '排序字段: ratingAvg/commentCount/createdAt/qualityScore/riskScore/viewCount',
+  })
+  @IsOptional()
+  @IsString()
+  @IsIn(['ratingAvg', 'commentCount', 'createdAt', 'qualityScore', 'riskScore', 'viewCount'])
+  sortBy?: string;
 
-    @ApiProperty({ description: '排序方式: desc 或 asc', required: false })
-    @IsString()
-    @IsOptional()
-    order?: 'asc' | 'desc';
+  @ApiPropertyOptional({ description: '排序方向 asc/desc', default: 'desc' })
+  @IsOptional()
+  @IsString()
+  @IsIn(['asc', 'desc'])
+  order?: 'asc' | 'desc';
 }

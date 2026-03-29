@@ -8,8 +8,8 @@ datasource db {
 
 model User {
   id              BigInt    @id @default(autoincrement())
-  phone           String    @unique @db.VarChar(20)
-  password        String    @db.VarChar(255)
+  phone           String?   @unique @db.VarChar(20)
+  password        String?   @db.VarChar(255)
   nickname        String?   @db.VarChar(50)
   avatar          String?   @db.VarChar(255)
   gender          Int       @default(0) @map("gender") @db.SmallInt
@@ -69,14 +69,24 @@ model Community {
   totalHouseholds  Int?      @map("total_households")
   parkingSpaces    Int?      @map("parking_spaces")
   description      String?   @db.Text
+  coverImage       String?   @map("cover_image") @db.VarChar(500)
   images           Json?
   tags             Json?
+  highlights       Json?
   facilities       Json?
+  qualityScore     Decimal   @default(0) @map("quality_score") @db.Decimal(5, 2)
+  riskScore        Decimal   @default(0) @map("risk_score") @db.Decimal(5, 2)
+  riskReason       String?   @map("risk_reason") @db.VarChar(255)
+  safetyScore      Decimal   @default(0) @map("safety_score") @db.Decimal(3, 2)
+  quietnessScore   Decimal   @default(0) @map("quietness_score") @db.Decimal(3, 2)
+  valueScore       Decimal   @default(0) @map("value_score") @db.Decimal(3, 2)
   ratingAvg        Decimal   @default(0) @map("rating_avg") @db.Decimal(3, 2)
   ratingCount      Int       @default(0) @map("rating_count")
   commentCount     Int       @default(0) @map("comment_count")
   viewCount        Int       @default(0) @map("view_count")
   favoriteCount    Int       @default(0) @map("favorite_count")
+  isRecommended    Boolean   @default(false) @map("is_recommended")
+  recommendOrder   Int       @default(0) @map("recommend_order")
   status           Int       @default(1) @map("status") @db.SmallInt
   createdAt        DateTime  @default(now()) @map("created_at")
   updatedAt        DateTime  @updatedAt @map("updated_at")
@@ -93,7 +103,10 @@ model Community {
   @@index([district])
   @@index([longitude, latitude])
   @@index([ratingAvg])
+  @@index([qualityScore])
+  @@index([riskScore])
   @@index([commentCount])
+  @@index([isRecommended, recommendOrder])
   @@index([status])
   @@index([createdAt])
 }
@@ -104,6 +117,7 @@ model Comment {
   communityId    BigInt    @map("community_id")
   parentId       BigInt?   @map("parent_id")
   content        String    @db.Text
+  tags           Json?
   images         Json?
   videos         Json?
   rating         Int       @default(0) @map("rating") @db.SmallInt
@@ -113,6 +127,8 @@ model Comment {
   status         Int       @default(0) @map("status") @db.SmallInt
   auditStatus    Int       @default(0) @map("audit_status") @db.SmallInt
   auditResult    String?   @map("audit_result") @db.Text
+  isAnonymous    Boolean   @default(false) @map("is_anonymous")
+  isVerified     Boolean   @default(false) @map("is_verified")
   auditUserId    BigInt?   @map("audit_user_id")
   auditAt        DateTime? @map("audit_at")
   createdAt      DateTime  @default(now()) @map("created_at")
